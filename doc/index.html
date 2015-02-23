@@ -11,9 +11,21 @@
     <script class='remove'>
 /*Respec configuration*/
     var respecConfig = {
+    
+          // GlobalPlatform Logo
+          logos: [
+             {
+                src: 'http://www.globalplatform.org/images/gplogo_2010.gif',
+                href: "http://www.globalplatform.org",
+                alt: "GlobalPlatform Logo",
+                width: 344,
+                height: 49,
+                id: 'gp-logo'
+             }
+          ],
+
           // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
           specStatus:           "unofficial",
-          //specStatus:           "ED",
 
           // the specification's short name, as in http://www.w3.org/TR/short-name/
           shortName:            "secure-element",
@@ -35,7 +47,7 @@
           // previousMaturity:  "WD",
 
           // if there a publicly available Editor's Draft, this is the link
-          edDraftURI:           "http://opoto.github.io/secure-element",
+          edDraftURI:           "http://globalplatform.github.io/WebApis-for-se/doc/",
 
           // if this is a LCWD, uncomment and set the end of its review period
           // lcEnd: "2009-08-05",
@@ -56,21 +68,13 @@
           ],
 
           // name of the WG
-          wg:           "System Applications Working Group",
+          wg:           "",
 
           // URI of the public WG page
-          wgURI:        "http://www.w3.org/2012/sysapps/",
+          wgURI:        "",
 
-          // name (without the @w3c.org) of the public mailing to which comments are due
-          wgPublicList: "public-sysapps",
-
-          // URI of the patent status for this WG, for Rec-track documents
-          // !!!! IMPORTANT !!!!
-          // This is important for Rec-track documents, do not copy a patent URI from a random
-          // document unless you know what you're doing. If in doubt ask your friendly neighbourhood
-          // Team Contact.
-          wgPatentURI:  "http://www.w3.org/2004/01/pp-impl/58119/status",
-          // !!!! IMPORTANT !!!! MAKE THE ABOVE BLINK IN YOUR HEAD
+          // name of the public mailing to which comments are due
+          wgPublicList: "",
 
           localBiblio:  {
             "dummy" : "dummy"
@@ -117,12 +121,6 @@
                 ,   authors:  [ "W3C Near Field Communications (NFC) Working Group" ]
                 ,   publisher:  "W3C"
               }
-            , "SYSAPPS": {
-                    title:    "Runtime and Security Model for Web Applications"
-                ,   href:     "http://www.w3.org/TR/runtime/"
-                ,   authors:  [ "W3C SysApps Working Group" ]
-                ,   publisher:  "W3C"
-              }
             , "GP": {
                     title:    "Card specifications"
                 ,   authors:  [ "GlobalPlatform" ]
@@ -157,12 +155,10 @@
     <!-- - - - - - - - - - -  Status of this document - - - - - - - - - - - -->
     <section id="sotd">
       <p>
-        <strong>This work-in-progress specification is an unofficial draft.
-        Developers are strongly discouraged to implement it at this
-        stage.</strong> If you are interested in implementing or using this
-        API, we encourage you to contact the editors or post on the working
-        group <a href=
-        "http://lists.w3.org/Archives/Public/public-sysapps/">mailing list</a>.
+        <strong>This is a work-in-progress specification. Developers are
+        strongly discouraged to implement it at this stage.</strong> If you are
+        interested in implementing or using this API, we encourage you to
+        contact the editors.
       </p>
       <p>
         See <a href="#Changes">Changes section</a> for history details.
@@ -296,15 +292,15 @@
           API defined in this specification.
         </p>
       </section><!-- Use Cases -->
-      <!-- - - - - - - - - - - - - -  Relationship to other W3C APIs - - - - - - - - - - - - - -->
+      <!-- - - - - - - - - - - - - -  Relationship to W3C APIs - - - - - - - - - - - - - -->
       <section>
         <h2>
-          Relationship to other W3C APIs
+          Relationship to W3C APIs
         </h2>
         <p>
           This specification, although addressing some concepts similar to
-          other W3C specifications, has distinct use cases and offer different
-          level of services:
+          several W3C specifications, has distinct use cases and offer
+          different level of services:
         </p>
         <ul>
           <li>The current NFC API draft specification [[NFC]] defines an API
@@ -328,7 +324,7 @@
           implementation dependent.
           </li>
         </ul>
-      </section><!-- Relationship to other W3C APIs -->
+      </section><!-- Relationship to W3C APIs -->
     </section><!-- Introduction -->
     <!-- - - - - - - - - - - - - - Conformance  - - - - - - - - - - - - - - -->
     <section id="conformance">
@@ -1471,9 +1467,9 @@
       </h2>
       <p>
         The complete list of changes can be viewed on <a href=
-        "https://github.com/opoto/secure-element/commits/gh-pages">Github</a>.
+        "http://globalplatform.github.io/WebApis-for-se/commits/gh-pages">Github</a>.
         You can also check the <a href=
-        "https://github.com/opoto/secure-element/issues">issues</a>.
+        "http://globalplatform.github.io/WebApis-for-se/issues">issues</a>.
       </p>
     </section>
     <!-- - - - - - - - - - - - - - Acknowledgements - - - - - - - - - - - - - - -->
