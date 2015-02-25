@@ -10,7 +10,11 @@
 </script>
     <script class='remove'>
 /*Respec configuration*/
-    var respecConfig = {
+    var 
+    yearStart = "2015",
+    yearNow = "" + new Date().getFullYear(),
+    copyrightYears = (yearStart === yearNow) ? yearStart : yearStart + '-' + yearNow,
+    respecConfig = {
 
           // specification status (e.g. WD, LCWD, NOTE, etc.). If in doubt use ED.
           specStatus:           "base",
@@ -49,7 +53,9 @@
 
           // if the specification's copyright date is a range of years, specify
           // the start date here:
-          // copyrightStart: "2005"
+          copyrightStart: yearStart,
+
+          overrideCopyright: "Copyright © " + copyrightYears + " <a href='http://www.globalplatform.org/'>GlobalPlatform</a>. This document is licensed under the <a class='subfoot' href='http://www.apache.org/licenses/LICENSE-2.0' rel='license'>Apache License, Version 2.0</a>",
 
           // if there is a previously published draft, uncomment this and set its YYYY-MM-DD date
           // and its maturity status
@@ -76,7 +82,7 @@
               ,   companyURL: "http://www.telekom.com/"
               },
           ],
-
+          
           // name of the WG
           wg:           "",
 
@@ -147,24 +153,27 @@
       };
     </script>
     <script class='remove'>
-  window.onload = function () { 
-        respecEvents.sub("end", function(message) {
-          //console.log(message);
-          if (message === "w3c/headers") {
-            var copyright = document.querySelector("p.copyright");
-            if (copyright) copyright.innerHTML = "Copyright © 2015 <a href='http://www.globalplatform.org/'>GlobalPlatform</a>. This document is licensed under the <a class='subfoot' href='http://www.apache.org/licenses/LICENSE-2.0' rel='license'>Apache License, Version 2.0</a>";
-            var title = document.querySelector("h2");
-            if (title) title.innerHTML = "GlobalPlatform Member Draft Specification";
-            var statusIntro = document.querySelector("#sotd > p:nth-child(2)");
-            if (statusIntro) statusIntro.remove();
-          }
-        });
-      };
+window.onload = function () { 
+    respecEvents.sub("end", 
+    function(message) {
+    //console.log(message);
+    if (message === "w3c/headers") {
+      /* already set by overrideCopyright, but just to be sure... */
+      var copyright = document.querySelector("p.copyright");
+      if (copyright) copyright.innerHTML = respecConfig.overrideCopyright;
+      /* */
+      var title = document.querySelector("h2");
+      if (title) title.innerHTML = "GlobalPlatform Member Draft Specification";
+      var statusIntro = document.querySelector("#sotd > p:nth-child(2)");
+      if (statusIntro) statusIntro.remove();
+    }
+    });
+    };
     </script>
     <style>
-  #gp-logo > img {
-        margin-left: -20px;
-      }
+#gp-logo > img {
+    margin-left: -20px;
+    }
     </style>
   </head>
   <body>
