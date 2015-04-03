@@ -854,12 +854,12 @@ window.onload = function () {
           realistic way.
         </dd>
         <dt>
-          readonly attribute ConnectivityType connectivityType
+          readonly attribute boolean isInternal
         </dt>
         <dd>
-          This attribute MUST return the <a>ConnectivityType</a> value matching
-          the connectivity used by the reader to communicate with the secure
-          element.
+          This attribute MUST return <code>true</code> if the secure element is
+          internal to the device and cannot be detached at least without
+          powering off the device.
         </dd>
         <dt>
           Promise&lt;Session&gt; openSession()
@@ -921,38 +921,6 @@ window.onload = function () {
           </dd>
         </dl>
       </section><!-- Enum SecureElementType -->
-      <!-- - - - - - - - - - - - Enum ConnectivityType - - - - - - - - - -->
-      <section>
-        <h2>
-          <a>ConnectivityType</a> enum
-        </h2>
-        <p>
-          The <a>ConnectivityType</a> enum identifies the type of the secure
-          element a reader gives access to.
-        </p>
-        <dl title="enum ConnectivityType" class="idl">
-          <dt>
-            embedded
-          </dt>
-          <dd>
-            The secure element is physically attached to the device, and cannot
-            be removed, at least without powering off the device.
-          </dd>
-          <dt>
-            plugged
-          </dt>
-          <dd>
-            The secure element is plugged to the device, and can be unplugged.
-          </dd>
-          <dt>
-            wireless
-          </dt>
-          <dd>
-            The secure element is accessed though wireless communication, such
-            as NFC. It can be disconnected.
-          </dd>
-        </dl>
-      </section><!-- Enum ConnectivityType -->
     </section><!-- Interface Reader -->
     <!-- - - - - - - - - - - - Interface Session - - - - - - - - - -->
     <section>
