@@ -716,18 +716,6 @@ window.onload = function () {
       </p>
       <dl title="interface SecureElementManager : EventTarget" class="idl">
         <dt>
-          readonly attribute Reader[] readers
-        </dt>
-        <dd>
-          This attribute MUST return the list of available readers in which a
-          secure element may be present. Its value MUST be an empty array if no
-          reader is available. It MUST be <code>null</code> if the
-          <code>close()</code> method has been closed on this
-          <a>SecureElementManager</a> object. Several requests of this
-          attribute MAY return a different array value, because new readers may
-          become available, while others may be disconnected.
-        </dd>
-        <dt>
           attribute EventHandler? onsepresent
         </dt>
         <dd>
@@ -754,19 +742,29 @@ window.onload = function () {
           when a secure element which was present in a reader is not present
           anymore (it has been unplugged, or is out of reach if it was
           connected through wireless communication). As soon as this event is
-          triggered, all <a>Reader</a>, <a>Session</a> and <a>Channel</a>
-          objects providing access to this secure element are marked as closed.
-          Calling any method other than <code>close()</code> on associated
-          readers, sessions, or channels MUST fail with an
-          <a>SEClosedException</a> error.
+          triggered, all <a>Session</a> and <a>Channel</a> objects providing
+          access to this secure element are marked as closed.
         </dd>
         <dt>
-          Promise&lt;void&gt; close()
+          Promise&lt;Reader[]&gt; getReaders()
+        </dt>
+        <dd>
+          This method MUST return the list of available readers in which a
+          secure element may be present. Its value MUST be an empty array if no
+          reader is available. It MUST be <code>null</code> if the
+          <code>shutdown()</code> method has been called on this
+          <a>SecureElementManager</a> object. Several invocation of this
+          methods MAY return a different array value, because new readers may
+          become available, while others may be disconnected.
+        </dd>
+        <dt>
+          Promise&lt;void&gt; shutdown()
         </dt>
         <dd>
           <p>
-            This method closes all readers and descendent <a>Session</a> and
-            <a>Channel</a> objects. When invoked, the user agent MUST run the
+            This method closes all sessions and channels opened from this
+            <a>SecureElementManager</a>object, and releases other potential
+            internal resources. When invoked, the user agent MUST run the
             following steps:
           </p>
           <ol>
@@ -776,18 +774,19 @@ window.onload = function () {
             <li>Return <var>promise</var> and continue the following steps
             asynchronously.
             </li>
-            <li>If the <code>close()</code> method has already been called on
-            this object, then resolve <var>promise</var>.
+            <li>If the <code>shutdown()</code> method has already been called
+            on this object, then resolve <var>promise</var>.
             </li>
             <li>Let <var>countdown</var> be the number of readers in the <code>
               readers</code> attribute, and <var>error</var> an object
               initially <code>undefined</code>.
             </li>
-            <li>Invoke <code>close()</code> method on each <a>Reader</a> object
-            in the array returned by the <code>readers</code> attribute.
+            <li>Invoke <code>closeSessions()</code> method on each
+            <a>Reader</a> object in the array returned by the
+            <code>readers</code> attribute.
             </li>
             <li>Let <var>readerpromises</var> be the set of <a>Promise</a>
-            objects returned by these <code>close()</code> invocations.
+            objects returned by these <code>closeSessions()</code> invocations.
             </li>
             <li>Set the <code>readers</code> attribute value to
             <code>null</code>.
@@ -870,12 +869,11 @@ window.onload = function () {
           session MUST NOT lock access to the secure element.
         </dd>
         <dt>
-          Promise&lt;void&gt; close()
+          Promise&lt;void&gt; closeSessions()
         </dt>
         <dd>
-          This method closes all sessions opened by this reader, and their
-          descendent <a>Channel</a> objects. Invoking <code>close()</code>
-          method on an already closed reader is an idempotent operation.
+          This method closes all sessions opened through this reader object.
+          This also closes their associated channels.
         </dd>
       </dl>
       <!-- - - - - - - - - - - - Enum SecureElementType - - - - - - - - - -->
@@ -1072,9 +1070,10 @@ window.onload = function () {
         </dt>
         <dd>
           Closes the connection session to the Secure Element. This will close
-          any channels opened by this application with this Secure Element.
-          Invoking <code>close()</code> method on an already closed session is
-          an idempotent operation.
+          any channels opened through this session object. Invoking
+          <code>close()</code> method on an already closed session is an
+          idempotent operation. Calling any other method on this object MUST
+          fail with an <a>SEClosedException</a> error.
         </dd>
       </dl>
     </section><!-- Interface Session -->
@@ -1199,11 +1198,12 @@ window.onload = function () {
           Promise&lt;void&gt; close()
         </dt>
         <dd>
-          This method closes this session object. If a transmit operation is
+          This method closes this channel object. If a transmit operation is
           still waiting for the secure element response, the user agent must
           terminate that asynchronous operation with a <code>closed</code>
           error status. Invoking <code>close()</code> method on an already
-          closed channel is an idempotent operation.
+          closed channel is an idempotent operation. Calling any other method
+          on this object MUST fail with an <a>SEClosedException</a> error.
         </dd>
       </dl><!-- - - - - - - - - - - - Enum ChannelType - - - - - - - - - -->
       <section>
@@ -1467,7 +1467,7 @@ window.onload = function () {
 </pre>
       <p>
         For simplicity and readability reasons, the code above omits the error
-        handling that would have to be done in a real application.
+        handling that would have to be implemented in a real application.
       </p>
     </section><!-- Examples -->
     <!-- - - - - - - - - - - - - -  Changes - - - - - - - - - - - - - - - - -->
