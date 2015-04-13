@@ -732,7 +732,8 @@ window.onload = function () {
             <li>Application is running, a new reader is detected and has a
             secure element present.
             </li>
-          </ul>
+          </ul>The event name is <code>sepresent</code>, and event type is
+          <a>ReaderEvent</a>.
         </dd>
         <dt>
           attribute EventHandler? onseremoval
@@ -743,7 +744,8 @@ window.onload = function () {
           anymore (it has been unplugged, or is out of reach if it was
           connected through wireless communication). As soon as this event is
           triggered, all <a>Session</a> and <a>Channel</a> objects providing
-          access to this secure element are marked as closed.
+          access to this secure element are marked as closed. The event name is
+          <code>seremoval</code>, and event type is <a>ReaderEvent</a>.
         </dd>
         <dt>
           Promise&lt;Reader[]&gt; getReaders()
@@ -809,7 +811,39 @@ window.onload = function () {
             </li>
           </ol>
         </dd>
-      </dl>
+      </dl><!-- - - - - - - - - - - - ReaderEvent - - - - - - - - - -->
+      <section>
+        <h3>
+          Events
+        </h3>
+        <p>
+          The <code>sepresent</code> and <code>seremoval</code> events are of
+          type <a>ReaderEvent</a>.
+        </p>
+        <dl title=
+        "[Constructor(DOMString type, optional ReaderEventInit eventInitDict), Exposed=Window,Worker] interface ReaderEvent : Event"
+        class="idl">
+          <dt>
+            readonly attribute Reader reader
+          </dt>
+          <dd>
+            The reader on which the secure element event occurred
+          </dd>
+        </dl><!-- ReaderEventInit -->
+        <section>
+          <h3>
+            Constructor parameters
+          </h3>
+          <dl title="dictionary ReaderEventInit : EventInit" class="idl">
+            <dt>
+              attribute Reader reader
+            </dt>
+            <dd>
+              The event's reader attribute value
+            </dd>
+          </dl>
+        </section><!-- ReaderEventInit -->
+      </section><!-- ReaderEvent -->
     </section><!-- Interface SecureElementManager -->
     <!-- - - - - - - - - - - - Interface Reader - - - - - - - - - -->
     <section>
@@ -878,9 +912,9 @@ window.onload = function () {
       </dl>
       <!-- - - - - - - - - - - - Enum SecureElementType - - - - - - - - - -->
       <section>
-        <h2>
+        <h3>
           <a>SecureElementType</a> enum
-        </h2>
+        </h3>
         <p>
           The <a>SecureElementType</a> enum identifies the type of the secure
           element a reader gives access to.
@@ -1207,9 +1241,9 @@ window.onload = function () {
         </dd>
       </dl><!-- - - - - - - - - - - - Enum ChannelType - - - - - - - - - -->
       <section>
-        <h2>
+        <h3>
           <a>ChannelType</a> enum
-        </h2>
+        </h3>
         <p>
           The <a>ChannelType</a> enum identifies the type of the secure element
           channel.
@@ -1433,10 +1467,10 @@ window.onload = function () {
             var seMgr = navigator.secureElementManager;
 
             // register sepresent event handler
-            seMgr.onsepresent = function(reader) {
+            seMgr.onsepresent = function(event) {
 
               // open session
-              reader.openSession()
+              event.reader.openSession()
               .then(
 
                 function (session) {
