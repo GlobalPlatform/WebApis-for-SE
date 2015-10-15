@@ -497,8 +497,8 @@ window.onload = function () {
           <strong>Traceability</strong> of the user may be facilitated by the
           unique identifying information the secure element may contain. Here
           again, the access control defined in <a href="#access-control">Access
-          Control</a> section will ensure only trusted applications have access
-          to the secure element API.
+          Control</a> section will ensure only authorized web applications have
+          access to the secure element API.
         </li>
       </ul>
     </section><!-- Security -->
@@ -564,10 +564,10 @@ window.onload = function () {
         Access Control
       </h2>
       <p>
-        In order to make sure only trusted applications are allowed to use this
-        API, the web application runtime MUST implement the access control
-        defined in [[GP-AC]], which defines a simple mechanism that protects
-        legitimate users using non-compromised devices from malicious
+        In order to make sure only authorized web applications are allowed to
+        use this API, the web application runtime MUST implement the access
+        control defined in [[GP-AC]], which defines a simple mechanism that
+        protects legitimate users using non-compromised devices from malicious
         applications. Note that it does not protect from a compromised device
         that would not properly implement the Access Control Enforcer, which is
         addressed by the internal protection of the secure element itself
@@ -612,7 +612,7 @@ window.onload = function () {
       </section>
       <section>
         <h3>
-          Trusted application identifier
+          Client application identifier
         </h3>
         <p>
           The <a>Access Control Enforcer</a> uses an application identifier to
