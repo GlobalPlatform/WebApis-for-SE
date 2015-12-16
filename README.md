@@ -7,5 +7,4 @@ This API is expected to be implemented into a web browser to allow web applicati
 Specifications
 --------------
 
-* Draft [Secure Element API](http://globalplatform.github.io/WebApis-for-se/doc)
- 
+* Draft [Secure Element API](http://globalplatform.github.io/WebApis-for-SE/doc/)
