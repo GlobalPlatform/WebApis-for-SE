@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
+    <meta charset='utf-8'>
     <title>
       Secure Element API
     </title>
-    <meta charset='utf-8'>
     <link href="http://www.globalplatform.org/favicon.ico" rel="icon" type=
     "image/x-icon">
     <script src='http://www.w3.org/Tools/respec/respec-w3c-common' async=""
@@ -182,15 +182,16 @@ window.onload = function () {
     <!-- - - - - - - - - - - - - - - Abstract - - - - - - - - - - - - - - - -->
     <section id="abstract">
       <p>
-        A secure element is a tamper proof device, providing a secure storage
+        A Secure Element is a tamper proof device, providing a secure storage
         and execution environment for sensitive data and processing. It offers
         both physical and logical protection against attacks, ensuring
-        integrity and confidentiality of its content.
+        integrity and confidentiality of its content. Trusted Execution
+        Environment (TEE) is out of scope of this specification.
       </p>
       <p>
         This specification defines a communication interface between a web
-        application and a secure element. It makes no assumption on the secure
-        element type, application domain, or physical communication media.
+        application and a Secure Element. It makes no assumption on the Secure
+        Element type, application domain or physical communication media.
       </p>
     </section>
     <!-- - - - - - - - - - -  Status of this document - - - - - - - - - - - -->
@@ -213,10 +214,11 @@ window.onload = function () {
       </h2>
       <p>
         The <cite>Secure Element API</cite> defined herein allows applications
-        to interact with secure elements. Considered secure elements are those
+        to interact with Secure Elements. Considered Secure Elements are those
         complying to [[!ISO7816-4]], which defines a command/response protocol,
-        based on structured <abbr title="Application Data Unit">APDU</abbr>
-        (Application Data Unit).
+        based on structured <abbr title=
+        "Application Protocol Data Unit">APDU</abbr> (Application Protocol Data
+        Unit).
       </p>
       <!-- - - - - - - - - - - -  Technical Background  - - - - - - - - - - - -->
       <section>
@@ -224,7 +226,7 @@ window.onload = function () {
           Technical Background
         </h2>
         <p>
-          Secure elements addressed by this specification are micro controllers
+          Secure Elements addressed by this specification are microcontrollers
           that may come in different form factors, such as:
         </p>
         <ul>
@@ -245,35 +247,34 @@ window.onload = function () {
             networks. <a>UICC</a> may however host other applications.
           </li>
           <li>Smart <abbr title="Storage Device">SD</abbr> cards have a similar
-          form as usual SD cards, but internally include a secure element, and
-          support an extended set of SD commands to communicate with the secure
-          element. Some of these smart SD cards also support NFC.
+          form as usual SD cards, but internally include a Secure Element and
+          support an extended set of SD commands to communicate with the Secure
+          Element. Some of these smart SD cards also support NFC.
           </li>
-          <li>Embedded secure elements, which are chips directly bonded on the
+          <li>Embedded Secure Elements, which are chips directly bonded on the
           device mother board. Unlike other form factors, this one does not
-          allow interchanging or extracting the secure element, it is
+          allow interchanging or extracting the Secure Element, it is
           permanently attached to the device.
           </li>
         </ul>
         <p>
-          Similarly to a computer, a secure element may host one or multiple
+          Similarly to a computer, a Secure Element may host one or multiple
           applications. Typical applications are mobile network authentication
           (SIM cards), payment (credit cards), authentication and signature
           (corporate badges, eID, etc.), loyalty, ticketing (public
-          transports). But these are only examples, many other applications
-          have been and can be deployed.
+          transports). These are only examples; many other applications have
+          been and can be deployed.
         </p>
         <p>
-          Applications hosted by the secure elements are commonly named
-          <dfn>on-card</dfn> applications. Considering the limited, if any,
-          user interface of these devices, and application can only be useful
-          for a user if there is also an off-card application part, which
-          handle the dialog with the user, or with external computing
-          resources. Examples of <dfn>off-card</dfn> applications are
-          <abbr title="Automatic Toll Machines">ATM</abbr> for payment, mail
-          applications for signature, access control doors for authentication,
-          etc. This specification defines the API to be used by off-card
-          applications based on web technologies.
+          Applications hosted by the Secure Elements are called
+          <dfn>on-card</dfn> applications. On-card applications have a limited,
+          if any, user interface. An application can be useful with an off-card
+          application part, which handles the dialog with the user or with
+          external computing resources. Examples of <dfn>off-card</dfn>
+          applications are <abbr title="Automatic Toll Machines">ATM</abbr> for
+          payment, mail applications for signature, access control doors for
+          authentication, etc. This specification defines the API to be used by
+          off-card applications based on web technologies.
         </p>
       </section><!-- Technical Background -->
       <!-- - - - - - - - - - - - Use Cases - - - - - - - - - - - -->
@@ -282,8 +283,8 @@ window.onload = function () {
           Use Cases
         </h2>
         <p>
-          This specification allows development of web applications making use
-          of these secure element applications. Some typical use cases that
+          This specification shows how to develop web applications making use
+          of these Secure Element applications. Some typical use cases that
           applications can address based on this API include:
         </p>
         <ul>
@@ -291,17 +292,17 @@ window.onload = function () {
             <strong>Authentication:</strong> Instead of user name and password,
             access to an online service may be protected by a strong
             authentication mechanism, based on credentials stored and processed
-            in a secure element. In web-based operating systems, system
+            in a Secure Element. In web-based operating systems, system
             applications such as <abbr title=
             "Virtual Private Network">VPN</abbr> (Virtual Private Network) or
-            eMail application may use of the secure element to authenticate the
+            eMail application may use of the Secure Element to authenticate the
             user.
           </li>
           <li>
-            <strong>Digital Signature:</strong> Applications may use the secure
-            element to digitally sign a document or any data with a key stored
-            in this secure element. The signature operation itself is executed
-            inside the secure element, ensuring both the integrity of the
+            <strong>Digital Signature:</strong> Applications may use the Secure
+            Element to digitally sign a document or any data with a key stored
+            in this Secure Element. The signature operation itself is executed
+            inside the Secure Element, ensuring both the integrity of the
             signature and the confidentiality of the key used in this process.
             For instance, this could be used by an eMail application to sign
             emails sent by the user. Or by a government web application to sign
@@ -309,29 +310,29 @@ window.onload = function () {
           </li>
           <li>
             <strong>Payment:</strong> Online commerce may use widely used smart
-            credit cards, or specific payment applications, to enforce the
-            security of online transactions. On cellular telephony environment,
-            the on-card payment application may be hosted on the SIM card,
+            credit cards or specific payment applications, to enforce the
+            security of online transactions. In cellular telephony environment,
+            the on-card payment application may be hosted on the UICC,
             alleviating the need for the user to handle multiple physical
             devices.
           </li>
           <li>
-            <strong>Credential provisioning:</strong> The content of a secure
-            element may be updated to install, update or remove an application
-            or any credential it may host. For instance a public transport
-            application may offer a user to credit her NFC-enabled transport
-            card with tickets bought online. Or a corporate intranet web
-            application may offer employees to renew online the X.509
-            certificates hosted in their corporate badge, so that they can do
-            this operation from anywhere just before these certificates expire.
+            <strong>Credential provisioning:</strong> The content of a Secure
+            Element may be updated to install, update or remove an application
+            or any credential it may host. For example, a public transport
+            application may offer users to credit their NFC-enabled transport
+            card with tickets bought online. In another example, a corporate
+            intranet web application may enable employees to renew online the
+            X.509 certificates hosted in their corporate badge from anywhere
+            just before the certificates expire.
           </li>
         </ul>
         <p>
-          Whatever the form factor listed above, secure element considered in
-          this specification implement the same [[!ISO7816-4]] transport
-          protocol. The physical media (USB, NFC, or any other wired or
-          wireless technique) used in this communication is abstracted by the
-          API defined in this specification.
+          Whatever the form factor listed above, Secure Element considered in
+          this specification implements the same [[!ISO7816-4]] transport
+          protocol. The physical media (USB, NFC or any other wired or wireless
+          technique) used in this communication is abstracted by the API
+          defined in this specification.
         </p>
       </section><!-- Use Cases -->
       <!-- - - - - - - - - - - - - -  Relationship to W3C APIs - - - - - - - - - - - - - -->
@@ -348,22 +349,22 @@ window.onload = function () {
           <li>The current NFC API draft specification [[NFC]] defines an API
           allowing to exchange NDEF messages with NFC tags or peers. While the
           Secure Element API specified herein allows web applications to send
-          commands to secure elements wired or plugged in the device, or
+          commands to Secure Elements wired or plugged in the device or
           wirelessly connected to the device thanks to NFC technology. The
           difference between the different communication links (wired or NFC)
-          is only visible through secure element type in this API, but does not
-          impact the way applications would interact with the secure element.
+          is only visible through Secure Element type in this API, but does not
+          impact the way applications would interact with the Secure Element.
           As such there is no overlap of functionalities between the two APIs.
           </li>
           <li>The Web Cryptography API draft specification [[WEBCRYPTO]]
           defines an API allowing a web application to invoke cryptographic
           services. Its implementation is independent from the underlying
           layers performing the actual cryptographic operations: it might be
-          pure software, or use a dedicated hardware such as a secure element
-          or a TPM. As such there is not overlap between the two APIs.
-          Nevertheless one can imagine that the User Agent implementing the Web
-          Cryptography API may rely on the Secure Element API, but this will be
-          implementation dependent.
+          pure software or use a dedicated hardware such as a Secure Element or
+          a TPM. As such there is not overlap between the two APIs.
+          Nevertheless one can imagine that a Web Cryptography API
+          implementation may use the Secure Element API directly, but this will
+          be implementation dependent.
           </li>
         </ul>
       </section><!-- Relationship to W3C APIs -->
@@ -417,10 +418,14 @@ window.onload = function () {
       </p>
       <p>
         [[!GP-AC]]: The <dfn>Access Rules</dfn> and <dfn>Access Control
-        Enforcer</dfn> concepts.
+        Enforcer</dfn> (<abbr title="Access Control Enforcer">ACE</abbr>)
+        concepts.
       </p>
       <p>
-        Some secure element concepts are defined in ISO/IEC specifications:
+        [[!GP]]: The <dfn>Supplementary Logical Channel</dfn> concept.
+      </p>
+      <p>
+        Some Secure Element concepts are defined in ISO/IEC specifications:
       </p>
       <ul>
         <li>
@@ -430,8 +435,8 @@ window.onload = function () {
         <li>
           <dfn>APDU command</dfn>, <dfn>APDU response</dfn>, <dfn>class
           byte</dfn>, <dfn>instruction byte</dfn>, <dfn>parameter bytes</dfn>,
-          <dfn>data field bytes</dfn>, <dfn>status word</dfn>, <dfn>basic
-          channel</dfn> and <dfn>logical channel</dfn> are defined in
+          <dfn>data field bytes</dfn>, <dfn>status word</dfn>, <dfn>logical
+          channel</dfn> and <dfn>basic logical channel</dfn> are defined in
           [[!ISO7816-4]]
         </li>
         <li>
@@ -446,115 +451,115 @@ window.onload = function () {
     <!-- - - - - - - - - - - - - - Security  - - - - - - - - - - - - - - - - -->
     <section class="informative">
       <h2>
-        Security and privacy considerations
+        Security and Privacy Considerations
       </h2>
       <p>
-        Using a secure element may bring additional security to a web
+        Using a Secure Element may bring additional security to a web
         application, but is not sufficient to ensure the application is secure.
         In particular, developers using the Secure Element API should be aware
         of the following security considerations:
       </p>
       <ul>
         <li>
-          <strong>Communication</strong> between the secure element and the web
-          application has to be secured, in order to ensure the confidentiality
+          <strong>Communication</strong> between the Secure Element and the web
+          application has to be secured in order to ensure the confidentiality
           and integrity of the message exchange. This can either be achieved if
-          the web application using the secure element API executes in a
+          the web application using the Secure Element API executes in a
           trusted execution environment offering guarantees on the integrity
           and confidentiality of the communication link. Or it can be provided
           programmatically by encryption and/or MACing of the messages
-          exchanged with the secure element (e.g. using GlobalPlatform's secure
+          exchanged with the Secure Element (e.g. using GlobalPlatform's secure
           messaging technology [[GP]]). The off-card processing of these
           messages has then to be done in a trusted execution environment,
-          which may be on the device to which the secure element is connected,
+          which may be on the device to which the Secure Element is connected,
           or on a remote device (e.g. the web application's originating
           server).
         </li>
         <li>
           <strong>Interface</strong> between the user and the web application
-          typically consists in displayed text and images (e.g. a transaction
-          confirmation dialog), and user inputs (e.g. a PIN code). Protecting
+          typically consists of displayed text and images (e.g. a transaction
+          confirmation dialog) and user inputs (e.g. a PIN code). Protecting
           this interface is out of the scope of this specification. If the
           application requires such guarantee, it should restrict its execution
           on Trusted Execution Environments.
         </li>
         <li>
-          <strong>Access</strong> to secure element applications should be
-          restricted to authorized parties. Secure element embedded application
-          usually enforce such control by requiring authentication of the
-          off-card communicating party, for instance by asking user to present
-          a PIN to unlock access, or performing a mutual authentication before
-          any sensitive operation.<br>
+          <strong>Access</strong> to <a>on-card</a> applications should be
+          restricted to authorized parties. On-card applications usually
+          enforce such control by requiring authentication of the off-card
+          communicating party, for instance by asking user to present a PIN to
+          unlock access or performing a mutual authentication before any
+          sensitive operation.<br>
           There is however a risk of denial of service (DoS) attacks, where an
-          attacker would e.g. deliberately present multiple invalid PIN values
-          to block the secure element, or sending burst of commands preventing
-          legitimate applications to execute optimally. In order to mitigate
-          this risk, this specification requires the web application runtime to
-          implement the access control mechanism defined in <a href=
+          attacker could e.g. either deliberately present multiple invalid PIN
+          values to block the Secure Element or sending burst of commands
+          preventing legitimate applications to execute optimally. In order to
+          mitigate this risk, this specification requires the web application
+          runtime to implement the access control mechanism defined in <a href=
           "#access-control">Access Control</a> section.
         </li>
         <li>
           <strong>Traceability</strong> of the user may be facilitated by the
-          unique identifying information the secure element may contain. Here
+          unique identifying information the Secure Element may contain. Here
           again, the access control defined in <a href="#access-control">Access
-          Control</a> section will ensure only trusted applications have access
-          to the secure element API.
+          Control</a> section will ensure only authorized web applications have
+          access to the Secure Element API.
         </li>
       </ul>
     </section><!-- Security -->
     <!-- - - - - - - - - - - - - -  Secure Element Services  - - - - - - - - - - -->
     <section class="informative">
       <h2>
-        Secure Element services
+        Secure Element Services
       </h2>
       <p>
-        Communication with a secure element is performed through a
+        Communication with a Secure Element is performed through a
         <dfn>reader</dfn>, which unlike its name suggests it not only able to
-        read content from secure element, but also to write or send any
-        application specific command. Given the removal nature of many secure
-        elements, a reader may be empty, meaning that no secure element is
+        read content from Secure Element, but also to write or send any
+        application specific command. Given the removal nature of many Secure
+        Elements, a reader may be empty, meaning that no Secure Element is
         connected to this reader. For instance, a USB smart card reader may be
-        connected to a computer, but no smart card is inserted. Or a device may
-        support NFC interactions with secure elements, but none is in the
-        field. For this reason, the API provides a mean to query the list of
-        available readers, and for each of them if they are empty or if a
-        secure element is present. In addition, this specification defines
-        events that are triggered when a secure element is connected to a
-        reader, and also when it is disconnected.
+        connected to a computer but no smart card is inserted or a device may
+        support NFC interactions with Secure Elements but none is in the field.
+        For this reason, the API provides a means to query the list of
+        available readers and for each of them if they are empty or if a Secure
+        Element is present. In addition, this specification defines events that
+        are triggered when a Secure Element is connected to a reader and also
+        when it is disconnected.
       </p>
       <p>
-        Once a web application is informed that a reader has a connected secure
-        element, it can open a <dfn>session</dfn> with it. Opening a session
+        Once a web application is informed that a reader has a connected Secure
+        Element, it can open a <dfn>session</dfn> with it. Opening a session
         establishes the communication between the web application and the
-        secure element, and provides a session object to the application.
-        However a secure element is just an application container, and the web
+        Secure Element and provides a session object to the application.
+        However a Secure Element is just an application container, the web
         application still needs to identify the application with which it wants
         to communicate.
       </p>
       <p>
-        To this intent, the session object provides a mean to open a
-        <dfn>channel</dfn> with a specific secure element application, which is
+        To this intent, the session object provides a means to open a
+        <dfn>channel</dfn> with a specific <a>on-card</a> application, which is
         uniquely identified by an <a>AID</a>. The web application runtime and
-        the secure element may then perform some internal security checking to
-        ensure the web application is allowed to connect to this secure element
+        the Secure Element may then perform some internal security checking to
+        ensure the web application is allowed to connect to this <a>on-card</a>
         application. If authorized, the returned channel object is the one
-        providing the method to send commands to the secure element
-        application, and get the corresponding responses.
+        providing the method to send commands to the <a>on-card</a> application
+        and get the corresponding responses.
       </p>
       <p>
-        The above steps required to send a command to a secure element creates
-        a set of chained objects. A reader may have several opened sessions,
+        The above steps required to send a command to a Secure Element create a
+        set of chained objects. A reader may have several opened sessions,
         which may have several opened channels. Each object has a
-        <code>close()</code> method to release all ressources associated to the
-        target object, and invoke <code>close()</code> method on all underlying
-        objects in the chain.
+        <code>close()</code> method to release all resources associated to the
+        target object, which invokes the <code>close()</code> method on each
+        underlying object in the chain.
       </p>
       <figure>
         <a href="#class-graph"><img src="images/class-graph.png" alt=
         "Class graph"></a>
         <figcaption id="class-graph">
           The figure above represents the class relationships between the
-          secure element entities introduced in this specification.
+          Secure Element entities introduced in this specification.
         </figcaption>
       </figure>
     </section><!-- Secure Element Services -->
@@ -564,37 +569,39 @@ window.onload = function () {
         Access Control
       </h2>
       <p>
-        In order to make sure only trusted applications are allowed to use this
-        API, the web application runtime MUST implement the access control
-        defined in [[GP-AC]], which defines a simple mechanism that protects
-        legitimate users using non-compromised devices from malicious
+        In order to make sure only authorized web applications are allowed to
+        use the Secure Element, the web application runtime MUST use the access
+        control defined in [[GP-AC]], which defines a simple mechanism that
+        protects legitimate users using non-compromised devices from malicious
         applications. Note that it does not protect from a compromised device
         that would not properly implement the Access Control Enforcer, which is
-        addressed by the internal protection of the secure element itself
-        (using e.g. PIN or secure messaging)
+        addressed by the internal protection of the Secure Element itself
+        (using e.g. PIN or secure messaging). The interface between the web
+        application runtime and the Access Control Enforcer is out of scope of
+        this specification.
       </p>
       <section>
         <h3>
-          Overall architecture
+          Overall Architecture
         </h3>
         <p>
           To control which applications running on a user device are allowed to
-          access secure element applications, several entities are involved:
+          access <a>on-card</a> applications, several entities are involved:
         </p>
         <ul>
-          <li>The secure element hosts a list of <a>Access Rules</a>. An access
-          rule contains the <a>AID</a> of the secure element application to
-          control access to, and the identifier of the requesting application
-          running on the device, as well as a filter on authorized APDUs, or a
-          simple boolean to authorize all or no communications.
+          <li>The Secure Element hosts a list of <a>Access Rules</a>. An access
+          rule contains the <a>AID</a> of the <a>on-card</a> application, the
+          identifier of the requesting <a>off-card</a> application and a filter
+          on authorized APDUs. The access rule may also contain a simple
+          Boolean to authorize all or no communications.
           </li>
-          <li>An <a>Access Control Enforcer</a> is running on the device of the
-          client application, inside the web application runtime. Any attempt
-          to establish a communication with a secure element application from
-          this device triggers this enforcer, which queries the secure element
-          to get the access rules (and usually cache them), and check that the
-          requesting application is authorized to communicate with the targeted
-          secure element application.
+          <li>An <a>Access Control Enforcer</a> is running on the same device
+          as the <a>off-card</a> application. Any attempt to establish a
+          communication with an <a>on-card</a> application from this device
+          triggers this enforcer, which queries the Secure Element to get the
+          access rules (and usually cache them) and check that the requesting
+          <a>off-card</a> application is authorized to communicate with the
+          targeted <a>on-card</a> application.
           </li>
         </ul>
         <figure>
@@ -612,14 +619,15 @@ window.onload = function () {
       </section>
       <section>
         <h3>
-          Trusted application identifier
+          Client Application Identifier
         </h3>
         <p>
           The <a>Access Control Enforcer</a> uses an application identifier to
-          check whether the application is white listed in <a>Access Rules</a>.
-          This identifier needs to be trustworthy so that only authorized
-          application may have a given identifier. The web application runtime
-          computes the application identifier using the following algorithm:
+          check whether the <a>off-card</a> application is white listed in
+          <a>Access Rules</a>. This identifier needs to be trustworthy so that
+          only authorized applications may have a given identifier. The web
+          application runtime computes the application identifier using the
+          following algorithm:
         </p>
         <ul>
           <li>let <code>origin</code> be the ASCII serialization of the web
@@ -637,20 +645,20 @@ window.onload = function () {
           </li>
         </ul>
         <p>
-          All applications that are <a>same-origin</a> will get the same
+          All applications that have the same <a>origin</a> will get the same
           application identifier, hence will be granted the same access rules.
         </p>
         <p>
           While applying the GlobalPlatform Access Control process, if the
-          <a>Access Control Enforcer</a> detects the Secure Element does not
-          implement the GlobalPlatform Access Control (it does not have access
-          rules), the <a>Access Control Enforcer</a> may use its own policy to
-          grant or refuse access to the Secure Element API.
+          <a>Access Control Enforcer</a> detects that the Secure Element does
+          not implement the GlobalPlatform Access Control (it does not have
+          access rules), the <a>Access Control Enforcer</a> may use its own
+          policy to grant or refuse access to the Secure Element API.
         </p>
       </section>
       <section>
         <h3>
-          Additional security rules
+          Additional Security Rules
         </h3>
         <p>
           To be eligible to gain access to the Secure Element API, a web
@@ -688,7 +696,7 @@ window.onload = function () {
         <a>Navigator</a> Interface
       </h2>
       <p>
-        The <a>Navigator</a> exposes the secure element service.
+        The <a>Navigator</a> exposes the Secure Element service.
       </p>
       <dl title="partial interface Navigator" class="idl">
         <dt>
@@ -698,8 +706,8 @@ window.onload = function () {
           When getting the <dfn id=
           "widl-Navigator-secureElement">secureElementManager</dfn> attribute,
           the user agent MUST return the <a>SecureElementManager</a> object
-          that provides access to available secure element readers. If the user
-          agent doesn't support secure element features, it MUST then return
+          that provides access to available Secure Element readers. If the user
+          agent doesn't support Secure Element features, it MUST then return
           <code>undefined</code>.
         </dd>
       </dl>
@@ -710,9 +718,9 @@ window.onload = function () {
         <a>SecureElementManager</a> Interface
       </h2>
       <p>
-        The <a>SecureElementManager</a> interface provides access to secure
-        element readers, and is the source of events notifying the presence of
-        secure elements.
+        The <a>SecureElementManager</a> interface provides access to Secure
+        Element readers and is the source of events notifying the presence of
+        Secure Elements.
       </p>
       <dl title="interface SecureElementManager : EventTarget" class="idl">
         <dt>
@@ -722,17 +730,17 @@ window.onload = function () {
           Event handler for the SE-present event. This event MUST be triggered
           each time any of the following situations occurs:
           <ul>
-            <li>Application starts while a secure element is present in a
+            <li>Web application starts while a Secure Element is present in a
             reader
             </li>
-            <li>Application is running, a reader which was already listed in
-            the readers attribute but had no secure element now detects a
-            present secure element.
+            <li>Web application is running, a reader which was already listed
+            in the readers attribute but had no Secure Element now detects the
+            presence of a Secure Element.
             </li>
-            <li>Application is running, a new reader is detected and has a
-            secure element present.
+            <li>Web application is running, a new reader is detected and has a
+            Secure Element present.
             </li>
-          </ul>The event name is <code>sepresent</code>, and event type is
+          </ul>The event name is <code>sepresent</code> and event type is
           <a>ReaderEvent</a>.
         </dd>
         <dt>
@@ -740,23 +748,23 @@ window.onload = function () {
         </dt>
         <dd>
           Event handler for the SE-removal event. This event MUST be triggered
-          when a secure element which was present in a reader is not present
-          anymore (it has been unplugged, or is out of reach if it was
+          when a Secure Element which was present in a reader is no longer
+          present (Meaning it has been unplugged or is out of reach if it was
           connected through wireless communication). As soon as this event is
           triggered, all <a>Session</a> and <a>Channel</a> objects providing
-          access to this secure element are marked as closed. The event name is
-          <code>seremoval</code>, and event type is <a>ReaderEvent</a>.
+          access to this Secure Element are marked as closed. The event name is
+          <code>seremoval</code> and event type is <a>ReaderEvent</a>.
         </dd>
         <dt>
           Promise&lt;Reader[]&gt; getReaders()
         </dt>
         <dd>
           This method MUST return the list of available readers in which a
-          secure element may be present. Its value MUST be an empty array if no
+          Secure Element may be present. Its value MUST be an empty array if no
           reader is available. It MUST be <code>null</code> if the
           <code>shutdown()</code> method has been called on this
-          <a>SecureElementManager</a> object. Several invocation of this
-          methods MAY return a different array value, because new readers may
+          <a>SecureElementManager</a> object. Several invocations of this
+          method MAY return different array values, because new readers may
           become available, while others may be disconnected.
         </dd>
         <dt>
@@ -765,7 +773,7 @@ window.onload = function () {
         <dd>
           <p>
             This method closes all sessions and channels opened from this
-            <a>SecureElementManager</a>object, and releases other potential
+            <a>SecureElementManager</a> object and releases other potential
             internal resources. When invoked, the user agent MUST run the
             following steps:
           </p>
@@ -780,8 +788,8 @@ window.onload = function () {
             on this object, then resolve <var>promise</var>.
             </li>
             <li>Let <var>countdown</var> be the number of readers in the <code>
-              readers</code> attribute, and <var>error</var> an object
-              initially <code>undefined</code>.
+              readers</code> attribute and <var>error</var> an object initially
+              <code>undefined</code>.
             </li>
             <li>Invoke <code>closeSessions()</code> method on each
             <a>Reader</a> object in the array returned by the
@@ -827,12 +835,12 @@ window.onload = function () {
             readonly attribute Reader reader
           </dt>
           <dd>
-            The reader on which the secure element event occurred
+            The reader on which the Secure Element event occurred
           </dd>
         </dl><!-- ReaderEventInit -->
         <section>
           <h3>
-            Constructor parameters
+            Constructor Parameters
           </h3>
           <dl title="dictionary ReaderEventInit : EventInit" class="idl">
             <dt>
@@ -852,19 +860,19 @@ window.onload = function () {
       </h2>
       <p>
         Readers connected to this device are accessible through the
-        <a>Reader</a> interface. A reader is the connector to a secure element.
-        Given the removable nature of some secure elements, a reader may or may
-        not have a secure element present. A reader may have at most one
-        present secure element simultaneously. A reader MAY for instance be a
-        <a>UICC</a> slot, a USB smart card reader, an NFC interface, or a
-        mother board slot where a embedded secure element is wired.
+        <a>Reader</a> interface. A reader is the connector to a Secure Element.
+        Given the removable nature of some Secure Elements, a reader may or may
+        not have a Secure Element present. A reader may only have at most one
+        present Secure Element. A reader MAY for instance be a <a>UICC</a>
+        slot, a USB smart card reader, an NFC interface or a mother board slot
+        where a embedded Secure Element is wired.
       </p>
       <dl title="interface Reader" class="idl">
         <dt>
           readonly attribute boolean isSEPresent
         </dt>
         <dd>
-          This attribute MUST return true if a secure element is present in
+          This attribute MUST return true if a Secure Element is present in
           this reader. It MUST return false otherwise.
         </dd>
         <dt>
@@ -880,27 +888,26 @@ window.onload = function () {
         </dt>
         <dd>
           This attribute MUST return the <a>SecureElementType</a> value best
-          matching the type of the secure element this reader gives access to.
+          matching the type of the Secure Element this reader gives access to.
           This information may be useful for applications that target a
-          specific secure element type. It may also be used to build the
-          application user interface, to represent the secure element in a
+          specific Secure Element type. It may also be used to build the
+          application user interface, to represent the Secure Element in a
           realistic way.
         </dd>
         <dt>
-          readonly attribute boolean isInternal
+          readonly attribute boolean isRemovable
         </dt>
         <dd>
-          This attribute MUST return <code>true</code> if the secure element is
-          internal to the device and cannot be detached at least without
-          powering off the device.
+          This attribute MUST return <code>true</code> if the Secure Element
+          cannot be detached without powering down the device.
         </dd>
         <dt>
           Promise&lt;Session&gt; openSession()
         </dt>
         <dd>
-          This method establishes a communication link with a secure element.
-          There may be several sessions opened at the same time, hence a
-          session MUST NOT lock access to the secure element.
+          This method establishes a communication link with a Secure Element.
+          There may be several sessions opened at the same time: no session
+          shall lock access to the Secure Element.
         </dd>
         <dt>
           Promise&lt;void&gt; closeSessions()
@@ -913,43 +920,44 @@ window.onload = function () {
       <!-- - - - - - - - - - - - Enum SecureElementType - - - - - - - - - -->
       <section>
         <h3>
-          <a>SecureElementType</a> enum
+          <a>SecureElementType</a> Enum
         </h3>
         <p>
-          The <a>SecureElementType</a> enum identifies the type of the secure
-          element a reader gives access to.
+          The <a>SecureElementType</a> enum identifies the type of the Secure
+          Element a reader gives access to.
         </p>
         <dl title="enum SecureElementType" class="idl">
           <dt>
             uicc
           </dt>
           <dd>
-            The secure element is a <a>UICC</a> used by the device to connect
+            The Secure Element is a <a>UICC</a> used by the device to connect
             to a mobile network.
           </dd>
           <dt>
             smartcard
           </dt>
           <dd>
-            The secure element is a smart card.
+            The Secure Element is a smart card (contactless, contact or USB
+            token).
           </dd>
           <dt>
-            chip
+            ese
           </dt>
           <dd>
-            The secure element is a dedicated chip in the device.
+            The Secure Element is embedded in the device.
           </dd>
           <dt>
             sd
           </dt>
           <dd>
-            The secure element is a SD card, and may be unplugged.
+            The Secure Element is a SD card and may be unplugged.
           </dd>
           <dt>
             other
           </dt>
           <dd>
-            For any other secure element type not listed above.
+            For any other Secure Element type not listed above.
           </dd>
         </dl>
       </section><!-- Enum SecureElementType -->
@@ -960,9 +968,9 @@ window.onload = function () {
         <a>Session</a> Interface
       </h2>
       <p>
-        A <a>Session</a> represent a connection session to one of the Secure
-        Elements available on the device. These objects can be used to get a
-        communication channel with an application hosted by the Secure Element.
+        A <a>Session</a> represents a connection session to one of the Secure
+        Elements available on the device. These objects can be used to open and
+        close communication channels with an <a>on-card</a> application.
       </p>
       <dl title="interface Session" class="idl">
         <dt>
@@ -977,7 +985,7 @@ window.onload = function () {
         </dt>
         <dd>
           This attribute MUST return the <a>Answer to Reset</a> provided by the
-          secure element, or <code>null</code> if the secure element does not
+          Secure Element or <code>null</code> if the Secure Element does not
           provide one.
         </dd>
         <dt>
@@ -985,18 +993,18 @@ window.onload = function () {
         </dt>
         <dd>
           <p>
-            This methods opens a <a>basic channel</a> to communicate with a
-            secure element application. Once this channel has been opened by an
-            application, it is considered to be "locked" to other applications:
-            any other call to this method will fail with
+            This methods opens the <a>basic logical channel</a> and selects an
+            <a>on-card</a> application. Once this channel has been opened by an
+            <a>off-card</a> application, it is considered to be "locked" to
+            other applications: any other call to this method will fail with
             <code>SENoChannelException</code> error until this <a>basic
-            channel</a> is closed. Some secure elements might always deny
+            channel</a> is closed. Some Secure Elements might always deny
             opening a basic channel.
           </p>
           <p>
             If the <code>aid</code> parameter is not null, the underlying
-            implementation of this operation MUST send to the secure element a
-            SELECT command, as defined in [[!ISO7816-4]], with following header
+            implementation of this operation shall send a SELECT command to the
+            Secure Element, as defined in [[!ISO7816-4]], with following header
             values:
           </p>
           <ul>
@@ -1010,13 +1018,14 @@ window.onload = function () {
             </li>
           </ul>
           <p>
-            If <code>aid</code> is null, then no SELECT is sent, the channel is
-            opened on the default selected secure element application.
+            If <code>aid</code> is null, then no SELECT command is sent, the
+            channel is opened on the default selected <a>on-card</a>
+            application.
           </p>
           <p>
             This method will trigger the <a>Access Control Enforcer</a> to
-            check the requesting application is authorized to open such
-            channel.
+            check the requesting <a>off-card</a> application is authorized to
+            open such channel.
           </p>
           <dl class='parameters'>
             <dt>
@@ -1026,40 +1035,40 @@ window.onload = function () {
               This parameter value MUST either be:
               <ul>
                 <li>The complete <a>Application Identifier</a> of the targeted
-                application on the secure element;
+                <a>on-card</a> application;
                 </li>
                 <li>A partial <a>Application Identifier</a> matching a set of
-                targeted applications on the secure element, in which case the
-                channel will be opened on the first matching application;
+                targeted <a>on-card</a> applications. The application with the
+                first matching AID shall be selected;
                 </li>
                 <li>
-                  <code>null</code> if the channel should be opened on the
-                  default application.
+                  <code>null</code> if the implicitly selected application on
+                  this channel shall be selected.
                 </li>
               </ul>
             </dd>
           </dl>
         </dd>
         <dt>
-          Promise&lt;Channel&gt; openLogicalChannel()
+          Promise&lt;Channel&gt; openSupplementaryChannel()
         </dt>
         <dd>
           <p>
-            This methods opens a <a>logical channel</a> to communicate with a
-            secure element application. It is up to the secure element to
-            choose which logical channel will be used. If no more logical
-            channel is available, this method MUST fail with
-            <code>SENoChannelException</code> error.
+            This methods opens a <a>supplementary logical channel</a> and
+            selects an <a>on-card</a> application. The Secure Element shall
+            open the next available supplementary logical channel. If no more
+            supplementary logical channel is available, this method MUST fail
+            with <code>SENoChannelException</code> error.
           </p>
           <p>
             If the <code>aid</code> parameter is not null, the underlying
-            implementation of this operation MUST send to the secure element a
+            implementation of this operation MUST send to the Secure Element a
             SELECT command, as defined in [[!ISO7816-4]], with following header
             values:
           </p>
           <ul>
             <li>CLA = ‘0x01’ to ‘0x03’, ‘0x40 to 0x4F’ (as chosen
-            by the secure element)
+            by the Secure Element)
             </li>
             <li>INS = ‘0xA4’
             </li>
@@ -1070,12 +1079,12 @@ window.onload = function () {
           </ul>
           <p>
             If <code>aid</code> is null, then no SELECT is sent, the channel is
-            opened on the default selected secure element application.
+            opened on the default selected <a>on-card</a> application.
           </p>
           <p>
             This method will trigger the <a>Access Control Enforcer</a> to
-            check the requesting application is authorized to open such
-            channel.
+            check the requesting <a>off-card</a> application is authorized to
+            open such channel.
           </p>
           <dl class='parameters'>
             <dt>
@@ -1085,15 +1094,15 @@ window.onload = function () {
               This parameter value MUST either be:
               <ul>
                 <li>The complete <a>Application Identifier</a> of the targeted
-                application on the secure element;
+                <a>on-card</a> application;
                 </li>
                 <li>A partial <a>Application Identifier</a> matching a set of
-                targeted applications on the secure element, in which case the
-                channel will be opened on the first matching application;
+                targeted <a>on-card</a> applications. The application with the
+                first matching AID shall be selected;
                 </li>
                 <li>
-                  <code>null</code> if the channel should be opened on the
-                  default application.
+                  <code>null</code> if the implicitly selected application on
+                  this channel shall be selected.
                 </li>
               </ul>
             </dd>
@@ -1103,11 +1112,11 @@ window.onload = function () {
           Promise&lt;void&gt; close()
         </dt>
         <dd>
-          Closes the connection session to the Secure Element. This will close
-          any channels opened through this session object. Invoking
-          <code>close()</code> method on an already closed session is an
-          idempotent operation. Calling any other method on this object MUST
-          fail with an <a>SEClosedException</a> error.
+          This method closes the connection session to the Secure Element. This
+          will close any channels opened through this session object. Invoking
+          <code>close()</code> method on an already closed session has no
+          effect. Calling any other method on this object MUST fail with an
+          <a>SEClosedException</a> error.
         </dd>
       </dl>
     </section><!-- Interface Session -->
@@ -1118,9 +1127,9 @@ window.onload = function () {
       </h2>
       <p>
         A <a>Channel</a> represents an [[!ISO7816-4]] channel opened to a
-        Secure Element. It can be either a logical channel or the basic
-        channel. It can be used to send commands to a Secure Element
-        application.
+        Secure Element. It can be either a supplementary logical channel or the
+        basic logical channel. It can be used to send commands to and receive
+        responses from an <a>on-card</a> application.
       </p>
       <dl title="interface Channel" class="idl">
         <dt>
@@ -1140,42 +1149,42 @@ window.onload = function () {
           readonly attribute SEResponse? openResponse
         </dt>
         <dd>
-          This attribute MUST return the secure element's response to the
+          This attribute MUST return the Secure Element's response to the
           channel opening operation. It MUST be <code>null</code> if the
-          channel was opened on the default secure element application (no
+          channel was opened on the default <a>on-card</a> application (no
           <a>AID</a> was provided in the open channel operation).
         </dd>
         <dt>
           Promise&lt;SEResponse&gt; selectNext()
         </dt>
         <dd>
-          Updates the targeted application of this channel to be the next one
-          matching the partial <a>Application Identifier</a> passed when this
-          channel was open. Invoking this method MUST fail with an
-          <code>SEInvalidStateException</code> error if this channel was not
-          open with a partial AID, or with an
+          Updates the targeted <a>on-card<a>application of this channel to be
+          the next one matching the partial <a>Application Identifier</a>
+          passed when this channel was open. Invoking this method MUST fail
+          with an <code>SEInvalidStateException</code> error if this channel
+          was not open with a partial AID or with an
           <code>SENoApplicationException</code> error if there is no next
           application matching that partial AID. In that case the application
           associated to this channel is unchanged. If a next application has
           been found and associated to this channel, this operation succeeds
-          and returns the secure element's response. This response value MUST
-          be assigned to the <code>openResponse</code> attribute.
+          and returns the Secure Element's response. This response value MUST
+          be assigned to the <code>openResponse</code> attribute.</a></a>
         </dd>
         <dt>
           Promise&lt;SEResponse&gt; transmit()
         </dt>
         <dd>
           <p>
-            This method transmits a command to the secure element. The user
+            This method transmits a command to the Secure Element. The user
             agent MUST ensure the synchronisation between all the concurrent
-            calls to this method: a command MUST NOT be sent to a secure
-            element while a response is still pending on any channel from this
-            same secure element.
+            calls to this method: a command MUST NOT be sent to a Secure
+            Element while a response is still pending on any channel from this
+            same Secure Element.
           </p>
           <p>
             This method will trigger the <a>Access Control Enforcer</a> to
-            check the requesting application is authorized to send such command
-            on this channel.
+            check the requesting <a>off-card</a> application is authorized to
+            send such command on this channel.
           </p>
           <p>
             The channel information in the <a>class byte</a> in the <a>APDU
@@ -1196,7 +1205,7 @@ window.onload = function () {
               SECommand cmd
             </dt>
             <dd>
-              The command to send to the secure element application.
+              The command to send to the <a>on-card</a> application.
             </dd>
           </dl>
         </dd>
@@ -1205,24 +1214,24 @@ window.onload = function () {
         </dt>
         <dd>
           <p>
-            This method behaves exactly as the transmit method above, excepts
+            This method behaves exactly as the transmit method above, except
             that both its parameter and the response are passed as a raw binary
-            data. Before transmitting the command to the secure element, the
+            data. Before transmitting the command to the Secure Element, the
             implementation of this method MUST set the logical channel in the
             <a>class byte</a> of the command so that it fits the channel
             allocated to this <a>Channel</a> object.
           </p>
           <p>
             This method will trigger the <a>Access Control Enforcer</a> to
-            check the requesting application is authorized to send such command
-            on this channel.
+            check the requesting <a>off-card</a> application is authorized to
+            send such command on this channel.
           </p>
           <dl class='parameters'>
             <dt>
               Uint8Array cmd
             </dt>
             <dd>
-              The raw command to send to the secure element application. The
+              The raw command to send to the <a>on-card</a> application. The
               channel information in the <a>class byte</a> of the command
               (first octet of the cmd data) will be ignored.
             </dd>
@@ -1233,19 +1242,19 @@ window.onload = function () {
         </dt>
         <dd>
           This method closes this channel object. If a transmit operation is
-          still waiting for the secure element response, the user agent must
+          still waiting for the Secure Element response, the user agent must
           terminate that asynchronous operation with a <code>closed</code>
           error status. Invoking <code>close()</code> method on an already
-          closed channel is an idempotent operation. Calling any other method
-          on this object MUST fail with an <a>SEClosedException</a> error.
+          closed channel has no effect. Calling any other method on this object
+          MUST fail with an <a>SEClosedException</a> error.
         </dd>
       </dl><!-- - - - - - - - - - - - Enum ChannelType - - - - - - - - - -->
       <section>
         <h3>
-          <a>ChannelType</a> enum
+          <a>ChannelType</a> Enum
         </h3>
         <p>
-          The <a>ChannelType</a> enum identifies the type of the secure element
+          The <a>ChannelType</a> enum identifies the type of the Secure Element
           channel.
         </p>
         <dl title="enum ChannelType" class="idl">
@@ -1253,14 +1262,15 @@ window.onload = function () {
             basic
           </dt>
           <dd>
-            Basic channel, as defined in [[!ISO7816-4]] (channel number 0).
+            Basic logical channel, as defined in [[!ISO7816-4]] (channel number
+            0).
           </dd>
           <dt>
-            logical
+            supplementary
           </dt>
           <dd>
-            Logical channel, as defined in [[!ISO7816-4]] (channel number &gt;
-            0).
+            Supplementary logical channel, as defined in [[!GP]] (channel
+            number &gt; 0).
           </dd>
         </dl>
       </section><!-- Enum ChannelType -->
@@ -1272,7 +1282,7 @@ window.onload = function () {
       </h2>
       <p>
         The <a>SECommand</a> interface represents an <a>APDU command</a> that
-        can be sent to a secure element.
+        can be sent to a Secure Element.
       </p>
       <dl title=
       "[Constructor(octet cla, octet ins, octet p1, octet p2, optional Uint8Array data, optional octet le)] interface SECommand"
@@ -1305,13 +1315,13 @@ window.onload = function () {
           attribute Uint8Array? data
         </dt>
         <dd>
-          <a>Data field bytes</a>, or <code>null</code> if command has no data
+          <a>Data field bytes</a> or <code>null</code> if command has no data
         </dd>
         <dt>
           attribute unsigned short le
         </dt>
         <dd>
-          The length of the expected response data, or <code>-1</code> if
+          The length of the expected response data or <code>-1</code> if
           application does not require a specific length
         </dd>
       </dl>
@@ -1323,7 +1333,7 @@ window.onload = function () {
       </h2>
       <p>
         The <a>SEResponse</a> interface represents an <a>APDU response</a>
-        received from a secure element.
+        received from a Secure Element.
       </p>
       <dl title="[Constructor(Uint8Array raw)] interface SEResponse" class=
       "idl">
@@ -1365,7 +1375,7 @@ window.onload = function () {
             </dt>
             <dd>
               Value to compare to the first octet of response's <a>status
-              word</a>, or <code>null</code> if this first octet may have any
+              word</a> or <code>null</code> if this first octet may have any
               value.
             </dd>
             <dt>
@@ -1373,7 +1383,7 @@ window.onload = function () {
             </dt>
             <dd>
               Value to compare to the second octet of response's <a>status
-              word</a>, or <code>null</code> if this second octet may have any
+              word</a> or <code>null</code> if this second octet may have any
               value.
             </dd>
           </dl>
@@ -1383,7 +1393,7 @@ window.onload = function () {
     <!-- - - - - - - - - - - - - -  Errors - - - - - - - - - - - - - - - - -->
     <section>
       <h2>
-        Error types
+        Error Types
       </h2>
       <p>
         In the interfaces defined above, some method return a <a>Promise</a>
@@ -1397,8 +1407,8 @@ window.onload = function () {
           SESecurityException
         </dt>
         <dd>
-          The requested operation does not match the access conditions of the
-          application, as defined in <a href="#access-control">Access
+          The requested operation does not match the Secure Element access
+          conditions, as defined in <a href="#access-control">Access
           Control</a> section
         </dd>
         <dt>
@@ -1430,7 +1440,8 @@ window.onload = function () {
           SENoApplicationException
         </dt>
         <dd>
-          The requested application was not found on the secure element
+          The requested <a>on-card</a> application was not found on the Secure
+          Element
         </dd>
         <dt>
           SEClosedException
@@ -1450,11 +1461,11 @@ window.onload = function () {
     <!-- - - - - - - - - - - - - -  Examples  - - - - - - - - - - - - - - - - -->
     <section>
       <h2>
-        Code example
+        Code Example
       </h2>
       <p>
         The javascript code excerpt below shows how a web application can wait
-        for a card to be present, and send it an APDU command:
+        for a card to be present and send it an APDU command:
       </p>
       <pre class="example highlight">
 
@@ -1463,7 +1474,7 @@ window.onload = function () {
             // my application command
             var myAppCmd = new SECommand(...);
 
-            // get secure element manager
+            // get Secure Element manager
             var seMgr = navigator.secureElementManager;
 
             // register sepresent event handler
@@ -1474,14 +1485,14 @@ window.onload = function () {
               .then(
 
                 function (session) {
-                  // open a basic channel to my application
+                  // open a basic logical channel to my application
                   return session.openBasicChannel(myAppID);
                 }
 
               ).then(
 
                 function (channel) {
-                  // open a basic channel to my application
+                  // send APDU to my application
                   return channel.transmit(myAppCmd);
                 }
 
