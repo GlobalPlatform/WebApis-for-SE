@@ -1008,9 +1008,10 @@ window.onload = function () {
             </li>
             <li>INS = ‘0xA4’
             </li>
-            <li>P1 =’0x04’ (Select by DF name/application identifier)
+            <li>P1 =‘0x04’ (Select by DF name/application identifier)
             </li>
-            <li>P2 =’0x00’ (First or only occurrence)
+            <li>P2 = <code>p2</code> parameter if present, ‘0x00’ otherwise
+            (First or only occurrence).
             </li>
           </ul>
           <p>
@@ -1025,7 +1026,7 @@ window.onload = function () {
           </p>
           <dl class='parameters'>
             <dt>
-              Uint8Array aid
+              Uint8Array? aid
             </dt>
             <dd>
               This parameter value MUST either be:
@@ -1042,6 +1043,16 @@ window.onload = function () {
                   this channel shall be selected.
                 </li>
               </ul>
+            </dd>
+            <dt>
+              optional octet p2
+            </dt>
+            <dd>
+              The P2 parameter of the SELECT APDU executed for this channel.
+              Except for specific needs, it is recommended to omit this method
+              parameter. The device should allow all values for P2, however
+              only the following values are mandatory: ‘00’, ‘04’,
+              ‘08’, ‘0C’ (as defined in [[!ISO7816-4]]).
             </dd>
           </dl>
         </dd>
@@ -1068,9 +1079,10 @@ window.onload = function () {
             </li>
             <li>INS = ‘0xA4’
             </li>
-            <li>P1 =’0x04’ (Select by DF name/application identifier)
+            <li>P1 =‘0x04’ (Select by DF name/application identifier)
             </li>
-            <li>P2 =’0x00’ (First or only occurrence)
+            <li>P2 = <code>p2</code> parameter if present, ‘0x00’ otherwise
+            (First or only occurrence).
             </li>
           </ul>
           <p>
@@ -1084,7 +1096,7 @@ window.onload = function () {
           </p>
           <dl class='parameters'>
             <dt>
-              Uint8Array aid
+              Uint8Array? aid
             </dt>
             <dd>
               This parameter value MUST either be:
@@ -1101,6 +1113,16 @@ window.onload = function () {
                   this channel shall be selected.
                 </li>
               </ul>
+            </dd>
+            <dt>
+              optional octet p2
+            </dt>
+            <dd>
+              The P2 parameter of the SELECT APDU executed for this channel.
+              Except for specific needs, it is recommended to omit this method
+              parameter. The device should allow all values for P2, however
+              only the following values are mandatory: ‘00’, ‘04’,
+              ‘08’, ‘0C’ (as defined in [[!ISO7816-4]]).
             </dd>
           </dl>
         </dd>
