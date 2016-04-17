@@ -1283,7 +1283,7 @@ window.onload = function () {
           application matching that partial AID. In that case the application
           associated to this channel is unchanged. If a next application has
           been found and associated to this channel, this operation succeeds
-          and returns the Secure Element's response. 
+          and returns the Secure Element's response.
           <p>
             For the SELECT command the API shall handle received status word as
             defined in <a href=
@@ -1296,7 +1296,6 @@ window.onload = function () {
             <code>openResponse</code> attribute shall return the status word
             for the SELECT command together with data, if any data is received.
           </p>
-
         </dd>
         <dt>
           Promise&lt;SEResponse&gt; transmit()
@@ -1369,12 +1368,36 @@ window.onload = function () {
           Promise&lt;void&gt; close()
         </dt>
         <dd>
-          This method closes this channel object. If a transmit operation is
-          still waiting for the Secure Element response, the user agent must
-          terminate that asynchronous operation with a <code>closed</code>
-          error status. Invoking <code>close()</code> method on an already
-          closed channel has no effect. Calling any other method on this object
-          MUST fail with an <a>SEClosedException</a> error.
+          Closes this channel object. If the method is called when the channel
+          is already closed, this method shall be ignored. The
+          <code>close()</code> method shall wait for completion of any pending
+          <code>transmit()</code> operation before closing the channel.
+          <p>
+            If the channel is not the basic channel, then a MANAGE CHANNEL
+            Close (P1=0x80) command shall be sent to the Secure Element for
+            closing the channel.
+          </p>
+          <p>
+            If the channel is the basic channel, then the following procedure
+            must be followed for closing the channel:
+          </p>
+          <ol>
+            <li>Send a MANAGE CHANNEL Reset (P1=0x40) command, as defined by
+            [[ISO7816-4]].
+            </li>
+            <li>If previous command is not supported by the card (i.e. card
+            returns an error SW), then SELECT by DF Name (P1=0x04; P2=0x00)
+            command shall be sent with an empty AID (Lc=0x00). All data
+            returned for the SELECT by DF Name command shall be discarded.
+            </li>
+          </ol>
+          <p>
+            In all cases the last SW of the MANAGE CHANNEL Close, MANAGE
+            CHANNEL Reset, or SELECT by DF Name command shall be ignored and
+            the channel object shall be closed by the API. Calling any other
+            method on this channel object MUST then fail with an
+            <a>SEClosedException</a> error.
+          </p>
         </dd>
       </dl><!-- - - - - - - - - - - - Enum ChannelType - - - - - - - - - -->
       <section>
