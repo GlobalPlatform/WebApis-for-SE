@@ -686,6 +686,68 @@ window.onload = function () {
         </ul>
       </section>
     </section><!-- Access Control -->
+    <!-- - - - - - - - - - - - Handling of Status Word - - - - - - - - - -->
+    <section>
+      <h2>
+        General Rules for Handling of Status Word
+      </h2>
+      <p>
+        This specification defines handling of status word as defined in ISO
+        7816 specifications, in order to behave correctly with any secure
+        element application across different sectors (banking, transport,
+        identity, etc.).
+      </p>
+      <section>
+        <h3>
+          Using Transport layer T=1
+        </h3>
+        <p>
+          The API or the underlying implementation shall handle the protocol
+          T=1 as specified in [[ISO7816-3]] and returns data (if available) and
+          received status word to the application. The API or underlying
+          implementation shall never automatically issue GET-RESPONSE APDU on
+          reception of any status word.
+        </p>
+      </section>
+      <section>
+        <h3>
+          Using Transport layer T=0
+        </h3>
+        <p>
+          Unless otherwise specified, when sending command APDU, SIMalliance's
+          OMAPI Specification requires the following management for status word
+          for all the methods defined in this document:
+        </p>
+        <ul>
+          <li>For status word ‘61 XX’ the API or underlying implementation
+          shall issue a GET RESPONSE command as specified by ISO 7816 standard
+          with LE=XX. The same behaviour has to be applied for the scenario
+          where the SE returns overall response data of more than 256 bytes to
+          the APDU. If an Error SW is received to GET RESPONSE command, all
+          data received so far shall be discarded and the Error SW shall be
+          returned.
+          </li>
+          <li>For the status word ‘6C XX’, the API or underlying
+          implementation shall reissue the input command with LE=XX as
+          specified by ISO 7816 standard. If an Error SW is received to the
+          reissued command, all data received so far shall be discarded and the
+          Error SW shall be returned.
+          </li>
+          <li>For any status words different than 61xx and 6Cxx the API or
+          underlying implementation shall not handle the received status words
+          internally (e.g.: it shall not send GET RESPONSE automatically). The
+          API or underlying implementation shall provide the status word
+          together with data, if data is also received with the SW to the
+          calling web application.
+          </li>
+        </ul>
+      </section>
+      <p>
+        Note that the handling of GET RESPONSE specified above implies that the
+        API or underlying implementation shall handle response data even if it
+        is more than 256 bytes.
+      </p>
+    </section><!-- Handling of Status Word -->
     <!-- - - - - - - - - - - - Interface Navigator - - - - - - - - - -->
     <section>
       <h2>
@@ -1024,6 +1086,23 @@ window.onload = function () {
             check the requesting <a>off-card</a> application is authorized to
             open such channel.
           </p>
+          <p>
+            For the SELECT command the API shall handle received status word as
+            defined in <a href=
+            "#general-rules-for-handling-of-status-word">section 7</a>, except
+            that for T=0 protocol the GET RESPONSE shall also be sent in case
+            of SW warning (‘62 XX’ or ‘63 XX’). If the status word for
+            the SELECT command indicates that the SE was able to open a channel
+            (status word ‘90 00’ or status words referencing a warning),
+            the API shall keep the channel open and the channel's
+            <code>openResponse</code> attribute shall return the status word
+            for the SELECT command together with data, if any data is received.
+          </p>
+          <p>
+            Other status words for the SELECT command which indicate that the
+            SE was not able to open a channel shall be considered as an error
+            and the corresponding channel shall not be opened.
+          </p>
           <dl class='parameters'>
             <dt>
               Uint8Array? aid
@@ -1087,12 +1166,31 @@ window.onload = function () {
           </ul>
           <p>
             If <code>aid</code> is null, then no SELECT is sent, the channel is
-            opened on the default selected <a>on-card</a> application.
+            opened on the default selected <a>on-card</a> application. In the
+            case of a UICC it is recommended that the API rejects the opening
+            of the supplementary logical channel without a specific AID.
           </p>
           <p>
             This method will trigger the <a>Access Control Enforcer</a> to
             check the requesting <a>off-card</a> application is authorized to
             open such channel.
+          </p>
+          <p>
+            For the SELECT command the API shall handle received status word as
+            defined in <a href=
+            "#general-rules-for-handling-of-status-word">section 7</a>, except
+            that for T=0 protocol the GET RESPONSE shall also be sent in case
+            of SW warning (‘62 XX’ or ‘63 XX’). If the status word for
+            the SELECT command indicates that the SE was able to open a channel
+            (status word ‘90 00’ or status words referencing a warning),
+            the API shall keep the channel open and the channel's
+            <code>openResponse</code> attribute shall return the status word
+            for the SELECT command together with data, if any data is received.
+          </p>
+          <p>
+            Other status words for the SELECT command which indicate that the
+            SE was not able to open a channel shall be considered as an error
+            and the corresponding channel shall not be opened.
           </p>
           <dl class='parameters'>
             <dt>
@@ -1176,7 +1274,7 @@ window.onload = function () {
           Promise&lt;SEResponse&gt; selectNext()
         </dt>
         <dd>
-          Updates the targeted <a>on-card<a>application of this channel to be
+          Updates the targeted <a>on-card</a> application of this channel to be
           the next one matching the partial <a>Application Identifier</a>
           passed when this channel was open. Invoking this method MUST fail
           with an <code>SEInvalidStateException</code> error if this channel
@@ -1185,8 +1283,20 @@ window.onload = function () {
           application matching that partial AID. In that case the application
           associated to this channel is unchanged. If a next application has
           been found and associated to this channel, this operation succeeds
-          and returns the Secure Element's response. This response value MUST
-          be assigned to the <code>openResponse</code> attribute.</a></a>
+          and returns the Secure Element's response. 
+          <p>
+            For the SELECT command the API shall handle received status word as
+            defined in <a href=
+            "#general-rules-for-handling-of-status-word">section 7</a>, except
+            that for T=0 protocol the GET RESPONSE shall also be sent in case
+            of SW warning (‘62 XX’ or ‘63 XX’). If the status word for
+            the SELECT command indicates that the SE was able to open a channel
+            (status word ‘90 00’ or status words referencing a warning),
+            the API shall keep the channel open and the channel's
+            <code>openResponse</code> attribute shall return the status word
+            for the SELECT command together with data, if any data is received.
+          </p>
+
         </dd>
         <dt>
           Promise&lt;SEResponse&gt; transmit()
