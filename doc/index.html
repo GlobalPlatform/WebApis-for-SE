@@ -1486,7 +1486,7 @@ interface Channel {
     readonly        attribute SEResponse? openResponse;
     Promise&lt;SEResponse&gt; selectNext ();
     Promise&lt;SEResponse&gt; transmit (SECommand cmd);
-    Promise&lt;Uint8Array&gt; transmit (Uint8Array cmd);
+    Promise&lt;Uint8Array&gt; transmitRaw (Uint8Array cmd);
     Promise&lt;void&gt;       close ();
 };
 </pre>
@@ -1626,7 +1626,7 @@ interface Channel {
             </table>
           </dd>
           <dt>
-            <dfn>transmit</dfn>
+            <dfn>transmitRaw</dfn>
           </dt>
           <dd>
             <p>
