@@ -153,21 +153,16 @@
     </script>
     <script class='remove'>
 window.onload = function () { 
-    respecEvents.sub("end", 
-    function(message) {
-    //console.log(message);
-    if (message === "w3c/conformance") {
-      /* already set by overrideCopyright, but just to be sure... */
-      var copyright = document.querySelector("p.copyright");
-      if (copyright) copyright.innerHTML = respecConfig.overrideCopyright;
-      /* */
-      var title = document.querySelector("h2");
-      if (title) title.innerHTML = "GlobalPlatform Device Specification";
-      var statusIntro = document.querySelector("#sotd > p:nth-child(2)");
-      if (statusIntro) statusIntro.remove();
-    }
+    require(["core/pubsubhub"], function (respecEvents) {
+        "use strict";
+        respecEvents.sub("end-all", function () {
+          var title = document.querySelector("h2");
+          if (title) title.innerHTML = "GlobalPlatform Device Specification";
+          var statusIntro = document.querySelector("#sotd > p:nth-child(2)");
+          if (statusIntro) statusIntro.remove();
+        });
     });
-    };
+};
     </script>
     <style>
 #gp-logo > img {
