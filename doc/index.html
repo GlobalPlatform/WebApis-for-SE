@@ -427,8 +427,8 @@ window.onload = function () {
           <dfn>APDU command</dfn>, <dfn>APDU response</dfn>, <dfn>class
           byte</dfn>, <dfn>instruction byte</dfn>, <dfn>parameter bytes</dfn>,
           <dfn>data field bytes</dfn>, <dfn>status word</dfn>, <dfn>logical
-          channel</dfn> and <dfn>basic logical channel</dfn> are defined in
-          [[!ISO7816-4]]
+          channel</dfn>, <dfn>basic channel</dfn> and <dfn>extended length
+          </dfn>are defined in [[!ISO7816-4]]
         </li>
         <li>
           <dfn><abbr title="Application Identifier">AID</abbr></dfn>
@@ -1776,7 +1776,7 @@ enum ChannelType {
         can be sent to a Secure Element.
       </p>
       <pre class="idl">
-[Constructor(octet cla, octet ins, octet p1, octet p2, optional Uint8Array data, optional octet le)]
+[Constructor(octet cla, octet ins, octet p1, octet p2, optional Uint8Array data, optional octet le, optional booolean extended)]
 interface SECommand {
     attribute octet          cla;
     attribute octet          ins;
@@ -1784,6 +1784,7 @@ interface SECommand {
     attribute octet          p2;
     attribute Uint8Array?    data;
     attribute unsigned short le;
+    attribute boolean        extended;
 };
 </pre>
       <section>
@@ -1833,6 +1834,14 @@ interface SECommand {
           <dd>
             The length of the expected response data or <code>-1</code> if
             application does not require a specific length.
+          </dd>
+          <dt>
+            <dfn>extended</dfn> of type <span class="idlAttrType"><a>boolean
+            </a></span>
+          </dt>
+          <dd>
+            Set to <code>true</code> if the command is encoded using extended
+            length as defined in [[!ISO7816-4]].
           </dd>
         </dl>
       </section>
