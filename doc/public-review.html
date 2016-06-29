@@ -1,0 +1,2671 @@
+<!DOCTYPE html>
+<html lang="en" typeof="bibo:Document " prefix="bibo: http://purl.org/ontology/bibo/ w3p: http://www.w3.org/2001/02pd/rec54#">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <meta property="dc:language" content="en" lang="">
+  <style>
+    /*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+    
+    .hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 0.5em;
+      color: #333;
+      background: #f8f8f8;
+    }
+    
+    .hljs-comment,
+    .hljs-quote {
+      color: #998;
+      font-style: italic;
+    }
+    
+    .hljs-keyword,
+    .hljs-selector-tag,
+    .hljs-subst {
+      color: #333;
+      font-weight: bold;
+    }
+    
+    .hljs-number,
+    .hljs-literal,
+    .hljs-variable,
+    .hljs-template-variable,
+    .hljs-tag .hljs-attr {
+      color: #008080;
+    }
+    
+    .hljs-string,
+    .hljs-doctag {
+      color: #d14;
+    }
+    
+    .hljs-title,
+    .hljs-section,
+    .hljs-selector-id {
+      color: #900;
+      font-weight: bold;
+    }
+    
+    .hljs-subst {
+      font-weight: normal;
+    }
+    
+    .hljs-type,
+    .hljs-class .hljs-title {
+      color: #458;
+      font-weight: bold;
+    }
+    
+    .hljs-tag,
+    .hljs-name,
+    .hljs-attribute {
+      color: #000080;
+      font-weight: normal;
+    }
+    
+    .hljs-regexp,
+    .hljs-link {
+      color: #009926;
+    }
+    
+    .hljs-symbol,
+    .hljs-bullet {
+      color: #990073;
+    }
+    
+    .hljs-built_in,
+    .hljs-builtin-name {
+      color: #0086b3;
+    }
+    
+    .hljs-meta {
+      color: #999;
+      font-weight: bold;
+    }
+    
+    .hljs-deletion {
+      background: #fdd;
+    }
+    
+    .hljs-addition {
+      background: #dfd;
+    }
+    
+    .hljs-emphasis {
+      font-style: italic;
+    }
+    
+    .hljs-strong {
+      font-weight: bold;
+    }
+  </style>
+  <style id="respec-mainstyle">
+    /*****************************************************************
+ * ReSpec 3 CSS
+ * Robin Berjon - http://berjon.com/
+ *****************************************************************/
+    /* Override code highlighter background */
+    
+    .hljs {
+      background: transparent !important;
+    }
+    /* --- INLINES --- */
+    
+    em.rfc2119 {
+      text-transform: lowercase;
+      font-variant: small-caps;
+      font-style: normal;
+      color: #900;
+    }
+    
+    h1 acronym,
+    h2 acronym,
+    h3 acronym,
+    h4 acronym,
+    h5 acronym,
+    h6 acronym,
+    a acronym,
+    h1 abbr,
+    h2 abbr,
+    h3 abbr,
+    h4 abbr,
+    h5 abbr,
+    h6 abbr,
+    a abbr {
+      border: none;
+    }
+    
+    dfn {
+      font-weight: bold;
+    }
+    
+    a.internalDFN {
+      color: inherit;
+      border-bottom: 1px solid #99c;
+      text-decoration: none;
+    }
+    
+    a.externalDFN {
+      color: inherit;
+      border-bottom: 1px dotted #ccc;
+      text-decoration: none;
+    }
+    
+    a.bibref {
+      text-decoration: none;
+    }
+    
+    cite .bibref {
+      font-style: normal;
+    }
+    
+    code {
+      color: #C83500;
+    }
+    /* --- TOC --- */
+    
+    .toc a,
+    .tof a {
+      text-decoration: none;
+    }
+    
+    a .secno,
+    a .figno {
+      color: #000;
+    }
+    
+    ul.tof,
+    ol.tof {
+      list-style: none outside none;
+    }
+    
+    .caption {
+      margin-top: 0.5em;
+      font-style: italic;
+    }
+    /* --- TABLE --- */
+    
+    table.simple {
+      border-spacing: 0;
+      border-collapse: collapse;
+      border-bottom: 3px solid #005a9c;
+    }
+    
+    .simple th {
+      background: #005a9c;
+      color: #fff;
+      padding: 3px 5px;
+      text-align: left;
+    }
+    
+    .simple th[scope="row"] {
+      background: inherit;
+      color: inherit;
+      border-top: 1px solid #ddd;
+    }
+    
+    .simple td {
+      padding: 3px 10px;
+      border-top: 1px solid #ddd;
+    }
+    
+    .simple tr:nth-child(even) {
+      background: #f0f6ff;
+    }
+    /* --- DL --- */
+    
+    .section dd> p:first-child {
+      margin-top: 0;
+    }
+    
+    .section dd> p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .section dd {
+      margin-bottom: 1em;
+    }
+    
+    .section dl.attrs dd,
+    .section dl.eldef dd {
+      margin-bottom: 0;
+    }
+    
+    .respec-hidden {
+      display: none;
+    }
+    
+    @media print {
+      .removeOnSave {
+        display: none;
+      }
+    }
+  </style>
+  <title>
+    Web API For Accessing Secure Element
+  </title>
+  <style>
+    /* --- EXAMPLES --- */
+    
+    div.example-title {
+      min-width: 7.5em;
+      color: #b9ab2d;
+    }
+    
+    div.example-title span {
+      text-transform: uppercase;
+    }
+    
+    aside.example,
+    div.example,
+    div.illegal-example {
+      padding: 0.5em;
+      margin: 1em 0;
+      position: relative;
+      clear: both;
+    }
+    
+    div.illegal-example {
+      color: red
+    }
+    
+    div.illegal-example p {
+      color: black
+    }
+    
+    aside.example,
+    div.example {
+      padding: .5em;
+      border-left-width: .5em;
+      border-left-style: solid;
+      border-color: #e0cb52;
+      background: #fcfaee;
+    }
+    
+    aside.example div.example {
+      border-left-width: .1em;
+      border-color: #999;
+      background: #fff;
+    }
+    
+    aside.example div.example div.example-title {
+      color: #999;
+    }
+  </style>
+  <style>
+    /* --- ISSUES/NOTES --- */
+    
+    div.issue-title,
+    div.note-title,
+    div.ednote-title,
+    div.warning-title {
+      padding-right: 1em;
+      min-width: 7.5em;
+      color: #b9ab2d;
+    }
+    
+    div.issue-title {
+      color: #e05252;
+    }
+    
+    div.note-title,
+    div.ednote-title {
+      color: #2b2;
+    }
+    
+    div.warning-title {
+      color: #f22;
+    }
+    
+    div.issue-title span,
+    div.note-title span,
+    div.ednote-title span,
+    div.warning-title span {
+      text-transform: uppercase;
+    }
+    
+    div.note,
+    div.issue,
+    div.ednote,
+    div.warning {
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+    
+    .note> p:first-child,
+    .ednote> p:first-child,
+    .issue> p:first-child,
+    .warning> p:first-child {
+      margin-top: 0
+    }
+    
+    .issue,
+    .note,
+    .ednote,
+    .warning {
+      padding: .5em;
+      border-left-width: .5em;
+      border-left-style: solid;
+    }
+    
+    div.issue,
+    div.note,
+    div.ednote,
+    div.warning {
+      padding: 1em 1.2em 0.5em;
+      margin: 1em 0;
+      position: relative;
+      clear: both;
+    }
+    
+    span.note,
+    span.ednote,
+    span.issue,
+    span.warning {
+      padding: .1em .5em .15em;
+    }
+    
+    .issue {
+      border-color: #e05252;
+      background: #fbe9e9;
+    }
+    
+    .note,
+    .ednote {
+      border-color: #52e052;
+      background: #e9fbe9;
+    }
+    
+    .warning {
+      border-color: #f11;
+      border-width: .2em;
+      border-style: solid;
+      background: #fbe9e9;
+    }
+    
+    .warning-title:before {
+      content: "⚠";
+      /*U+26A0 WARNING SIGN*/
+      font-size: 3em;
+      float: left;
+      height: 100%;
+      padding-right: .3em;
+      vertical-align: top;
+      margin-top: -0.5em;
+    }
+    
+    li.task-list-item {
+      list-style: none;
+    }
+    
+    input.task-list-item-checkbox {
+      margin: 0 0.35em 0.25em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <style>
+    /* --- WEB IDL --- */
+    
+    pre.idl {
+      border-top: 1px solid #90b8de;
+      border-bottom: 1px solid #90b8de;
+      padding: 1em;
+      line-height: 120%;
+    }
+    
+    @media print {
+      pre.idl {
+        white-space: pre-wrap;
+      }
+    }
+    
+    pre.idl::before {
+      content: "WebIDL";
+      display: block;
+      width: 150px;
+      background: #90b8de;
+      color: #fff;
+      font-family: sans-serif;
+      padding: 3px;
+      font-weight: bold;
+      margin: -1em 0 1em -1em;
+    }
+    
+    .idlType {
+      color: #ff4500;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    /*.idlModule*/
+    /*.idlModuleID*/
+    /*.idlInterface*/
+    
+    .idlInterfaceID,
+    .idlDictionaryID,
+    .idlCallbackID,
+    .idlEnumID {
+      font-weight: bold;
+      color: #005a9c;
+    }
+    
+    a.idlEnumItem {
+      color: #000;
+      border-bottom: 1px dotted #ccc;
+      text-decoration: none;
+    }
+    
+    .idlSuperclass {
+      font-style: italic;
+      color: #005a9c;
+    }
+    /*.idlAttribute*/
+    
+    .idlAttrType,
+    .idlFieldType,
+    .idlMemberType {
+      color: #005a9c;
+    }
+    
+    .idlAttrName,
+    .idlFieldName,
+    .idlMemberName {
+      color: #ff4500;
+    }
+    
+    .idlAttrName a,
+    .idlFieldName a,
+    .idlMemberName a {
+      color: #ff4500;
+      border-bottom: 1px dotted #ff4500;
+      text-decoration: none;
+    }
+    /*.idlMethod*/
+    
+    .idlMethType,
+    .idlCallbackType {
+      color: #005a9c;
+    }
+    
+    .idlMethName {
+      color: #ff4500;
+    }
+    
+    .idlMethName a {
+      color: #ff4500;
+      border-bottom: 1px dotted #ff4500;
+      text-decoration: none;
+    }
+    /*.idlCtor*/
+    
+    .idlCtorName {
+      color: #ff4500;
+    }
+    
+    .idlCtorName a {
+      color: #ff4500;
+      border-bottom: 1px dotted #ff4500;
+      text-decoration: none;
+    }
+    /*.idlParam*/
+    
+    .idlParamType {
+      color: #005a9c;
+    }
+    
+    .idlParamName,
+    .idlDefaultValue {
+      font-style: italic;
+    }
+    
+    .extAttr {
+      color: #666;
+    }
+    /*.idlSectionComment*/
+    
+    .idlSectionComment {
+      color: gray;
+    }
+    /*.idlIterable*/
+    
+    .idlIterableKeyType,
+    .idlIterableValueType {
+      color: #005a9c;
+    }
+    /*.idlMaplike*/
+    
+    .idlMaplikeKeyType,
+    .idlMaplikeValueType {
+      color: #005a9c;
+    }
+    /*.idlConst*/
+    
+    .idlConstType {
+      color: #005a9c;
+    }
+    
+    .idlConstName {
+      color: #ff4500;
+    }
+    
+    .idlConstName a {
+      color: #ff4500;
+      border-bottom: 1px dotted #ff4500;
+      text-decoration: none;
+    }
+    /*.idlException*/
+    
+    .idlExceptionID {
+      font-weight: bold;
+      color: #c00;
+    }
+    
+    .idlTypedefID,
+    .idlTypedefType {
+      color: #005a9c;
+    }
+    
+    .idlRaises,
+    .idlRaises a.idlType,
+    .idlRaises a.idlType code,
+    .excName a,
+    .excName a code {
+      color: #c00;
+      font-weight: normal;
+    }
+    
+    .excName a {
+      font-family: monospace;
+    }
+    
+    .idlRaises a.idlType,
+    .excName a.idlType {
+      border-bottom: 1px dotted #c00;
+    }
+    
+    .excGetSetTrue,
+    .excGetSetFalse,
+    .prmNullTrue,
+    .prmNullFalse,
+    .prmOptTrue,
+    .prmOptFalse {
+      width: 45px;
+      text-align: center;
+    }
+    
+    .excGetSetTrue,
+    .prmNullTrue,
+    .prmOptTrue {
+      color: #0c0;
+    }
+    
+    .excGetSetFalse,
+    .prmNullFalse,
+    .prmOptFalse {
+      color: #c00;
+    }
+    
+    .idlImplements a {
+      font-weight: bold;
+    }
+    
+    dl.attributes,
+    dl.methods,
+    dl.constants,
+    dl.constructors,
+    dl.fields,
+    dl.dictionary-members {
+      margin-left: 2em;
+    }
+    
+    .attributes dt,
+    .methods dt,
+    .constants dt,
+    .constructors dt,
+    .fields dt,
+    .dictionary-members dt {
+      font-weight: normal;
+    }
+    
+    .attributes dt code,
+    .methods dt code,
+    .constants dt code,
+    .constructors dt code,
+    .fields dt code,
+    .dictionary-members dt code {
+      font-weight: bold;
+      color: #000;
+      font-family: monospace;
+    }
+    
+    .attributes dt code,
+    .fields dt code,
+    .dictionary-members dt code {
+      background: #ffffd2;
+    }
+    
+    .attributes dt .idlAttrType code,
+    .fields dt .idlFieldType code,
+    .dictionary-members dt .idlMemberType code {
+      color: #005a9c;
+      background: transparent;
+      font-family: inherit;
+      font-weight: normal;
+      font-style: italic;
+    }
+    
+    .methods dt code {
+      background: #d9e6f8;
+    }
+    
+    .constants dt code {
+      background: #ddffd2;
+    }
+    
+    .constructors dt code {
+      background: #cfc;
+    }
+    
+    .attributes dd,
+    .methods dd,
+    .constants dd,
+    .constructors dd,
+    .fields dd,
+    .dictionary-members dd {
+      margin-bottom: 1em;
+    }
+    
+    table.parameters,
+    table.exceptions {
+      border-spacing: 0;
+      border-collapse: collapse;
+      margin: 0.5em 0;
+      width: 100%;
+    }
+    
+    table.parameters {
+      border-bottom: 1px solid #90b8de;
+    }
+    
+    table.exceptions {
+      border-bottom: 1px solid #deb890;
+    }
+    
+    .parameters th,
+    .exceptions th {
+      color: #fff;
+      padding: 3px 5px;
+      text-align: left;
+      font-weight: normal;
+      text-shadow: #666 1px 1px 0;
+    }
+    
+    .parameters th {
+      background: #90b8de;
+    }
+    
+    .exceptions th {
+      background: #deb890;
+    }
+    
+    .parameters td,
+    .exceptions td {
+      padding: 3px 10px;
+      border-top: 1px solid #ddd;
+      vertical-align: top;
+    }
+    
+    .parameters tr:first-child td,
+    .exceptions tr:first-child td {
+      border-top: none;
+    }
+    
+    .parameters td.prmName,
+    .exceptions td.excName,
+    .exceptions td.excCodeName {
+      width: 100px;
+    }
+    
+    .parameters td.prmType {
+      width: 120px;
+    }
+    
+    table.exceptions table {
+      border-spacing: 0;
+      border-collapse: collapse;
+      width: 100%;
+    }
+  </style>
+  <link href="https://www.globalplatform.org/favicon.ico" rel="icon" type="image/x-icon">
+
+
+
+  <style>
+    #gp-logo> img {
+      margin-left: -20px;
+    }
+  </style>
+  <link href="https://www.w3.org/StyleSheets/TR/2016/base" rel="stylesheet">
+  <!--[if lt IE 9]><script src='https://www.w3.org/2008/site/js/html5shiv.js'></script><![endif]-->
+  <script type="application/json" id="initialUserConfig">
+    {
+      "specStatus": "base",
+      "logos": [
+      {
+        "src": "https://www.globalplatform.org/images/gplogo_2010.gif",
+        "href": "https://www.globalplatform.org",
+        "alt": "GlobalPlatform Logo",
+        "width": 344,
+        "height": 49,
+        "id": "gp-logo"
+      }],
+      "otherLinks": [
+      {
+        "key": "Related links",
+        "data": [
+        {
+          "value": "GlobalPlatform",
+          "href": "https://www.globalplatform.org"
+        },
+        {
+          "value": "Github project",
+          "href": "https://github.com/GlobalPlatform/WebApis-for-SE"
+        }]
+      }],
+      "copyrightStart": "2015",
+      "overrideCopyright": "<p class='copyright'>Copyright © 2015-2016 <a href='https://www.globalplatform.org/'>GlobalPlatform</a>. This document is licensed under the <a class='subfoot' href='https://www.apache.org/licenses/LICENSE-2.0' rel='license'>Apache License, Version 2.0</a></p>",
+      "edDraftURI": "https://globalplatform.github.io/WebApis-for-SE/doc/",
+      "editors": [
+      {
+        "name": "Olivier Potonniée",
+        "company": "Gemalto",
+        "companyURL": "https://www.gemalto.com/"
+      },
+      {
+        "name": "Ming Yin",
+        "company": "Deutsche Telekom",
+        "companyURL": "https://www.telekom.com/"
+      }],
+      "wg": "",
+      "wgURI": "",
+      "wgPublicList": "",
+      "localBiblio":
+      {
+        "dummy": "dummy",
+        "ES6":
+        {
+          "title": "ECMA-262, 6th Edition / Draft January 20, 2014",
+          "href": "http://ecma-international.org/ecma-262/6.0/index.html",
+          "status": "Draft",
+          "publisher": "Ecma International"
+        },
+        "ETSI-102216":
+        {
+          "title": "TR 102 216 : Smart cards; Vocabulary for Smart Card Platform specifications",
+          "href": "https://webapp.etsi.org/workprogram/Report_WorkItem.asp?WKI_ID=18815&curItemNr=1&totalNrItems=1&optDisplay=10&qSORT=HIGHVERSION&qETSI_STANDARD_TYPE=%27TR%27&qETSI_NUMBER=102+216",
+          "authors": [
+            "ETSI"
+          ],
+          "publisher": "ETSI"
+        },
+        "ISO7816-3":
+        {
+          "title": "7816-3 Identification cards -- Integrated circuit cards -- Part 3: Cards with contacts -- Electrical interface and transmission protocols",
+          "href": "http://www.iso.org/iso/fr/home/store/catalogue_tc/catalogue_detail.htm?csnumber=38770",
+          "authors": [
+            "ISO/IEC"
+          ],
+          "publisher": "ISO"
+        },
+        "ISO7816-4":
+        {
+          "title": "7816-4 Identification cards -- Integrated circuit cards -- Part 4: Organization, security and commands for interchange",
+          "href": "http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=54550",
+          "authors": [
+            "ISO/IEC"
+          ],
+          "publisher": "ISO"
+        },
+        "ISO7816-5":
+        {
+          "title": "7816-5 Identification cards -- Integrated circuit cards -- Part 5: Registration of application providers",
+          "href": "http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=34259",
+          "authors": [
+            "ISO/IEC"
+          ],
+          "publisher": "ISO"
+        },
+        "WEBCRYPTO":
+        {
+          "title": "Web Cryptography API",
+          "href": "https://www.w3.org/TR/WebCryptoAPI/",
+          "authors": [
+            "W3C Web Cryptography Working Group"
+          ],
+          "publisher": "W3C"
+        },
+        "NFC":
+        {
+          "title": "Web NFC",
+          "href": "https://www.w3.org/community/web-nfc/",
+          "authors": [
+            "W3C Near Field Communications (NFC) Community Group"
+          ],
+          "publisher": "W3C"
+        },
+        "GP":
+        {
+          "title": "Card specifications",
+          "authors": [
+            "GlobalPlatform"
+          ],
+          "href": "https://www.globalplatform.org/specificationscard.asp",
+          "publisher": "GlobalPlatform"
+        },
+        "GP-AC":
+        {
+          "title": "Secure Element Access Control",
+          "authors": [
+            "GlobalPlatform"
+          ],
+          "href": "https://www.globalplatform.org/specificationsdevice.asp",
+          "publisher": "GlobalPlatform"
+        }
+      }
+    }
+  </script>
+</head>
+<body id="respecDocument" role="document" class="h-entry toc-inline">
+  <div id="respecHeader" role="contentinfo" class="head">
+    <p>
+    </p>
+    <p><span id="gp-logo"><img src="https://www.globalplatform.org/images/gplogo_2010.gif" alt="GlobalPlatform Logo" height="49" width="344"></span></p>
+    <p></p>
+    <h1 class="title p-name" id="title" property="dcterms:title">Web API For Accessing Secure Element</h1>
+    <h2 id="w3c-document-24-june-2016">GlobalPlatform Device Specification</h2>
+    <dl>
+      <dt>Latest editor's draft:</dt>
+      <dd><a href="https://globalplatform.github.io/WebApis-for-SE/doc/">https://globalplatform.github.io/WebApis-for-SE/doc/</a></dd>
+      <dt>Editors:</dt>
+      <dd class="p-author h-card vcard" property="bibo:editor" resource="_:editor0"><span property="rdf:first" typeof="foaf:Person"><span property="foaf:name" class="p-name fn">Olivier Potonniée</span>, <a property="foaf:workplaceHomepage" class="p-org org h-org h-card" href="https://www.gemalto.com/">Gemalto</a></span>
+        <span property="rdf:rest" resource="_:editor1"></span>
+      </dd>
+      <dd class="p-author h-card vcard" resource="_:editor1"><span property="rdf:first" typeof="foaf:Person"><span property="foaf:name" class="p-name fn">Ming Yin</span>, <a property="foaf:workplaceHomepage" class="p-org org h-org h-card" href="https://www.telekom.com/">Deutsche Telekom</a></span>
+        <span property="rdf:rest" resource="rdf:nil"></span>
+      </dd>
+
+      <dt>Related links:</dt>
+      <dd>
+        <a href="https://www.globalplatform.org">
+                      GlobalPlatform
+                    </a>
+      </dd>
+      <dd>
+        <a href="https://github.com/GlobalPlatform/WebApis-for-SE">
+                      Github project
+                    </a>
+      </dd>
+    </dl>
+    <p class="copyright">Copyright © 2015-2016 <a href="https://www.globalplatform.org/">GlobalPlatform</a>. This document is licensed under the <a class="subfoot" href="https://www.apache.org/licenses/LICENSE-2.0" rel="license">Apache License, Version 2.0</a></p>
+    <hr title="Separator for header">
+  </div>
+  <!-- - - - - - - - - - - - - - - Abstract - - - - - - - - - - - - - - - -->
+
+  <section property="dc:abstract" class="introductory" id="abstract">
+    <h2 resource="#h-abstract" id="h-abstract"><span property="xhv:role" resource="xhv:heading">Abstract</span></h2>
+    <p>
+      A Secure Element is a tamper proof device, providing a secure storage and execution environment for sensitive data and processing. It offers both physical and logical protection against attacks, ensuring integrity and confidentiality of its content. Trusted Execution Environment (TEE) is out of scope of this specification.
+    </p>
+    <p>
+      This specification defines a communication interface between a web application and a Secure Element. It makes no assumption on the Secure Element type, application domain or physical communication media.
+    </p>
+  </section>
+
+  <section id="sotd" class="introductory">
+    <h2 resource="#h-sotd" id="h-sotd"><span property="xhv:role" resource="xhv:heading">Status of This Document</span></h2>
+
+
+    <p>
+      <strong>This is a work-in-progress specification. Implementers are
+        informed that this API may change without providing any backward
+        compatibility at this stage.</strong> If you are interested in implementing or using this API, we encourage you to contact the editors.
+    </p>
+    <p>
+      See <a href="#Changes">Changes section</a> for history details.
+    </p>
+
+  </section>
+  <nav id="toc">
+    <h2 resource="#table-of-contents" id="table-of-contents" class="introductory"><span property="xhv:role" resource="xhv:heading">Table of Contents</span></h2>
+    <ul role="directory" class="toc">
+      <li class="tocline"><a class="tocxref" href="#introduction"><span class="secno">1. </span>
+        Introduction
+      </a>
+        <ul class="toc">
+          <li class="tocline"><a class="tocxref" href="#technical-background"><span class="secno">1.1 </span>
+          Technical Background
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#use-cases"><span class="secno">1.2 </span>
+          Use Cases
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#relationship-to-w3c-apis"><span class="secno">1.3 </span>
+          Relationship to W3C APIs
+        </a></li>
+        </ul>
+      </li>
+      <li class="tocline"><a class="tocxref" href="#conformance"><span class="secno">2. </span>Conformance</a></li>
+      <li class="tocline"><a class="tocxref" href="#dependencies"><span class="secno">3. </span>
+        Dependencies
+      </a></li>
+      <li class="tocline"><a class="tocxref" href="#security-and-privacy-considerations"><span class="secno">4. </span>
+        Security and Privacy Considerations
+      </a></li>
+      <li class="tocline"><a class="tocxref" href="#secure-element-services"><span class="secno">5. </span>
+        Secure Element Services
+      </a></li>
+      <li class="tocline"><a class="tocxref" href="#access-control"><span class="secno">6. </span>
+        Access Control
+      </a>
+        <ul class="toc">
+          <li class="tocline"><a class="tocxref" href="#overall-architecture"><span class="secno">6.1 </span>
+          Overall Architecture
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#client-application-identifier"><span class="secno">6.2 </span>
+          Client Application Identifier
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#additional-security-rules"><span class="secno">6.3 </span>
+          Additional Security Rules
+        </a></li>
+        </ul>
+      </li>
+      <li class="tocline"><a class="tocxref" href="#general-rules-for-handling-of-status-word"><span class="secno">7. </span>
+        General Rules for Handling of Status Word
+      </a>
+        <ul class="toc">
+          <li class="tocline"><a class="tocxref" href="#using-transport-layer-t-1"><span class="secno">7.1 </span>
+          Using Transport layer T=1
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#using-transport-layer-t-0"><span class="secno">7.2 </span>
+          Using Transport layer T=0
+        </a></li>
+        </ul>
+      </li>
+      <li class="tocline"><a class="tocxref" href="#navigator-interface"><span class="secno">8. </span>
+        <span data-link-type="dfn" class="formerLink"><code>Navigator</code></span> Interface
+      </a>
+        <ul class="toc">
+          <li class="tocline"><a class="tocxref" href="#attributes"><span class="secno">8.1 </span>
+          Attributes
+        </a></li>
+        </ul>
+      </li>
+      <li class="tocline"><a class="tocxref" href="#secureelementmanager-interface"><span class="secno">9. </span>
+        <span data-link-type="dfn" class="formerLink"><code>SecureElementManager</code></span> Interface
+      </a>
+        <ul class="toc">
+          <li class="tocline"><a class="tocxref" href="#attributes-1"><span class="secno">9.1 </span>
+          Attributes
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#methods"><span class="secno">9.2 </span>
+          Methods
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#events"><span class="secno">9.3 </span>
+          Events
+        </a>
+            <ul class="toc">
+              <li class="tocline"><a class="tocxref" href="#attributes-2"><span class="secno">9.3.1 </span>
+            Attributes
+          </a></li>
+              <li class="tocline"><a class="tocxref" href="#constructor-parameters"><span class="secno">9.3.2 </span>
+            Constructor Parameters
+          </a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li class="tocline"><a class="tocxref" href="#reader-interface"><span class="secno">10. </span>
+        <span data-link-type="dfn" class="formerLink"><code>Reader</code></span> Interface
+      </a>
+        <ul class="toc">
+          <li class="tocline"><a class="tocxref" href="#attributes-3"><span class="secno">10.1 </span>
+          Attributes
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#methods-1"><span class="secno">10.2 </span>
+          Methods
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#secureelementtype-enum"><span class="secno">10.3 </span>
+          <span data-link-type="dfn" class="formerLink"><code>SecureElementType</code></span> Enum
+        </a></li>
+        </ul>
+      </li>
+      <li class="tocline"><a class="tocxref" href="#session-interface"><span class="secno">11. </span>
+        <span data-link-type="dfn" class="formerLink"><code>Session</code></span> Interface
+      </a>
+        <ul class="toc">
+          <li class="tocline"><a class="tocxref" href="#attributes-4"><span class="secno">11.1 </span>
+          Attributes
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#methods-2"><span class="secno">11.2 </span>
+          Methods
+        </a></li>
+        </ul>
+      </li>
+      <li class="tocline"><a class="tocxref" href="#channel-interface"><span class="secno">12. </span>
+        <span data-link-type="dfn" class="formerLink"><code>Channel</code></span> Interface
+      </a>
+        <ul class="toc">
+          <li class="tocline"><a class="tocxref" href="#attributes-5"><span class="secno">12.1 </span>
+          Attributes
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#methods-3"><span class="secno">12.2 </span>
+          Methods
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#channeltype-enum"><span class="secno">12.3 </span>
+          <span data-link-type="dfn" class="formerLink"><code>ChannelType</code></span> Enum
+        </a></li>
+        </ul>
+      </li>
+      <li class="tocline"><a class="tocxref" href="#secommand-interface"><span class="secno">13. </span>
+        <span data-link-type="dfn" class="formerLink"><code>SECommand</code></span> Interface
+      </a>
+        <ul class="toc">
+          <li class="tocline"><a class="tocxref" href="#attributes-6"><span class="secno">13.1 </span>
+          Attributes
+        </a></li>
+        </ul>
+      </li>
+      <li class="tocline"><a class="tocxref" href="#seresponse-interface"><span class="secno">14. </span>
+        <span data-link-type="dfn" class="formerLink"><code>SEResponse</code></span> Interface
+      </a>
+        <ul class="toc">
+          <li class="tocline"><a class="tocxref" href="#attributes-7"><span class="secno">14.1 </span>
+          Attributes
+        </a></li>
+          <li class="tocline"><a class="tocxref" href="#methods-4"><span class="secno">14.2 </span>
+          Methods
+        </a></li>
+        </ul>
+      </li>
+      <li class="tocline"><a class="tocxref" href="#error-types"><span class="secno">15. </span>
+        Error Types
+      </a></li>
+      <li class="tocline"><a class="tocxref" href="#code-example"><span class="secno">16. </span>
+        Code Example
+      </a></li>
+      <li class="tocline"><a class="tocxref" href="#Changes"><span class="secno">A. </span>
+        Changes
+      </a></li>
+      <li class="tocline"><a class="tocxref" href="#references"><span class="secno">B. </span>References</a>
+        <ul class="toc">
+          <li class="tocline"><a class="tocxref" href="#normative-references"><span class="secno">B.1 </span>Normative references</a></li>
+          <li class="tocline"><a class="tocxref" href="#informative-references"><span class="secno">B.2 </span>Informative references</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <!-- - - - - - - - - - -  Status of this document - - - - - - - - - - - -->
+
+  <!-- - - - - - - - - - - - - -  Introduction  - - - - - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#introduction" typeof="bibo:Chapter" id="introduction" class="informative">
+    <!--OddPage-->
+    <h2 resource="#h-introduction" id="h-introduction"><span property="xhv:role" resource="xhv:heading"><span class="secno">1. </span>
+        Introduction
+      </span></h2>
+    <p><em>This section is non-normative.</em></p>
+    <p>
+      The API defined herein allows applications to interact with Secure Elements. Considered Secure Elements are those complying to [
+      <cite><a href="#bib-ISO7816-4" class="bibref">ISO7816-4</a></cite>], which defines a command/response protocol, based on structured <abbr title="Application Protocol Data Unit">APDU</abbr> (Application Protocol Data Unit).
+    </p>
+    <!-- - - - - - - - - - - -  Technical Background  - - - - - - - - - - - -->
+
+    <section property="bibo:hasPart" resource="#technical-background" typeof="bibo:Chapter" id="technical-background">
+      <h3 resource="#h-technical-background" id="h-technical-background"><span property="xhv:role" resource="xhv:heading"><span class="secno">1.1 </span>
+          Technical Background
+        </span></h3>
+      <p>
+        Secure Elements addressed by this specification are microcontrollers that may come in different form factors, such as:
+      </p>
+      <ul>
+        <li>Smart cards. The chip is embedded in a plastic card usually of the size of a typical credit card. The card may show physical contacts to communicate with the chip, or the chip may support
+          <abbr title="Near Field Communication">NFC</abbr> (Near Field Communication), in which case the plastic card embeds an antenna. Some cards also support both communication methods.
+        </li>
+        <li>
+          <a data-link-type="dfn" class="internalDFN" href="#dfn-universal-integrated-circuit-card"><abbr title="Universal Integrated Circuit Card">UICC</abbr></a> (Universal Integrated Circuit Card) are smart cards used in cellular telephony, which may be delivered in different sizes. They are often called <abbr title="Subscriber Identity Module">SIM</abbr>, which is actually the name of the application hosted by the <a data-link-type="dfn" class="internalDFN" href="#dfn-universal-integrated-circuit-card"><abbr title="Universal Integrated Circuit Card">UICC</abbr></a> to access GSM networks. <a data-link-type="dfn" class="internalDFN" href="#dfn-universal-integrated-circuit-card"><abbr title="Universal Integrated Circuit Card">UICC</abbr></a> may however host other applications.
+        </li>
+        <li>Smart <abbr title="Storage Device">SD</abbr> cards have a similar form as usual <abbr title="Storage Device">SD</abbr> cards, but internally include a Secure Element and support an extended set of <abbr title="Storage Device">SD</abbr> commands to communicate with the Secure Element. Some of these smart <abbr title="Storage Device">SD</abbr> cards also support <abbr title="Near Field Communication">NFC</abbr>.
+        </li>
+        <li>Embedded Secure Elements, which are chips directly bonded on the device mother board. Unlike other form factors, this one does not allow interchanging or extracting the Secure Element, it is permanently attached to the device.
+        </li>
+      </ul>
+      <p>
+        Similarly to a computer, a Secure Element may host one or multiple applications. Typical applications are mobile network authentication (<abbr title="Subscriber Identity Module">SIM</abbr> cards), payment (credit cards), authentication and signature (corporate badges, eID, etc.), loyalty, ticketing (public transports). These are only examples; many other applications have been and can be deployed.
+      </p>
+      <p>
+        Applications hosted by the Secure Elements are called
+        <dfn id="dfn-on-card" data-dfn-type="dfn">on-card</dfn> applications. On-card applications have a limited, if any, user interface. An application can be useful with an off-card application part, which handles the dialog with the user or with external computing resources. Examples of <dfn id="dfn-off-card" data-dfn-type="dfn">off-card</dfn> applications are <abbr title="Automatic Toll Machines">ATM</abbr> for payment, mail applications for signature, access control doors for authentication, etc. This specification defines the API to be used by off-card applications based on web technologies.
+      </p>
+    </section>
+    <!-- Technical Background -->
+    <!-- - - - - - - - - - - - Use Cases - - - - - - - - - - - -->
+
+    <section property="bibo:hasPart" resource="#use-cases" typeof="bibo:Chapter" id="use-cases">
+      <h3 resource="#h-use-cases" id="h-use-cases"><span property="xhv:role" resource="xhv:heading"><span class="secno">1.2 </span>
+          Use Cases
+        </span></h3>
+      <p>
+        This specification shows how to develop web applications making use of these Secure Element applications. Some typical use cases that applications can address based on this API include:
+      </p>
+      <ul>
+        <li>
+          <strong>Authentication:</strong> Instead of user name and password, access to an online service may be protected by a strong authentication mechanism, based on credentials stored and processed in a Secure Element. In web-based operating systems, system applications such as <abbr title="Virtual Private Network">VPN</abbr> (Virtual Private Network) or eMail application may use of the Secure Element to authenticate the user.
+        </li>
+        <li>
+          <strong>Digital Signature:</strong> Applications may use the Secure Element to digitally sign a document or any data with a key stored in this Secure Element. The signature operation itself is executed inside the Secure Element, ensuring both the integrity of the signature and the confidentiality of the key used in this process. For instance, this could be used by an eMail application to sign emails sent by the user. Or by a government web application to sign a online administrative request.
+        </li>
+        <li>
+          <strong>Payment:</strong> Online commerce may use widely used smart credit cards or specific payment applications, to enforce the security of online transactions. In cellular telephony environment, the on-card payment application may be hosted on the <abbr title="Universal Integrated Circuit Card">UICC</abbr>, alleviating the need for the user to handle multiple physical devices.
+        </li>
+        <li>
+          <strong>Credential provisioning:</strong> The content of a Secure Element may be updated to install, update or remove an application or any credential it may host. For example, a public transport application may offer users to credit their <abbr title="Near Field Communication">NFC</abbr>-enabled transport card with tickets bought online. In another example, a corporate intranet web application may enable employees to renew online the X.509 certificates hosted in their corporate badge from anywhere just before the certificates expire.
+        </li>
+      </ul>
+      <p>
+        Whatever the form factor listed above, Secure Element considered in this specification implements the same [<cite><a href="#bib-ISO7816-4" class="bibref">ISO7816-4</a></cite>] transport protocol. The physical media (USB, <abbr title="Near Field Communication">NFC</abbr> or any other wired or wireless technique) used in this communication is abstracted by the API defined in this specification.
+      </p>
+    </section>
+    <!-- Use Cases -->
+    <!-- - - - - - - - - - - - - -  Relationship to W3C APIs - - - - - - - - - - - - - -->
+
+    <section property="bibo:hasPart" resource="#relationship-to-w3c-apis" typeof="bibo:Chapter" id="relationship-to-w3c-apis">
+      <h3 resource="#h-relationship-to-w3c-apis" id="h-relationship-to-w3c-apis"><span property="xhv:role" resource="xhv:heading"><span class="secno">1.3 </span>
+          Relationship to W3C APIs
+        </span></h3>
+      <p>
+        This specification, although addressing some concepts similar to several W3C specifications, has distinct use cases and offer different level of services:
+      </p>
+      <ul>
+        <li>The current <abbr title="Near Field Communication">NFC</abbr> API draft specification [<cite><a href="#bib-NFC" class="bibref">NFC</a></cite>] defines an API allowing to exchange NDEF messages with <abbr title="Near Field Communication">NFC</abbr> tags or peers. While the Secure Element API specified herein allows web applications to send commands to Secure Elements wired or plugged in the device or wirelessly connected to the device thanks to <abbr title="Near Field Communication">NFC</abbr> technology. The difference between the different communication links (wired or <abbr title="Near Field Communication">NFC</abbr>) is only visible through Secure Element type in this API, but does not impact the way applications would interact with the Secure Element. As such there is no overlap of functionalities between the two APIs.
+        </li>
+        <li>The Web Cryptography API draft specification [<cite><a href="#bib-WEBCRYPTO" class="bibref">WEBCRYPTO</a></cite>] defines an API allowing a web application to invoke cryptographic services. Its implementation is independent from the underlying layers performing the actual cryptographic operations: it might be pure software or use a dedicated hardware such as a Secure Element or a TPM. As such there is not overlap between the two APIs. Nevertheless one can imagine that a Web Cryptography API implementation may use the Secure Element API directly, but this will be implementation dependent.
+        </li>
+      </ul>
+    </section>
+    <!-- Relationship to W3C APIs -->
+  </section>
+  <!-- Introduction -->
+  <!-- - - - - - - - - - - - - - Conformance  - - - - - - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#conformance" typeof="bibo:Chapter" id="conformance">
+    <!--OddPage-->
+    <h2 resource="#h-conformance" id="h-conformance"><span property="xhv:role" resource="xhv:heading"><span class="secno">2. </span>Conformance</span></h2>
+    <p>
+      As well as sections marked as non-normative, all authoring guidelines, diagrams, examples, and notes in this specification are non-normative. Everything else in this specification is normative.
+    </p>
+    <p id="respecRFC2119">The key words <em class="rfc2119" title="MAY">MAY</em>, <em class="rfc2119" title="MUST">MUST</em>, and <em class="rfc2119" title="MUST NOT">MUST NOT</em> are to be interpreted as described in [<cite><a href="#bib-RFC2119" class="bibref">RFC2119</a></cite>].
+    </p>
+
+    <p>
+      This specification defines conformance criteria that apply to a single product: the <dfn id="dfn-user-agent" data-dfn-type="dfn">user agent</dfn> that implements the interfaces that it contains.
+    </p>
+    <p>
+      Implementations that use ECMAScript to implement the APIs defined in this specification <em title="MUST" class="rfc2119">MUST</em> implement them in a manner consistent with the ECMAScript Bindings defined in the Web IDL specification [<cite><a href="#bib-WEBIDL" class="bibref">WEBIDL</a></cite>], as this specification uses that specification and terminology.
+    </p>
+  </section>
+  <!-- Conformance -->
+  <!-- - - - - - - - - - - - - -  Dependencies  - - - - - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#dependencies" typeof="bibo:Chapter" id="dependencies">
+    <!--OddPage-->
+    <h2 resource="#h-dependencies" id="h-dependencies"><span property="xhv:role" resource="xhv:heading"><span class="secno">3. </span>
+        Dependencies
+      </span></h2>
+    <p>
+      This specification depends on interfaces and concepts defined in the following specifications.
+    </p>
+    <p>
+      [<cite><a href="#bib-HTML" class="bibref">HTML</a></cite>]: <dfn id="dfn-event-handler" data-dfn-type="dfn"><a href="https://www.whatwg.org/specs/web-apps/current-work/#event-handlers">event
+        handler</a></dfn>.
+    </p>
+    <p>
+      [<cite><a href="#bib-DOM4" class="bibref">DOM4</a></cite>]: the <dfn id="dfn-event" data-dfn-type="dfn"><a href="https://dom.spec.whatwg.org/#event"><code>Event</code></a></dfn> and
+      <dfn id="dfn-domexception" data-dfn-type="dfn"><a href="https://dom.spec.whatwg.org/#domexception"><code>DOMException</code></a></dfn> interfaces, the concept of <dfn id="dfn-firing-an-event" data-dfn-type="dfn"><a href="https://dom.spec.whatwg.org/#concept-event-fire">firing an
+        event</a></dfn>.
+    </p>
+    <p>
+      [<cite><a href="#bib-ES6" class="bibref">ES6</a></cite>]: the <dfn id="dfn-promise" data-dfn-type="dfn"><a href="http://ecma-international.org/ecma-262/6.0/index.html#sec-promise-objects">
+        <code>Promise</code></a></dfn> object type.
+    </p>
+    <p>
+      [<cite><a href="#bib-RFC6454" class="bibref">RFC6454</a></cite>]: The concepts of <dfn id="dfn-origin" data-dfn-type="dfn">origin</dfn> and
+      <dfn id="dfn-same-origin" data-dfn-type="dfn">same-origin</dfn>, as well as the algorithm for serializing an origin.
+    </p>
+    <p>
+      [<cite><a href="#bib-GP-AC" class="bibref">GP-AC</a></cite>]: The <dfn id="dfn-access-rules" data-dfn-type="dfn">Access Rules</dfn> and <dfn id="dfn-access-control-enforcer" data-dfn-type="dfn">Access Control
+        Enforcer</dfn> (<abbr title="Access Control Enforcer">ACE</abbr>) concepts.
+    </p>
+    <p>
+      [<cite><a href="#bib-GP" class="bibref">GP</a></cite>]: The <dfn id="dfn-supplementary-logical-channel" data-dfn-type="dfn">Supplementary Logical Channel</dfn> concept.
+    </p>
+    <p>
+      Some Secure Element concepts are defined in ISO/IEC specifications:
+    </p>
+    <ul>
+      <li>
+        <dfn id="dfn-answer-to-reset" data-dfn-type="dfn"><abbr title="Answer to Reset">ATR</abbr></dfn> (Answer to Reset) is defined in [<cite><a href="#bib-ISO7816-3" class="bibref">ISO7816-3</a></cite>]
+      </li>
+      <li>
+        <dfn id="dfn-apdu-command" data-dfn-type="dfn"><abbr title="Application Protocol Data Unit">APDU</abbr> command</dfn>, <dfn id="dfn-apdu-response" data-dfn-type="dfn"><abbr title="Application Protocol Data Unit">APDU</abbr> response</dfn>, <dfn id="dfn-class-byte" data-dfn-type="dfn">class
+          byte</dfn>, <dfn id="dfn-instruction-byte" data-dfn-type="dfn">instruction byte</dfn>, <dfn id="dfn-parameter-bytes" data-dfn-type="dfn">parameter bytes</dfn>,
+        <dfn id="dfn-data-field-bytes" data-dfn-type="dfn">data field bytes</dfn>, <dfn id="dfn-status-word" data-dfn-type="dfn">status word</dfn>, <dfn id="dfn-logical-channel" data-dfn-type="dfn">logical
+          channel</dfn> and <dfn id="dfn-basic-logical-channel" data-dfn-type="dfn">basic logical channel</dfn> are defined in [
+        <cite><a href="#bib-ISO7816-4" class="bibref">ISO7816-4</a></cite>]
+      </li>
+      <li>
+        <dfn id="dfn-application-identifier" data-dfn-type="dfn"><abbr title="Application Identifier">AID</abbr></dfn> (Application Identifier) is defined in [<cite><a href="#bib-ISO7816-5" class="bibref">ISO7816-5</a></cite>].
+      </li>
+      <li>
+        <dfn id="dfn-universal-integrated-circuit-card" data-dfn-type="dfn"><abbr title="Universal Integrated Circuit Card">UICC</abbr></dfn> is defined in [<cite><a href="#bib-ETSI-102216" class="bibref">ETSI-102216</a></cite>]
+      </li>
+    </ul>
+  </section>
+  <!-- Dependencies -->
+  <!-- - - - - - - - - - - - - - Security  - - - - - - - - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#security-and-privacy-considerations" typeof="bibo:Chapter" id="security-and-privacy-considerations" class="informative">
+    <!--OddPage-->
+    <h2 resource="#h-security-and-privacy-considerations" id="h-security-and-privacy-considerations"><span property="xhv:role" resource="xhv:heading"><span class="secno">4. </span>
+        Security and Privacy Considerations
+      </span></h2>
+    <p><em>This section is non-normative.</em></p>
+    <p>
+      Using a Secure Element may bring additional security to a web application, but is not sufficient to ensure the application is secure. In particular, developers using the Secure Element API should be aware of the following security considerations:
+    </p>
+    <ul>
+      <li>
+        <strong>Communication</strong> between the Secure Element and the web application has to be secured in order to ensure the confidentiality and integrity of the message exchange. This can either be achieved if the web application using the Secure Element API executes in a trusted execution environment offering guarantees on the integrity and confidentiality of the communication link. Or it can be provided programmatically by encryption and/or MACing of the messages exchanged with the Secure Element (e.g. using GlobalPlatform's secure messaging technology [<cite><a href="#bib-GP" class="bibref">GP</a></cite>]). The off-card processing of these messages has then to be done in a trusted execution environment, which may be on the device to which the Secure Element is connected, or on a remote device (e.g. the web application's originating server).
+      </li>
+      <li>
+        <strong>Interface</strong> between the user and the web application typically consists of displayed text and images (e.g. a transaction confirmation dialog) and user inputs (e.g. a PIN code). Protecting this interface is out of the scope of this specification. If the application requires such guarantee, it should restrict its execution on Trusted Execution Environments.
+      </li>
+      <li>
+        <strong>Access</strong> to <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> applications should be restricted to authorized parties. On-card applications usually enforce such control by requiring authentication of the off-card communicating party, for instance by asking user to present a PIN to unlock access or performing a mutual authentication before any sensitive operation.<br> There is however a risk of denial of service (DoS) attacks, where an attacker could e.g. either deliberately present multiple invalid PIN values to block the Secure Element or sending burst of commands preventing legitimate applications to execute optimally. In order to mitigate this risk, this specification requires the web application runtime to implement the access control mechanism defined in <a href="#access-control">Access Control</a> section.
+      </li>
+      <li>
+        <strong>Traceability</strong> of the user may be facilitated by the unique identifying information the Secure Element may contain. Here again, the access control defined in <a href="#access-control">Access
+          Control</a> section will ensure only authorized web applications have access to the Secure Element API.
+      </li>
+    </ul>
+  </section>
+  <!-- Security -->
+  <!-- - - - - - - - - - - - - -  Secure Element Services  - - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#secure-element-services" typeof="bibo:Chapter" id="secure-element-services" class="informative">
+    <!--OddPage-->
+    <h2 resource="#h-secure-element-services" id="h-secure-element-services"><span property="xhv:role" resource="xhv:heading"><span class="secno">5. </span>
+        Secure Element Services
+      </span></h2>
+    <p><em>This section is non-normative.</em></p>
+    <p>
+      Communication with a Secure Element is performed through a
+      <dfn data-idl="" id="dom-reader" data-dfn-type="dfn" data-dfn-for=""><code>reader</code></dfn>, which unlike its name suggests it not only able to read content from Secure Element, but also to write or send any application specific command. Given the removal nature of many Secure Elements, a reader may be empty, meaning that no Secure Element is connected to this reader. For instance, a USB smart card reader may be connected to a computer but no smart card is inserted or a device may support <abbr title="Near Field Communication">NFC</abbr> interactions with Secure Elements but none is in the field. For this reason, the API provides a means to query the list of available readers and for each of them if they are empty or if a Secure Element is present. In addition, this specification defines events that are triggered when a Secure Element is connected to a reader and also when it is disconnected.
+    </p>
+    <p>
+      Once a web application is informed that a reader has a connected Secure Element, it can open a <dfn data-idl="" id="dom-session" data-dfn-type="dfn" data-dfn-for=""><code>session</code></dfn> with it. Opening a session establishes the communication between the web application and the Secure Element and provides a session object to the application. However a Secure Element is just an application container, the web application still needs to identify the application with which it wants to communicate.
+    </p>
+    <p>
+      To this intent, the session object provides a means to open a
+      <dfn data-idl="" id="dom-channel" data-dfn-type="dfn" data-dfn-for=""><code>channel</code></dfn> with a specific <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application, which is uniquely identified by an <a data-link-type="dfn" class="internalDFN" href="#dfn-application-identifier"><abbr title="Application Identifier">AID</abbr></a>. The web application runtime and the Secure Element may then perform some internal security checking to ensure the web application is allowed to connect to this <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application. If authorized, the returned channel object is the one providing the method to send commands to the <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application and get the corresponding responses.
+    </p>
+    <p>
+      The above steps required to send a command to a Secure Element create a set of chained objects. A reader may have several opened sessions, which may have several opened channels. Each object has a
+      <code>close()</code> method to release all resources associated to the target object, which invokes the <code>close()</code> method on each underlying object in the chain.
+    </p>
+    <figure id="fig-the-figure-above-represents-the-class-relationships-between-the-secure-element-entities-introduced-in-this-specification.x">
+      <a href="#class-graph"><img src="images/class-graph.png" alt="Class graph"></a>
+      <figcaption id="class-graph">Fig. <span class="figno">1</span> <span class="fig-title">
+          The figure above represents the class relationships between the
+          Secure Element entities introduced in this specification.
+        </span></figcaption>
+    </figure>
+  </section>
+  <!-- Secure Element Services -->
+  <!-- - - - - - - - - - - - - -  Access Control  - - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#access-control" typeof="bibo:Chapter" id="access-control">
+    <!--OddPage-->
+    <h2 resource="#h-access-control" id="h-access-control"><span property="xhv:role" resource="xhv:heading"><span class="secno">6. </span>
+        Access Control
+      </span></h2>
+    <p>
+      In order to make sure only authorized web applications are allowed to use the Secure Element, the web application runtime <em title="MUST" class="rfc2119">MUST</em> use the access control defined in [<cite><a href="#bib-GP-AC" class="bibref">GP-AC</a></cite>], which defines a simple mechanism that protects legitimate users using non-compromised devices from malicious applications. Note that it does not protect from a compromised device that would not properly implement the Access Control Enforcer, which is addressed by the internal protection of the Secure Element itself (using e.g. PIN or secure messaging). The interface between the web application runtime and the Access Control Enforcer is out of scope of this specification.
+    </p>
+
+    <section property="bibo:hasPart" resource="#overall-architecture" typeof="bibo:Chapter" id="overall-architecture">
+      <h3 resource="#h-overall-architecture" id="h-overall-architecture"><span property="xhv:role" resource="xhv:heading"><span class="secno">6.1 </span>
+          Overall Architecture
+        </span></h3>
+      <p>
+        To control which applications running on a user device are allowed to access <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> applications, several entities are involved:
+      </p>
+      <ul>
+        <li>The Secure Element hosts a list of <a data-link-type="dfn" class="internalDFN" href="#dfn-access-rules">Access Rules</a>. An access rule contains the <a data-link-type="dfn" class="internalDFN" href="#dfn-application-identifier"><abbr title="Application Identifier">AID</abbr></a> of the <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application, the identifier of the requesting <a data-link-type="dfn" class="internalDFN" href="#dfn-off-card">off-card</a> application and a filter on authorized APDUs. The access rule may also contain a simple Boolean to authorize all or no communications.
+        </li>
+        <li>An <a data-link-type="dfn" class="internalDFN" href="#dfn-access-control-enforcer">Access Control Enforcer</a> is running on the same device as the <a data-link-type="dfn" class="internalDFN" href="#dfn-off-card">off-card</a> application. Any attempt to establish a communication with an <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application from this device triggers this enforcer, which queries the Secure Element to get the access rules (and usually cache them) and check that the requesting
+          <a data-link-type="dfn" class="internalDFN" href="#dfn-off-card">off-card</a> application is authorized to communicate with the targeted <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application.
+        </li>
+      </ul>
+      <figure id="fig-the-figure-above-shows-the-overall-access-control-architecture.x">
+        <a href="#access-control-img"><img src="images/gp-access-control.png" alt="Class graph"></a>
+        <figcaption id="access-control-img">Fig. <span class="figno">2</span> <span class="fig-title">
+            The figure above shows the overall access control architecture.
+          </span></figcaption>
+      </figure>
+      <p>
+        Sections below describe how the GlobalPlatform Access Control is applied to web applications. Details of the GlobalPlatform Access Control mechanisms itself are defined in [<cite><a href="#bib-GP-AC" class="bibref">GP-AC</a></cite>].
+      </p>
+    </section>
+
+    <section property="bibo:hasPart" resource="#client-application-identifier" typeof="bibo:Chapter" id="client-application-identifier">
+      <h3 resource="#h-client-application-identifier" id="h-client-application-identifier"><span property="xhv:role" resource="xhv:heading"><span class="secno">6.2 </span>
+          Client Application Identifier
+        </span></h3>
+      <p>
+        The <a data-link-type="dfn" class="internalDFN" href="#dfn-access-control-enforcer">Access Control Enforcer</a> uses an application identifier to check whether the <a data-link-type="dfn" class="internalDFN" href="#dfn-off-card">off-card</a> application is white listed in
+        <a data-link-type="dfn" class="internalDFN" href="#dfn-access-rules">Access Rules</a>. This identifier needs to be trustworthy so that only authorized applications may have a given identifier. The web application runtime computes the application identifier using the following algorithm:
+      </p>
+      <ul>
+        <li>let <code>origin</code> be the ASCII serialization of the web application origin as defined in [<cite><a href="#bib-RFC6454" class="bibref">RFC6454</a></cite>]
+        </li>
+        <li>set the application identifier to be the SHA-1 digest of this
+          <code>origin</code> value.
+          <div class="note">
+            <div id="h-note1" role="heading" aria-level="4" class="note-title marker"><span>Note</span></div>
+            <div class="">
+              The SHA-1 hash function is used here because the GlobalPlatform Access Control specification for now only supports 20 bytes long identifiers. A stronger algorithm will be used as soon as GlobalPlatform updates its specification to support longer values.
+            </div>
+          </div>
+        </li>
+      </ul>
+      <p>
+        All applications that have the same <a data-link-type="dfn" class="internalDFN" href="#dfn-origin">origin</a> will get the same application identifier, hence will be granted the same access rules.
+      </p>
+      <p>
+        While applying the GlobalPlatform Access Control process, if the
+        <a data-link-type="dfn" class="internalDFN" href="#dfn-access-control-enforcer">Access Control Enforcer</a> detects that the Secure Element does not implement the GlobalPlatform Access Control (it does not have access rules), the <a data-link-type="dfn" class="internalDFN" href="#dfn-access-control-enforcer">Access Control Enforcer</a> may use its own policy to grant or refuse access to the Secure Element API.
+      </p>
+    </section>
+
+    <section property="bibo:hasPart" resource="#additional-security-rules" typeof="bibo:Chapter" id="additional-security-rules">
+      <h3 resource="#h-additional-security-rules" id="h-additional-security-rules"><span property="xhv:role" resource="xhv:heading"><span class="secno">6.3 </span>
+          Additional Security Rules
+        </span></h3>
+      <p>
+        To be eligible to gain access to the Secure Element API, a web application must meet the following requirements:
+      </p>
+      <ul>
+        <li>The web application <em title="MUST" class="rfc2119">MUST</em> be fetched using HTTPS protocol.
+        </li>
+        <li>The TLS/SSL server certificate of this HTTPS connection <em title="MUST" class="rfc2119">MUST</em> be trusted and valid:
+          <ul>
+            <li>Its subject <em title="MUST" class="rfc2119">MUST</em> match the hosting domain name.
+            </li>
+            <li>Its validity dates <em title="MUST" class="rfc2119">MUST</em> include the current date provided by the execution runtime.
+            </li>
+            <li>The issuance signature chain <em title="MUST" class="rfc2119">MUST</em> be valid.
+            </li>
+            <li>The issuance chain <em title="MUST" class="rfc2119">MUST</em> be rooted by a CA trusted by the web application runtime.
+            </li>
+          </ul>
+        </li>
+        <li>The user <em title="MUST NOT" class="rfc2119">MUST NOT</em> be able to bypass these rules. Some browsers offer users to define "exceptions" to allow connections to a HTTPS URL even if SSL server certificate is invalid. Such exception <em title="MUST NOT" class="rfc2119">MUST NOT</em> be used to allow access to the Secure Element API.
+        </li>
+      </ul>
+    </section>
+  </section>
+  <!-- Access Control -->
+  <!-- - - - - - - - - - - - Handling of Status Word - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#general-rules-for-handling-of-status-word" typeof="bibo:Chapter" id="general-rules-for-handling-of-status-word">
+    <!--OddPage-->
+    <h2 resource="#h-general-rules-for-handling-of-status-word" id="h-general-rules-for-handling-of-status-word"><span property="xhv:role" resource="xhv:heading"><span class="secno">7. </span>
+        General Rules for Handling of Status Word
+      </span></h2>
+    <p>
+      This specification defines handling of status word as defined in ISO 7816 specifications, in order to behave correctly with any secure element application across different sectors (banking, transport, identity, etc.).
+    </p>
+
+    <section property="bibo:hasPart" resource="#using-transport-layer-t-1" typeof="bibo:Chapter" id="using-transport-layer-t-1">
+      <h3 resource="#h-using-transport-layer-t-1" id="h-using-transport-layer-t-1"><span property="xhv:role" resource="xhv:heading"><span class="secno">7.1 </span>
+          Using Transport layer T=1
+        </span></h3>
+      <p>
+        The API or the underlying implementation shall handle the protocol T=1 as specified in [<cite><a href="#bib-ISO7816-3" class="bibref">ISO7816-3</a></cite>] and returns data (if available) and received status word to the application. The API or underlying implementation shall never automatically issue GET-RESPONSE <abbr title="Application Protocol Data Unit">APDU</abbr> on reception of any status word.
+      </p>
+    </section>
+
+    <section property="bibo:hasPart" resource="#using-transport-layer-t-0" typeof="bibo:Chapter" id="using-transport-layer-t-0">
+      <h3 resource="#h-using-transport-layer-t-0" id="h-using-transport-layer-t-0"><span property="xhv:role" resource="xhv:heading"><span class="secno">7.2 </span>
+          Using Transport layer T=0
+        </span></h3>
+      <p>
+        Unless otherwise specified, when sending command <abbr title="Application Protocol Data Unit">APDU</abbr>, this specification requires the following management for status word for all the methods defined in this document:
+      </p>
+      <ul>
+        <li>For status word ‘61 XX’ the API or underlying implementation shall issue a GET RESPONSE command as specified by ISO 7816 standard with LE=XX. The same behaviour has to be applied for the scenario where the SE returns overall response data of more than 256 bytes to the <abbr title="Application Protocol Data Unit">APDU</abbr>. If an Error SW is received to GET RESPONSE command, all data received so far shall be discarded and the Error SW shall be returned.
+        </li>
+        <li>For the status word ‘6C XX’, the API or underlying implementation shall reissue the input command with LE=XX as specified by ISO 7816 standard. If an Error SW is received to the reissued command, all data received so far shall be discarded and the Error SW shall be returned.
+        </li>
+        <li>For any status words different than 61xx and 6Cxx the API or underlying implementation shall not handle the received status words internally (e.g.: it shall not send GET RESPONSE automatically). The API or underlying implementation shall provide the status word together with data, if data is also received with the SW to the calling web application.
+        </li>
+      </ul>
+    </section>
+    <p>
+      Note that the handling of GET RESPONSE specified above implies that the API or underlying implementation shall handle response data even if it is more than 256 bytes.
+    </p>
+  </section>
+  <!-- Handling of Status Word -->
+  <!-- - - - - - - - - - - - Interface Navigator - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#navigator-interface" typeof="bibo:Chapter" id="navigator-interface">
+    <!--OddPage-->
+    <h2 resource="#h-navigator-interface" id="h-navigator-interface"><span property="xhv:role" resource="xhv:heading"><span class="secno">8. </span>
+        <a data-link-type="dfn" class="internalDFN" href="#idl-def-navigator-partial-1"><code>Navigator</code></a> Interface
+      </span></h2>
+    <p>
+      The <a data-link-type="dfn" class="internalDFN" href="#idl-def-navigator-partial-1"><code>Navigator</code></a> exposes the Secure Element service.
+    </p>
+    <pre class="def idl"><span class="idlInterface" id="idl-def-navigator-partial-1" data-idl="" data-title="Navigator">partial interface <span class="idlInterfaceID">Navigator</span> {
+<span data-dfn-for="navigator" class="idlAttribute" id="idl-def-navigator-secureelementmanager" data-idl="" data-title="secureElementManager">    readonly attribute <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#idl-def-secureelementmanager"><code>SecureElementManager</code></a>?</span> <span class="idlAttrName"><a data-for="Navigator" data-link-type="dfn" class="internalDFN" href="#dom-navigator-secureelementmanager" data-lt="secureElementManager"><code>secureElementManager</code></a></span>;</span>
+};</span></pre>
+
+    <section property="bibo:hasPart" resource="#attributes" typeof="bibo:Chapter" id="attributes">
+      <h3 resource="#h-attributes" id="h-attributes"><span property="xhv:role" resource="xhv:heading"><span class="secno">8.1 </span>
+          Attributes
+        </span></h3>
+      <dl data-link-for="Navigator" data-dfn-for="Navigator" class="attributes">
+        <dt>
+            <dfn data-idl="" id="dom-navigator-secureelementmanager" data-dfn-type="dfn" data-dfn-for="navigator"><code>secureElementManager</code></dfn> of type <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-navigator-secureelementmanager"><code>SecureElementManager</code></a></span>, readonly,
+            nullable
+          </dt>
+        <dd>
+          When getting the <a data-link-type="dfn" class="internalDFN" href="#dom-navigator-secureelementmanager"><code>secureElementManager</code></a> attribute, the user agent <em title="MUST" class="rfc2119">MUST</em> return the <a data-link-type="dfn" class="internalDFN" href="#dom-navigator-secureelementmanager"><code>SecureElementManager</code></a> object that provides access to available Secure Element readers. If the user agent doesn't support Secure Element features, it <em title="MUST" class="rfc2119">MUST</em> then return
+          <code>undefined</code>.
+        </dd>
+      </dl>
+    </section>
+  </section>
+  <!-- Interface Navigator -->
+  <!-- - - - - - - - - - - - Interface SecureElement - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#secureelementmanager-interface" typeof="bibo:Chapter" id="secureelementmanager-interface">
+    <!--OddPage-->
+    <h2 resource="#h-secureelementmanager-interface" id="h-secureelementmanager-interface"><span property="xhv:role" resource="xhv:heading"><span class="secno">9. </span>
+        <a data-link-type="dfn" class="internalDFN" href="#idl-def-secureelementmanager"><code>SecureElementManager</code></a> Interface
+      </span></h2>
+    <p>
+      The <a data-link-type="dfn" class="internalDFN" href="#idl-def-secureelementmanager"><code>SecureElementManager</code></a> interface provides access to Secure Element readers and is the source of events notifying the presence of Secure Elements.
+    </p>
+    <pre class="def idl"><span class="idlInterface" id="idl-def-secureelementmanager" data-idl="" data-title="SecureElementManager">interface <span class="idlInterfaceID">SecureElementManager</span> : <span class="idlSuperclass">EventTarget</span> {
+<span data-dfn-for="secureelementmanager" class="idlAttribute" id="idl-def-secureelementmanager-onsepresent" data-idl="" data-title="onsepresent">    attribute <span class="idlAttrType">EventHandler?</span> <span class="idlAttrName"><a data-for="SecureElementManager" data-link-type="dfn" class="internalDFN" href="#dom-secureelementmanager-onsepresent" data-lt="onsepresent"><code>onsepresent</code></a></span>;</span>
+<span data-dfn-for="secureelementmanager" class="idlAttribute" id="idl-def-secureelementmanager-onseremoval" data-idl="" data-title="onseremoval">    attribute <span class="idlAttrType">EventHandler?</span> <span class="idlAttrName"><a data-for="SecureElementManager" data-link-type="dfn" class="internalDFN" href="#dom-secureelementmanager-onseremoval" data-lt="onseremoval"><code>onseremoval</code></a></span>;</span>
+<span data-dfn-for="secureelementmanager" class="idlMethod" id="idl-def-secureelementmanager-getreaders()" data-idl="" data-title="getReaders">    <span class="idlMethType">Promise&lt;<a data-link-type="dfn" class="internalDFN" href="#dom-reader"><code>Reader</code></a>[]&gt;</span> <span class="idlMethName"><a data-for="SecureElementManager" data-link-type="dfn" class="internalDFN" href="#dom-secureelementmanager-getreaders" data-lt="getReaders"><code>getReaders</code></a></span>();</span>
+<span data-dfn-for="secureelementmanager" class="idlMethod" id="idl-def-secureelementmanager-shutdown()" data-idl="" data-title="shutdown">    <span class="idlMethType">Promise&lt;void&gt;</span>     <span class="idlMethName"><a data-for="SecureElementManager" data-link-type="dfn" class="internalDFN" href="#dom-secureelementmanager-shutdown" data-lt="shutdown"><code>shutdown</code></a></span>();</span>
+};</span></pre>
+
+    <section property="bibo:hasPart" resource="#attributes-1" typeof="bibo:Chapter" id="attributes-1">
+      <h3 resource="#h-attributes-1" id="h-attributes-1"><span property="xhv:role" resource="xhv:heading"><span class="secno">9.1 </span>
+          Attributes
+        </span></h3>
+      <dl data-link-for="SecureElementManager" data-dfn-for="SecureElementManager" class="attributes">
+        <dt>
+            <dfn data-idl="" id="dom-secureelementmanager-onsepresent" data-dfn-type="dfn" data-dfn-for="secureelementmanager"><code>onsepresent</code></dfn> of type <span class="idlAttrType">EventHandler</span>, nullable
+          </dt>
+        <dd>
+          Event handler for the SE-present event. This event <em title="MUST" class="rfc2119">MUST</em> be triggered each time any of the following situations occurs:
+          <ul>
+            <li>Web application starts while a Secure Element is present in a reader
+            </li>
+            <li>Web application is running, a reader which was already listed in the readers attribute but had no Secure Element now detects the presence of a Secure Element.
+            </li>
+            <li>Web application is running, a new reader is detected and has a Secure Element present.
+            </li>
+          </ul>The event name is <code>sepresent</code> and event type is
+          <a data-link-type="dfn" class="internalDFN" href="#idl-def-readerevent"><code>ReaderEvent</code></a>.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-secureelementmanager-onseremoval" data-dfn-type="dfn" data-dfn-for="secureelementmanager"><code>onseremoval</code></dfn> of type <span class="idlAttrType">EventHandler</span>, nullable
+          </dt>
+        <dd>
+          Event handler for the SE-removal event. This event <em title="MUST" class="rfc2119">MUST</em> be triggered when a Secure Element which was present in a reader is no longer present (Meaning it has been unplugged or is out of reach if it was connected through wireless communication). As soon as this event is triggered, all <a data-link-type="dfn" class="internalDFN" href="#dom-session"><code>Session</code></a> and <a data-link-type="dfn" class="internalDFN" href="#dom-channel"><code>Channel</code></a> objects providing access to this Secure Element are marked as closed. The event name is <code>seremoval</code> and event type is
+          <a data-link-type="dfn" class="internalDFN" href="#idl-def-readerevent"><code>ReaderEvent</code></a>.
+        </dd>
+      </dl>
+    </section>
+
+    <section property="bibo:hasPart" resource="#methods" typeof="bibo:Chapter" id="methods">
+      <h3 resource="#h-methods" id="h-methods"><span property="xhv:role" resource="xhv:heading"><span class="secno">9.2 </span>
+          Methods
+        </span></h3>
+      <dl data-link-for="SecureElementManager" data-dfn-for="SecureElementManager" class="methods">
+        <dt>
+            <dfn data-idl="" id="dom-secureelementmanager-getreaders" data-dfn-type="dfn" data-dfn-for="secureelementmanager"><code>getReaders</code></dfn>
+          </dt>
+        <dd>
+          This method <em title="MUST" class="rfc2119">MUST</em> return the list of available readers in which a Secure Element may be present. Its value <em title="MUST" class="rfc2119">MUST</em> be an empty array if no reader is available. It <em title="MUST" class="rfc2119">MUST</em> be <code>null</code> if the
+          <code>shutdown()</code> method has been called on this
+          <a data-link-type="dfn" class="internalDFN" href="#idl-def-secureelementmanager"><code>SecureElementManager</code></a> object. Several invocations of this method <em title="MAY" class="rfc2119">MAY</em> return different array values, because new readers may become available, while others may be disconnected.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-secureelementmanager-shutdown" data-dfn-type="dfn" data-dfn-for="secureelementmanager"><code>shutdown</code></dfn>
+          </dt>
+        <dd>
+          <p>
+            This method closes all sessions and channels opened from this
+            <a data-link-type="dfn" class="internalDFN" href="#idl-def-secureelementmanager"><code>SecureElementManager</code></a> object and releases other potential internal resources. When invoked, the user agent <em title="MUST" class="rfc2119">MUST</em> run the following steps:
+          </p>
+          <ol>
+            <li>Let <var>promise</var> be a newly-created <a data-link-type="dfn" class="internalDFN" href="#dfn-promise">Promise</a> object.
+            </li>
+            <li>Return <var>promise</var> and continue the following steps asynchronously.
+            </li>
+            <li>If the <code>shutdown()</code> method has already been called on this object, then resolve <var>promise</var>.
+            </li>
+            <li>Let <var>countdown</var> be the number of readers in the
+              <code>readers</code> attribute and <var>error</var> an object initially <code>undefined</code>.
+            </li>
+            <li>Invoke <code>closeSessions()</code> method on each
+              <a data-link-type="dfn" class="internalDFN" href="#dom-reader"><code>Reader</code></a> object in the array returned by the
+              <code>readers</code> attribute.
+            </li>
+            <li>Let <var>readerpromises</var> be the set of <a data-link-type="dfn" class="internalDFN" href="#dfn-promise">Promise</a> objects returned by these <code>closeSessions()</code> invocations.
+            </li>
+            <li>Set the <code>readers</code> attribute value to
+              <code>null</code>.
+            </li>
+            <li>If <var>countdown</var> is 0, then resolve <var>promise</var> with this <a data-link-type="dfn" class="internalDFN" href="#idl-def-secureelementmanager"><code>SecureElementManager</code></a> object.
+            </li>
+            <li>When a <var>readerpromises</var> element is fulfilled, <var>
+                countdown</var> is decremented. If <var>countdown</var> is 0 and <var>error</var> is <code>undefined</code>, then resolve
+              <var>promise</var>. If <var>countdown</var> is 0 and
+              <var>error</var> is not <code>undefined</code>, then reject
+              <var>promise</var> with the <var>error</var> value.
+            </li>
+            <li>When a <var>readerpromises</var> element is rejected,
+              <var>countdown</var> is decremented. If <var>error</var> is
+              <code>undefined</code> then set it to the rejected value. If
+              <var>countdown</var> is 0 then reject <var>promise</var> with
+              <var>error</var> value.
+            </li>
+          </ol>
+        </dd>
+      </dl>
+      <!-- - - - - - - - - - - - Interface SecureElement - - - - - - - - - -->
+    </section>
+    <!-- - - - - - - - - - - - Events - - - - - - - - - -->
+
+    <section property="bibo:hasPart" resource="#events" typeof="bibo:Chapter" id="events">
+      <h3 resource="#h-events" id="h-events"><span property="xhv:role" resource="xhv:heading"><span class="secno">9.3 </span>
+          Events
+        </span></h3>
+      <p>
+        The <code>sepresent</code> and <code>seremoval</code> events are of type <a data-link-type="dfn" class="internalDFN" href="#idl-def-readerevent"><code>ReaderEvent</code></a>.
+      </p>
+      <pre class="def idl"><span class="idlInterface" id="idl-def-readerevent" data-idl="" data-title="ReaderEvent">[<span class="idlCtor"><span class="extAttrName">Constructor</span>(<span class="idlParam"><span class="idlParamType">DOMString</span> <span class="idlParamName">type</span></span>, <span class="idlParam">optional <span class="idlParamType"><a data-link-type="dfn" class="internalDFN" href="#idl-def-readereventinit"><code>ReaderEventInit</code></a></span> <span class="idlParamName">eventInitDict</span></span>)</span>,
+ <span class="extAttr"><span class="extAttrName">Exposed</span>=<span class="extAttrRhs">Window</span></span>,
+ <span class="extAttr"><span class="extAttrName">Worker</span></span>]
+interface <span class="idlInterfaceID">ReaderEvent</span> : <span class="idlSuperclass"><a data-link-type="dfn" class="internalDFN" href="#dfn-event">Event</a></span> {
+<span data-dfn-for="readerevent" class="idlAttribute" id="idl-def-readerevent-reader" data-idl="" data-title="reader">    readonly attribute <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-reader"><code>Reader</code></a></span> <span class="idlAttrName"><a data-for="ReaderEvent" data-link-type="dfn" class="internalDFN" href="#dom-readerevent-reader" data-lt="reader"><code>reader</code></a></span>;</span>
+};</span></pre>
+
+      <section property="bibo:hasPart" resource="#attributes-2" typeof="bibo:Chapter" id="attributes-2">
+        <h4 resource="#h-attributes-2" id="h-attributes-2"><span property="xhv:role" resource="xhv:heading"><span class="secno">9.3.1 </span>
+            Attributes
+          </span></h4>
+        <dl data-link-for="ReaderEvent" data-dfn-for="ReaderEvent" class="attributes">
+          <dt>
+              <dfn data-idl="" id="dom-readerevent-reader" data-lt="reader" data-dfn-type="dfn" data-dfn-for="readerevent"><code>ReaderEvent.reader</code></dfn> of type <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-readerevent-reader"><code>Reader</code></a></span>, readonly
+            </dt>
+          <dd>
+            The reader on which the Secure Element event occurred
+          </dd>
+        </dl>
+        <!-- ReaderEventInit -->
+      </section>
+
+      <section property="bibo:hasPart" resource="#constructor-parameters" typeof="bibo:Chapter" id="constructor-parameters">
+        <h4 resource="#h-constructor-parameters" id="h-constructor-parameters"><span property="xhv:role" resource="xhv:heading"><span class="secno">9.3.2 </span>
+            Constructor Parameters
+          </span></h4>
+        <pre class="def idl"><span class="idlDictionary" id="idl-def-readereventinit" data-idl="" data-title="ReaderEventInit">dictionary <span class="idlDictionaryID">ReaderEventInit</span> : <span class="idlSuperclass">EventInit</span> {
+<span data-dfn-for="readereventinit" class="idlMember" id="idl-def-readereventinit-reader" data-idl="" data-title="reader">    <span class="idlMemberType"><a data-link-type="dfn" class="internalDFN" href="#dom-reader"><code>Reader</code></a></span> <span class="idlMemberName"><a data-for="ReaderEventInit" data-link-type="dfn" class="internalDFN" href="#dom-readereventinit-reader" data-lt="reader"><code>reader</code></a></span>;</span>
+};</span></pre>
+        <dl data-link-for="ReaderEventInit" data-dfn-for="ReaderEventInit" class="attributes">
+          <dt>
+              <dfn data-idl="" id="dom-readereventinit-reader" data-lt="reader" data-dfn-type="dfn" data-dfn-for="readereventinit"><code>ReaderEventInit.reader</code></dfn> of type <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-readereventinit-reader"><code>Reader</code></a></span>
+            </dt>
+          <dd>
+            The event's reader attribute value
+          </dd>
+        </dl>
+      </section>
+      <!-- ReaderEventInit -->
+    </section>
+    <!-- ReaderEvent -->
+  </section>
+  <!-- Interface SecureElementManager -->
+  <!-- - - - - - - - - - - - Interface Reader - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#reader-interface" typeof="bibo:Chapter" id="reader-interface">
+    <!--OddPage-->
+    <h2 resource="#h-reader-interface" id="h-reader-interface"><span property="xhv:role" resource="xhv:heading"><span class="secno">10. </span>
+        <a data-link-type="dfn" class="internalDFN" href="#dom-reader"><code>Reader</code></a> Interface
+      </span></h2>
+    <p>
+      Readers connected to this device are accessible through the
+      <a data-link-type="dfn" class="internalDFN" href="#dom-reader"><code>Reader</code></a> interface. A reader is the connector to a Secure Element. Given the removable nature of some Secure Elements, a reader may or may not have a Secure Element present. A reader may only have at most one present Secure Element. A reader <em title="MAY" class="rfc2119">MAY</em> for instance be a <a data-link-type="dfn" class="internalDFN" href="#dfn-universal-integrated-circuit-card"><abbr title="Universal Integrated Circuit Card">UICC</abbr></a> slot, a USB smart card reader, an <abbr title="Near Field Communication">NFC</abbr> interface or a mother board slot where a embedded Secure Element is wired.
+    </p>
+    <pre class="def idl"><span class="idlInterface" id="idl-def-reader" data-idl="" data-title="Reader">interface <span class="idlInterfaceID"><a data-for="" data-link-type="dfn" class="internalDFN" href="#dom-reader" data-lt="Reader"><code>Reader</code></a></span> {
+<span data-dfn-for="reader" class="idlAttribute" id="idl-def-reader-issepresent" data-idl="" data-title="isSEPresent">    readonly attribute <span class="idlAttrType">boolean</span>           <span class="idlAttrName"><a data-for="Reader" data-link-type="dfn" class="internalDFN" href="#dom-reader-issepresent" data-lt="isSEPresent"><code>isSEPresent</code></a></span>;</span>
+<span data-dfn-for="reader" class="idlAttribute" id="idl-def-reader-name" data-idl="" data-title="name">    readonly attribute <span class="idlAttrType">DOMString</span>         <span class="idlAttrName"><a data-for="Reader" data-link-type="dfn" class="internalDFN" href="#dom-reader-name" data-lt="name"><code>name</code></a></span>;</span>
+<span data-dfn-for="reader" class="idlAttribute" id="idl-def-reader-secureelementtype" data-idl="" data-title="secureElementType">    readonly attribute <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#idl-def-secureelementtype"><code>SecureElementType</code></a></span> <span class="idlAttrName"><a data-for="Reader" data-link-type="dfn" class="internalDFN" href="#dom-reader-secureelementtype" data-lt="secureElementType"><code>secureElementType</code></a></span>;</span>
+<span data-dfn-for="reader" class="idlAttribute" id="idl-def-reader-isremovable" data-idl="" data-title="isRemovable">    readonly attribute <span class="idlAttrType">boolean</span>           <span class="idlAttrName"><a data-for="Reader" data-link-type="dfn" class="internalDFN" href="#dom-reader-isremovable" data-lt="isRemovable"><code>isRemovable</code></a></span>;</span>
+<span data-dfn-for="reader" class="idlMethod" id="idl-def-reader-opensession()" data-idl="" data-title="openSession">    <span class="idlMethType">Promise&lt;<a data-link-type="dfn" class="internalDFN" href="#dom-session"><code>Session</code></a>&gt;</span> <span class="idlMethName"><a data-for="Reader" data-link-type="dfn" class="internalDFN" href="#dom-reader-opensession" data-lt="openSession"><code>openSession</code></a></span>();</span>
+<span data-dfn-for="reader" class="idlMethod" id="idl-def-reader-closesessions()" data-idl="" data-title="closeSessions">    <span class="idlMethType">Promise&lt;void&gt;</span>    <span class="idlMethName"><a data-for="Reader" data-link-type="dfn" class="internalDFN" href="#dom-reader-closesessions" data-lt="closeSessions"><code>closeSessions</code></a></span>();</span>
+};</span></pre>
+
+    <section property="bibo:hasPart" resource="#attributes-3" typeof="bibo:Chapter" id="attributes-3">
+      <h3 resource="#h-attributes-3" id="h-attributes-3"><span property="xhv:role" resource="xhv:heading"><span class="secno">10.1 </span>
+          Attributes
+        </span></h3>
+      <dl data-link-for="Reader" data-dfn-for="Reader" class="attributes">
+        <dt>
+            <dfn data-idl="" id="dom-reader-issepresent" data-dfn-type="dfn" data-dfn-for="reader"><code>isSEPresent</code></dfn> of type <span class="idlAttrType">boolean</span>, readonly
+          </dt>
+        <dd>
+          This attribute <em title="MUST" class="rfc2119">MUST</em> return true if a Secure Element is present in this reader. It <em title="MUST" class="rfc2119">MUST</em> return false otherwise.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-reader-name" data-dfn-type="dfn" data-dfn-for="reader"><code>name</code></dfn> of type <span class="idlAttrType">DOMString</span>, readonly
+          </dt>
+        <dd>
+          This attribute <em title="MUST" class="rfc2119">MUST</em> return the name of the reader. This is an arbitrary name set by the system. It <em title="MAY" class="rfc2119">MAY</em> be computed based on reader provided data.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-reader-secureelementtype" data-dfn-type="dfn" data-dfn-for="reader"><code>secureElementType</code></dfn> of type <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-reader-secureelementtype"><code>SecureElementType</code></a></span>, readonly
+          </dt>
+        <dd>
+          This attribute <em title="MUST" class="rfc2119">MUST</em> return the <a data-link-type="dfn" class="internalDFN" href="#dom-reader-secureelementtype"><code>SecureElementType</code></a> value best matching the type of the Secure Element this reader gives access to. This information may be useful for applications that target a specific Secure Element type. It may also be used to build the application user interface, to represent the Secure Element in a realistic way.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-reader-isremovable" data-dfn-type="dfn" data-dfn-for="reader"><code>isRemovable</code></dfn> of type <span class="idlAttrType">boolean</span>, readonly
+          </dt>
+        <dd>
+          This attribute <em title="MUST" class="rfc2119">MUST</em> return <code>true</code> if the Secure Element cannot be detached without powering down the device.
+        </dd>
+      </dl>
+    </section>
+
+    <section property="bibo:hasPart" resource="#methods-1" typeof="bibo:Chapter" id="methods-1">
+      <h3 resource="#h-methods-1" id="h-methods-1"><span property="xhv:role" resource="xhv:heading"><span class="secno">10.2 </span>
+          Methods
+        </span></h3>
+      <dl data-link-for="Reader" data-dfn-for="Reader" class="methods">
+        <dt>
+            <dfn data-idl="" id="dom-reader-opensession" data-dfn-type="dfn" data-dfn-for="reader"><code>openSession</code></dfn>
+          </dt>
+        <dd>
+          This method establishes a communication link with a Secure Element. There may be several sessions opened at the same time: no session shall lock access to the Secure Element.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-reader-closesessions" data-dfn-type="dfn" data-dfn-for="reader"><code>closeSessions</code></dfn>
+          </dt>
+        <dd>
+          This method closes all sessions opened through this reader object. This also closes their associated channels.
+        </dd>
+      </dl>
+    </section>
+    <!-- - - - - - - - - - - - Enum SecureElementType - - - - - - - - - -->
+
+    <section property="bibo:hasPart" resource="#secureelementtype-enum" typeof="bibo:Chapter" id="secureelementtype-enum">
+      <h3 resource="#h-secureelementtype-enum" id="h-secureelementtype-enum"><span property="xhv:role" resource="xhv:heading"><span class="secno">10.3 </span>
+          <a data-link-type="dfn" class="internalDFN" href="#idl-def-secureelementtype"><code>SecureElementType</code></a> Enum
+        </span></h3>
+      <p>
+        The <a data-link-type="dfn" class="internalDFN" href="#idl-def-secureelementtype"><code>SecureElementType</code></a> enum identifies the type of the Secure Element a reader gives access to.
+      </p>
+      <pre class="def idl"><span class="idlEnum" id="idl-def-secureelementtype" data-idl="" data-title="SecureElementType">enum <span class="idlEnumID">SecureElementType</span> {
+    "<a href="#dom-secureelementtype-uicc" class="idlEnumItem">uicc</a>",
+    "<a href="#dom-secureelementtype-smartcard" class="idlEnumItem">smartcard</a>",
+    "<a href="#dom-secureelementtype-ese" class="idlEnumItem">ese</a>",
+    "<a href="#dom-secureelementtype-sd" class="idlEnumItem">sd</a>",
+    "<a href="#dom-secureelementtype-other" class="idlEnumItem">other</a>"
+};</span></pre>
+      <table data-link-for="SecureElementType" data-dfn-for="SecureElementType" class="simple">
+        <tbody>
+          <tr>
+            <th colspan="2">
+              Enumeration description
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <dfn data-idl="" id="dom-secureelementtype-uicc" data-dfn-type="dfn" data-dfn-for="secureelementtype"><code>uicc</code></dfn>
+            </td>
+            <td>
+              <p>
+                The Secure Element is a <a data-link-type="dfn" class="internalDFN" href="#dfn-universal-integrated-circuit-card"><abbr title="Universal Integrated Circuit Card">UICC</abbr></a> used by the device to connect to a mobile network.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <dfn data-idl="" id="dom-secureelementtype-smartcard" data-dfn-type="dfn" data-dfn-for="secureelementtype"><code>smartcard</code></dfn>
+            </td>
+            <td>
+              <p>
+                The Secure Element is a smart card (contactless, contact or USB token).
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <dfn data-idl="" id="dom-secureelementtype-ese" data-dfn-type="dfn" data-dfn-for="secureelementtype"><code>ese</code></dfn>
+            </td>
+            <td>
+              <p>
+                The Secure Element is embedded in the device.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <dfn data-idl="" id="dom-secureelementtype-sd" data-dfn-type="dfn" data-dfn-for="secureelementtype"><code>sd</code></dfn>
+            </td>
+            <td>
+              <p>
+                The Secure Element is a <abbr title="Storage Device">SD</abbr> card and may be unplugged.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <dfn data-idl="" id="dom-secureelementtype-other" data-dfn-type="dfn" data-dfn-for="secureelementtype"><code>other</code></dfn>
+            </td>
+            <td>
+              <p>
+                For any other Secure Element type not listed above.
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <!-- Enum SecureElementType -->
+  </section>
+  <!-- Interface Reader -->
+  <!-- - - - - - - - - - - - Interface Session - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#session-interface" typeof="bibo:Chapter" id="session-interface">
+    <!--OddPage-->
+    <h2 resource="#h-session-interface" id="h-session-interface"><span property="xhv:role" resource="xhv:heading"><span class="secno">11. </span>
+        <a data-link-type="dfn" class="internalDFN" href="#dom-session"><code>Session</code></a> Interface
+      </span></h2>
+    <p>
+      A <a data-link-type="dfn" class="internalDFN" href="#dom-session"><code>Session</code></a> represents a connection session to one of the Secure Elements available on the device. These objects can be used to open and close communication channels with an <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application.
+    </p>
+    <pre class="def idl"><span class="idlInterface" id="idl-def-session" data-idl="" data-title="Session">interface <span class="idlInterfaceID"><a data-for="" data-link-type="dfn" class="internalDFN" href="#dom-session" data-lt="Session"><code>Session</code></a></span> {
+<span data-dfn-for="session" class="idlAttribute" id="idl-def-session-reader" data-idl="" data-title="reader">    readonly attribute <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-reader"><code>Reader</code></a></span>      <span class="idlAttrName"><a data-for="Session" data-link-type="dfn" class="internalDFN" href="#dom-session-reader" data-lt="reader"><code>reader</code></a></span>;</span>
+<span data-dfn-for="session" class="idlAttribute" id="idl-def-session-atr" data-idl="" data-title="atr">    readonly attribute <span class="idlAttrType">Uint8Array?</span> <span class="idlAttrName"><a data-for="Session" data-link-type="dfn" class="internalDFN" href="#dom-session-atr" data-lt="atr"><code>atr</code></a></span>;</span>
+<span data-dfn-for="session" class="idlMethod" id="idl-def-session-openbasicchannel(uint8array?,optional-octet)" data-idl="" data-title="openBasicChannel">    <span class="idlMethType">Promise&lt;<a data-link-type="dfn" class="internalDFN" href="#dom-channel"><code>Channel</code></a>&gt;</span> <span class="idlMethName"><a data-for="Session" data-link-type="dfn" class="internalDFN" href="#dom-session-openbasicchannel" data-lt="openBasicChannel"><code>openBasicChannel</code></a></span>(<span class="idlParam"><span class="idlParamType">Uint8Array?</span> <span class="idlParamName">aid</span></span>, <span class="idlParam">optional <span class="idlParamType">octet</span> <span class="idlParamName">p2</span></span>);</span>
+<span data-dfn-for="session" class="idlMethod" id="idl-def-session-opensupplementarychannel(uint8array?,optional-octet)" data-idl="" data-title="openSupplementaryChannel">    <span class="idlMethType">Promise&lt;<a data-link-type="dfn" class="internalDFN" href="#dom-channel"><code>Channel</code></a>&gt;</span> <span class="idlMethName"><a data-for="Session" data-link-type="dfn" class="internalDFN" href="#dom-session-opensupplementarychannel" data-lt="openSupplementaryChannel"><code>openSupplementaryChannel</code></a></span>(<span class="idlParam"><span class="idlParamType">Uint8Array?</span> <span class="idlParamName">aid</span></span>,
+                                              <span class="idlParam">optional <span class="idlParamType">octet</span> <span class="idlParamName">p2</span></span>);</span>
+<span data-dfn-for="session" class="idlMethod" id="idl-def-session-close()" data-idl="" data-title="close">    <span class="idlMethType">Promise&lt;void&gt;</span>    <span class="idlMethName"><a data-for="Session" data-link-type="dfn" class="internalDFN" href="#dom-session-close" data-lt="close"><code>close</code></a></span>();</span>
+};</span></pre>
+
+    <section property="bibo:hasPart" resource="#attributes-4" typeof="bibo:Chapter" id="attributes-4">
+      <h3 resource="#h-attributes-4" id="h-attributes-4"><span property="xhv:role" resource="xhv:heading"><span class="secno">11.1 </span>
+          Attributes
+        </span></h3>
+      <dl data-link-for="Session" data-dfn-for="Session" class="attributes">
+        <dt>
+            <dfn data-idl="" id="dom-session-reader" data-dfn-type="dfn" data-dfn-for="session"><code>reader</code></dfn> of type <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-session-reader"><code>Reader</code></a></span>, readonly
+          </dt>
+        <dd>
+          This attribute <em title="MUST" class="rfc2119">MUST</em> return the reader object from which this session object was created.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-session-atr" data-dfn-type="dfn" data-dfn-for="session"><code>atr</code></dfn> of type <span class="idlAttrType">Uint8Array</span>, readonly, nullable
+          </dt>
+        <dd>
+          This attribute <em title="MUST" class="rfc2119">MUST</em> return the <a data-link-type="dfn" class="internalDFN" href="#dfn-answer-to-reset">Answer to Reset</a> provided by the Secure Element or <code>null</code> if the Secure Element does not provide one.
+        </dd>
+      </dl>
+    </section>
+
+    <section property="bibo:hasPart" resource="#methods-2" typeof="bibo:Chapter" id="methods-2">
+      <h3 resource="#h-methods-2" id="h-methods-2"><span property="xhv:role" resource="xhv:heading"><span class="secno">11.2 </span>
+          Methods
+        </span></h3>
+      <dl data-link-for="Session" data-dfn-for="Session" class="methods">
+        <dt>
+            <dfn data-idl="" id="dom-session-openbasicchannel" data-dfn-type="dfn" data-dfn-for="session"><code>openBasicChannel</code></dfn>
+          </dt>
+        <dd>
+          <p>
+            This methods opens the <a data-link-type="dfn" class="internalDFN" href="#dfn-basic-logical-channel">basic logical channel</a> and selects an <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application. Once this channel has been opened by an <a data-link-type="dfn" class="internalDFN" href="#dfn-off-card">off-card</a> application, it is considered to be "locked" to other applications: any other call to this method will fail with <code>SENoChannelException</code> error until this basic channel is closed. Some Secure Elements might always deny opening a basic channel.
+          </p>
+          <p>
+            If the <code>aid</code> parameter is not null, the underlying implementation of this operation shall send a SELECT command to the Secure Element, as defined in [<cite><a href="#bib-ISO7816-4" class="bibref">ISO7816-4</a></cite>], with following header values:
+          </p>
+          <ul>
+            <li>CLA = ‘0x00’
+            </li>
+            <li>INS = ‘0xA4’
+            </li>
+            <li>P1 =‘0x04’ (Select by DF name/application identifier)
+            </li>
+            <li>P2 = <code>p2</code> parameter if present, ‘0x00’ otherwise (First or only occurrence).
+            </li>
+          </ul>
+          <p>
+            If <code>aid</code> is null, then no SELECT command is sent, the channel is opened on the default selected <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application.
+          </p>
+          <p>
+            This method will trigger the <a data-link-type="dfn" class="internalDFN" href="#dfn-access-control-enforcer">Access Control Enforcer</a> to check the requesting <a data-link-type="dfn" class="internalDFN" href="#dfn-off-card">off-card</a> application is authorized to open such channel.
+          </p>
+          <p>
+            For the SELECT command the API shall handle received status word as defined in <a href="#general-rules-for-handling-of-status-word">section 7</a>, except that for T=0 protocol the GET RESPONSE shall also be sent in case of SW warning (‘62 XX’ or ‘63 XX’). If the status word for the SELECT command indicates that the SE was able to open a channel (status word ‘90 00’ or status words referencing a warning), the API shall keep the channel open and the channel's <code>openResponse</code> attribute shall return the status word for the SELECT command together with data, if any data is received.
+          </p>
+          <p>
+            Other status words for the SELECT command which indicate that the SE was not able to open a channel shall be considered as an error and the corresponding channel shall not be opened.
+          </p>
+          <table class="parameters">
+            <tbody>
+              <tr>
+                <th>
+                  Parameter
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Nullable
+                </th>
+                <th>
+                  Optional
+                </th>
+                <th>
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td class="prmName">
+                  aid
+                </td>
+                <td class="prmType">
+                  <code>Uint8Array</code>
+                </td>
+                <td class="prmNullTrue">
+                  <span role="img" aria-label="True">✔</span>
+                </td>
+                <td class="prmOptFalse">
+                  <span role="img" aria-label="False">✘</span>
+                </td>
+                <td class="prmDesc">
+                  This parameter value <em title="MUST" class="rfc2119">MUST</em> either be:
+                  <ul>
+                    <li>The complete <a data-link-type="dfn" class="internalDFN" href="#dfn-application-identifier">Application Identifier</a> of the targeted <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application;
+                    </li>
+                    <li>A partial <a data-link-type="dfn" class="internalDFN" href="#dfn-application-identifier">Application Identifier</a> matching a set of targeted <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> applications. The application with the first matching <abbr title="Application Identifier">AID</abbr> shall be selected;
+                    </li>
+                    <li>
+                      <code>null</code> if the implicitly selected application on this channel shall be selected.
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="prmName">
+                  p2
+                </td>
+                <td class="prmType">
+                  <code>octet</code>
+                </td>
+                <td class="prmNullFalse">
+                  <span role="img" aria-label="False">✘</span>
+                </td>
+                <td class="prmOptTrue">
+                  <span role="img" aria-label="True">✔</span>
+                </td>
+                <td class="prmDesc">
+                  The P2 parameter of the SELECT <abbr title="Application Protocol Data Unit">APDU</abbr> executed for this channel. Except for specific needs, it is recommended to omit this method parameter. The device should allow all values for P2, however only the following values are mandatory: ‘00’, ‘04’, ‘08’, ‘0C’ (as defined in [<cite><a href="#bib-ISO7816-4" class="bibref">ISO7816-4</a></cite>]).
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-session-opensupplementarychannel" data-dfn-type="dfn" data-dfn-for="session"><code>openSupplementaryChannel</code></dfn>
+          </dt>
+        <dd>
+          <p>
+            This methods opens a <a data-link-type="dfn" class="internalDFN" href="#dfn-supplementary-logical-channel">supplementary logical channel</a> and selects an <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application. The Secure Element shall open the next available supplementary logical channel. If no more supplementary logical channel is available, this method <em title="MUST" class="rfc2119">MUST</em> fail with <code>SENoChannelException</code> error.
+          </p>
+          <p>
+            If the <code>aid</code> parameter is not null, the underlying implementation of this operation <em title="MUST" class="rfc2119">MUST</em> send to the Secure Element a SELECT command, as defined in [<cite><a href="#bib-ISO7816-4" class="bibref">ISO7816-4</a></cite>], with following header values:
+          </p>
+          <ul>
+            <li>CLA = ‘0x01’ to ‘0x03’, ‘0x40 to 0x4F’ (as chosen by the Secure Element)
+            </li>
+            <li>INS = ‘0xA4’
+            </li>
+            <li>P1 =‘0x04’ (Select by DF name/application identifier)
+            </li>
+            <li>P2 = <code>p2</code> parameter if present, ‘0x00’ otherwise (First or only occurrence).
+            </li>
+          </ul>
+          <p>
+            If <code>aid</code> is null, then no SELECT is sent, the channel is opened on the default selected <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application. In the case of a <abbr title="Universal Integrated Circuit Card">UICC</abbr> it is recommended that the API rejects the opening of the supplementary logical channel without a specific
+            <abbr title="Application Identifier">AID</abbr>.
+          </p>
+          <p>
+            This method will trigger the <a data-link-type="dfn" class="internalDFN" href="#dfn-access-control-enforcer">Access Control Enforcer</a> to check the requesting <a data-link-type="dfn" class="internalDFN" href="#dfn-off-card">off-card</a> application is authorized to open such channel.
+          </p>
+          <p>
+            For the SELECT command the API shall handle received status word as defined in <a href="#general-rules-for-handling-of-status-word">section 7</a>, except that for T=0 protocol the GET RESPONSE shall also be sent in case of SW warning (‘62 XX’ or ‘63 XX’). If the status word for the SELECT command indicates that the SE was able to open a channel (status word ‘90 00’ or status words referencing a warning), the API shall keep the channel open and the channel's <code>openResponse</code> attribute shall return the status word for the SELECT command together with data, if any data is received.
+          </p>
+          <p>
+            Other status words for the SELECT command which indicate that the SE was not able to open a channel shall be considered as an error and the corresponding channel shall not be opened.
+          </p>
+          <table class="parameters">
+            <tbody>
+              <tr>
+                <th>
+                  Parameter
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Nullable
+                </th>
+                <th>
+                  Optional
+                </th>
+                <th>
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td class="prmName">
+                  aid
+                </td>
+                <td class="prmType">
+                  <code>Uint8Array</code>
+                </td>
+                <td class="prmNullTrue">
+                  <span role="img" aria-label="True">✔</span>
+                </td>
+                <td class="prmOptFalse">
+                  <span role="img" aria-label="False">✘</span>
+                </td>
+                <td class="prmDesc">
+                  This parameter value <em title="MUST" class="rfc2119">MUST</em> either be:
+                  <ul>
+                    <li>The complete <a data-link-type="dfn" class="internalDFN" href="#dfn-application-identifier">Application Identifier</a> of the targeted <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application;
+                    </li>
+                    <li>A partial <a data-link-type="dfn" class="internalDFN" href="#dfn-application-identifier">Application Identifier</a> matching a set of targeted <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> applications. The application with the first matching <abbr title="Application Identifier">AID</abbr> shall be selected;
+                    </li>
+                    <li>
+                      <code>null</code> if the implicitly selected application on this channel shall be selected.
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td class="prmName">
+                  p2
+                </td>
+                <td class="prmType">
+                  <code>octet</code>
+                </td>
+                <td class="prmNullFalse">
+                  <span role="img" aria-label="False">✘</span>
+                </td>
+                <td class="prmOptTrue">
+                  <span role="img" aria-label="True">✔</span>
+                </td>
+                <td class="prmDesc">
+                  The P2 parameter of the SELECT <abbr title="Application Protocol Data Unit">APDU</abbr> executed for this channel. Except for specific needs, it is recommended to omit this method parameter. The device should allow all values for P2, however only the following values are mandatory: ‘00’, ‘04’, ‘08’, ‘0C’ (as defined in [<cite><a href="#bib-ISO7816-4" class="bibref">ISO7816-4</a></cite>]).
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-session-close" data-dfn-type="dfn" data-dfn-for="session"><code>close</code></dfn>
+          </dt>
+        <dd>
+          This method closes the connection session to the Secure Element. This will close any channels opened through this session object. Invoking <code>close()</code> method on an already closed session has no effect. Calling any other method on this object <em title="MUST" class="rfc2119">MUST</em> fail with an SEClosedException error.
+        </dd>
+      </dl>
+    </section>
+  </section>
+  <!-- Interface Session -->
+  <!-- - - - - - - - - - - - Interface Channel - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#channel-interface" typeof="bibo:Chapter" id="channel-interface">
+    <!--OddPage-->
+    <h2 resource="#h-channel-interface" id="h-channel-interface"><span property="xhv:role" resource="xhv:heading"><span class="secno">12. </span>
+        <a data-link-type="dfn" class="internalDFN" href="#dom-channel"><code>Channel</code></a> Interface
+      </span></h2>
+    <p>
+      A <a data-link-type="dfn" class="internalDFN" href="#dom-channel"><code>Channel</code></a> represents an [<cite><a href="#bib-ISO7816-4" class="bibref">ISO7816-4</a></cite>] channel opened to a Secure Element. It can be either a supplementary logical channel or the basic logical channel. It can be used to send commands to and receive responses from an <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application.
+    </p>
+    <pre class="def idl"><span class="idlInterface" id="idl-def-channel" data-idl="" data-title="Channel">interface <span class="idlInterfaceID"><a data-for="" data-link-type="dfn" class="internalDFN" href="#dom-channel" data-lt="Channel"><code>Channel</code></a></span> {
+<span data-dfn-for="channel" class="idlAttribute" id="idl-def-channel-session" data-idl="" data-title="session">    readonly attribute <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-session"><code>Session</code></a></span>     <span class="idlAttrName"><a data-for="Channel" data-link-type="dfn" class="internalDFN" href="#dom-channel-session" data-lt="session"><code>session</code></a></span>;</span>
+<span data-dfn-for="channel" class="idlAttribute" id="idl-def-channel-channeltype" data-idl="" data-title="channelType">    readonly attribute <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#idl-def-channeltype"><code>ChannelType</code></a></span> <span class="idlAttrName"><a data-for="Channel" data-link-type="dfn" class="internalDFN" href="#dom-channel-channeltype" data-lt="channelType"><code>channelType</code></a></span>;</span>
+<span data-dfn-for="channel" class="idlAttribute" id="idl-def-channel-openresponse" data-idl="" data-title="openResponse">    readonly attribute <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#idl-def-seresponse"><code>SEResponse</code></a>?</span> <span class="idlAttrName"><a data-for="Channel" data-link-type="dfn" class="internalDFN" href="#dom-channel-openresponse" data-lt="openResponse"><code>openResponse</code></a></span>;</span>
+<span data-dfn-for="channel" class="idlMethod" id="idl-def-channel-selectnext()" data-idl="" data-title="selectNext">    <span class="idlMethType">Promise&lt;<a data-link-type="dfn" class="internalDFN" href="#idl-def-seresponse"><code>SEResponse</code></a>&gt;</span> <span class="idlMethName"><a data-for="Channel" data-link-type="dfn" class="internalDFN" href="#dom-channel-selectnext" data-lt="selectNext"><code>selectNext</code></a></span>();</span>
+<span data-dfn-for="channel" class="idlMethod" id="idl-def-channel-transmit(secommand)" data-idl="" data-title="transmit">    <span class="idlMethType">Promise&lt;<a data-link-type="dfn" class="internalDFN" href="#idl-def-seresponse"><code>SEResponse</code></a>&gt;</span> <span class="idlMethName"><a data-for="Channel" data-link-type="dfn" class="internalDFN" href="#dom-channel-transmit" data-lt="transmit"><code>transmit</code></a></span>(<span class="idlParam"><span class="idlParamType"><a data-link-type="dfn" class="internalDFN" href="#idl-def-secommand"><code>SECommand</code></a></span> <span class="idlParamName">cmd</span></span>);</span>
+<span data-dfn-for="channel" class="idlMethod" id="idl-def-channel-transmitraw(uint8array)" data-idl="" data-title="transmitRaw">    <span class="idlMethType">Promise&lt;Uint8Array&gt;</span> <span class="idlMethName"><a data-for="Channel" data-link-type="dfn" class="internalDFN" href="#dom-channel-transmitraw" data-lt="transmitRaw"><code>transmitRaw</code></a></span>(<span class="idlParam"><span class="idlParamType">Uint8Array</span> <span class="idlParamName">cmd</span></span>);</span>
+<span data-dfn-for="channel" class="idlMethod" id="idl-def-channel-close()" data-idl="" data-title="close">    <span class="idlMethType">Promise&lt;void&gt;</span>       <span class="idlMethName"><a data-for="Channel" data-link-type="dfn" class="internalDFN" href="#dom-channel-close" data-lt="close"><code>close</code></a></span>();</span>
+};</span></pre>
+
+    <section property="bibo:hasPart" resource="#attributes-5" typeof="bibo:Chapter" id="attributes-5">
+      <h3 resource="#h-attributes-5" id="h-attributes-5"><span property="xhv:role" resource="xhv:heading"><span class="secno">12.1 </span>
+          Attributes
+        </span></h3>
+      <dl data-link-for="Channel" data-dfn-for="Channel" class="attributes">
+        <dt>
+            <dfn data-idl="" id="dom-channel-session" data-dfn-type="dfn" data-dfn-for="channel"><code>session</code></dfn> of type <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-channel-session"><code>Session</code></a></span>, readonly
+          </dt>
+        <dd>
+          This attribute <em title="MUST" class="rfc2119">MUST</em> return the session object from which this Channel object was created.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-channel-channeltype" data-dfn-type="dfn" data-dfn-for="channel"><code>channelType</code></dfn> of type <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-channel-channeltype"><code>ChannelType</code></a></span>, readonly
+          </dt>
+        <dd>
+          This attribute <em title="MUST" class="rfc2119">MUST</em> return this channel type.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-channel-openresponse" data-dfn-type="dfn" data-dfn-for="channel"><code>openResponse</code></dfn> of type <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#idl-def-seresponse"><code>SEResponse</code></a></span>, readonly, nullable
+          </dt>
+        <dd>
+          This attribute <em title="MUST" class="rfc2119">MUST</em> return the Secure Element's response to the channel opening operation. It <em title="MUST" class="rfc2119">MUST</em> be <code>null</code> if the channel was opened on the default <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application (no
+          <a data-link-type="dfn" class="internalDFN" href="#dfn-application-identifier"><abbr title="Application Identifier">AID</abbr></a> was provided in the open channel operation).
+        </dd>
+      </dl>
+    </section>
+
+    <section property="bibo:hasPart" resource="#methods-3" typeof="bibo:Chapter" id="methods-3">
+      <h3 resource="#h-methods-3" id="h-methods-3"><span property="xhv:role" resource="xhv:heading"><span class="secno">12.2 </span>
+          Methods
+        </span></h3>
+      <dl data-link-for="Channel" data-dfn-for="Channel" class="methods">
+        <dt>
+            <dfn data-idl="" id="dom-channel-selectnext" data-dfn-type="dfn" data-dfn-for="channel"><code>selectNext</code></dfn>
+          </dt>
+        <dd>
+          Updates the targeted <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application of this channel to be the next one matching the partial <a data-link-type="dfn" class="internalDFN" href="#dfn-application-identifier">Application Identifier</a> passed when this channel was open. Invoking this method <em title="MUST" class="rfc2119">MUST</em> fail with an <code>SEInvalidStateException</code> error if this channel was not open with a partial <abbr title="Application Identifier">AID</abbr> or with an
+          <code>SENoApplicationException</code> error if there is no next application matching that partial <abbr title="Application Identifier">AID</abbr>. In that case the application associated to this channel is unchanged. If a next application has been found and associated to this channel, this operation succeeds and returns the Secure Element's response.
+          <p>
+            For the SELECT command the API shall handle received status word as defined in <a href="#general-rules-for-handling-of-status-word">section 7</a>, except that for T=0 protocol the GET RESPONSE shall also be sent in case of SW warning (‘62 XX’ or ‘63 XX’). If the status word for the SELECT command indicates that the SE was able to open a channel (status word ‘90 00’ or status words referencing a warning), the API shall keep the channel open and the channel's <code>openResponse</code> attribute shall return the status word for the SELECT command together with data, if any data is received.
+          </p>
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-channel-transmit" data-dfn-type="dfn" data-dfn-for="channel"><code>transmit</code></dfn>
+          </dt>
+        <dd>
+          <p>
+            This method transmits a command to the Secure Element. The user agent <em title="MUST" class="rfc2119">MUST</em> ensure the synchronisation between all the concurrent calls to this method: a command <em title="MUST NOT" class="rfc2119">MUST NOT</em> be sent to a Secure Element while a response is still pending on any channel from this same Secure Element.
+          </p>
+          <p>
+            This method will trigger the <a data-link-type="dfn" class="internalDFN" href="#dfn-access-control-enforcer">Access Control Enforcer</a> to check the requesting <a data-link-type="dfn" class="internalDFN" href="#dfn-off-card">off-card</a> application is authorized to send such command on this channel.
+          </p>
+          <p>
+            The channel information in the <a data-link-type="dfn" class="internalDFN" href="#dfn-class-byte">class byte</a> in the <a data-link-type="dfn" class="internalDFN" href="#dfn-apdu-command"><abbr title="Application Protocol Data Unit">APDU</abbr>
+              command</a> will be ignored. The system <em title="MAY" class="rfc2119">MAY</em> modify the <a data-link-type="dfn" class="internalDFN" href="#dfn-class-byte">class
+              byte</a> of the command to ensure the <abbr title="Application Protocol Data Unit">APDU</abbr> is transported on this channel. To ensure the invoking web application does not exit from the scope of this channel, the user agent <em title="MUST" class="rfc2119">MUST</em> reject the following commands with <code>SEInvalidValueException</code> error value:
+          </p>
+          <ul>
+            <li>MANAGE_CHANNEL (INS=0x70)
+            </li>
+            <li>SELECT by DF Name (INS=0xA4 and P1=04)
+            </li>
+          </ul>
+          <table class="parameters">
+            <tbody>
+              <tr>
+                <th>
+                  Parameter
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Nullable
+                </th>
+                <th>
+                  Optional
+                </th>
+                <th>
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td class="prmName">
+                  cmd
+                </td>
+                <td class="prmType">
+                  <code>SECommand</code>
+                </td>
+                <td class="prmNullFalse">
+                  <span role="img" aria-label="False">✘</span>
+                </td>
+                <td class="prmOptFalse">
+                  <span role="img" aria-label="False">✘</span>
+                </td>
+                <td class="prmDesc">
+                  The command to send to the <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-channel-transmitraw" data-dfn-type="dfn" data-dfn-for="channel"><code>transmitRaw</code></dfn>
+          </dt>
+        <dd>
+          <p>
+            This method behaves exactly as the <a data-link-type="dfn" class="internalDFN" href="#dom-channel-transmit"><code>transmit</code></a> method above, except that both its parameter and the response are passed as a raw binary data. Before transmitting the command to the Secure Element, the implementation of this method <em title="MUST" class="rfc2119">MUST</em> set the logical channel in the <a data-link-type="dfn" class="internalDFN" href="#dfn-class-byte">class byte</a> of the command so that it fits the channel allocated to this <a data-link-type="dfn" class="internalDFN" href="#dom-channel"><code>Channel</code></a> object.
+          </p>
+          <p>
+            This method will trigger the <a data-link-type="dfn" class="internalDFN" href="#dfn-access-control-enforcer">Access Control Enforcer</a> to check the requesting <a data-link-type="dfn" class="internalDFN" href="#dfn-off-card">off-card</a> application is authorized to send such command on this channel.
+          </p>
+          <table class="parameters">
+            <tbody>
+              <tr>
+                <th>
+                  Parameter
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Nullable
+                </th>
+                <th>
+                  Optional
+                </th>
+                <th>
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td class="prmName">
+                  cmd
+                </td>
+                <td class="prmType">
+                  <code>Uint8Array</code>
+                </td>
+                <td class="prmNullFalse">
+                  <span role="img" aria-label="False">✘</span>
+                </td>
+                <td class="prmOptFalse">
+                  <span role="img" aria-label="False">✘</span>
+                </td>
+                <td class="prmDesc">
+                  The raw command to send to the <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application. The channel information in the <a data-link-type="dfn" class="internalDFN" href="#dfn-class-byte">class byte</a> of the command (first octet of the cmd data) will be ignored.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-channel-close" data-dfn-type="dfn" data-dfn-for="channel"><code>close</code></dfn>
+          </dt>
+        <dd>
+          Closes this channel object. If the method is called when the channel is already closed, this method shall be ignored. The
+          <code>close()</code> method shall wait for completion of any pending <code>transmit()</code> operation before closing the channel.
+          <p>
+            If the channel is not the basic channel, then a MANAGE CHANNEL Close (P1=0x80) command shall be sent to the Secure Element for closing the channel.
+          </p>
+          <p>
+            If the channel is the basic channel, then the following procedure must be followed for closing the channel:
+          </p>
+          <ol>
+            <li>Send a MANAGE CHANNEL Reset (P1=0x40) command, as defined by [
+              <cite><a href="#bib-ISO7816-4" class="bibref">ISO7816-4</a></cite>].
+            </li>
+            <li>If previous command is not supported by the card (i.e. card returns an error SW), then SELECT by DF Name (P1=0x04; P2=0x00) command shall be sent with an empty <abbr title="Application Identifier">AID</abbr> (Lc=0x00). All data returned for the SELECT by DF Name command shall be discarded.
+            </li>
+          </ol>
+          <p>
+            In all cases the last SW of the MANAGE CHANNEL Close, MANAGE CHANNEL Reset, or SELECT by DF Name command shall be ignored and the channel object shall be closed by the API. Calling any other method on this channel object <em title="MUST" class="rfc2119">MUST</em> then fail with an SEClosedException error.
+          </p>
+        </dd>
+      </dl>
+    </section>
+    <!-- - - - - - - - - - - - Enum ChannelType - - - - - - - - - -->
+
+    <section property="bibo:hasPart" resource="#channeltype-enum" typeof="bibo:Chapter" id="channeltype-enum">
+      <h3 resource="#h-channeltype-enum" id="h-channeltype-enum"><span property="xhv:role" resource="xhv:heading"><span class="secno">12.3 </span>
+          <a data-link-type="dfn" class="internalDFN" href="#idl-def-channeltype"><code>ChannelType</code></a> Enum
+        </span></h3>
+      <p>
+        The <a data-link-type="dfn" class="internalDFN" href="#idl-def-channeltype"><code>ChannelType</code></a> enum identifies the type of the Secure Element channel.
+      </p>
+      <pre class="def idl"><span class="idlEnum" id="idl-def-channeltype" data-idl="" data-title="ChannelType">enum <span class="idlEnumID">ChannelType</span> {
+    "<a href="#dom-channeltype-basic" class="idlEnumItem">basic</a>",
+    "<a href="#dom-channeltype-supplementary" class="idlEnumItem">supplementary</a>"
+};</span></pre>
+      <table data-link-for="ChannelType" data-dfn-for="ChannelType" class="simple">
+        <tbody>
+          <tr>
+            <th colspan="2">
+              Enumeration description
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <dfn data-idl="" id="dom-channeltype-basic" data-dfn-type="dfn" data-dfn-for="channeltype"><code>basic</code></dfn>
+            </td>
+            <td>
+              <p>
+                Basic logical channel, as defined in [<cite><a href="#bib-ISO7816-4" class="bibref">ISO7816-4</a></cite>] (channel number 0).
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <dfn data-idl="" id="dom-channeltype-supplementary" data-dfn-type="dfn" data-dfn-for="channeltype"><code>supplementary</code></dfn>
+            </td>
+            <td>
+              <p>
+                Supplementary logical channel, as defined in [<cite><a href="#bib-GP" class="bibref">GP</a></cite>] (channel number &gt; 0).
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <!-- Enum ChannelType -->
+  </section>
+  <!-- Interface Channel -->
+  <!-- - - - - - - - - - - - Interface SECommand - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#secommand-interface" typeof="bibo:Chapter" id="secommand-interface">
+    <!--OddPage-->
+    <h2 resource="#h-secommand-interface" id="h-secommand-interface"><span property="xhv:role" resource="xhv:heading"><span class="secno">13. </span>
+        <a data-link-type="dfn" class="internalDFN" href="#idl-def-secommand"><code>SECommand</code></a> Interface
+      </span></h2>
+    <p>
+      The <a data-link-type="dfn" class="internalDFN" href="#idl-def-secommand"><code>SECommand</code></a> interface represents an <a data-link-type="dfn" class="internalDFN" href="#dfn-apdu-command"><abbr title="Application Protocol Data Unit">APDU</abbr> command</a> that can be sent to a Secure Element.
+    </p>
+    <pre class="def idl"><span class="idlInterface" id="idl-def-secommand" data-idl="" data-title="SECommand">[<span class="idlCtor"><span class="extAttrName">Constructor</span>(<span class="idlParam"><span class="idlParamType">octet</span> <span class="idlParamName">cla</span></span>, <span class="idlParam"><span class="idlParamType">octet</span> <span class="idlParamName">ins</span></span>, <span class="idlParam"><span class="idlParamType">octet</span> <span class="idlParamName">p1</span></span>, <span class="idlParam"><span class="idlParamType">octet</span> <span class="idlParamName">p2</span></span>, <span class="idlParam">optional <span class="idlParamType">Uint8Array</span> <span class="idlParamName">data</span></span>, <span class="idlParam">optional <span class="idlParamType">octet</span> <span class="idlParamName">le</span></span>)</span>]
+interface <span class="idlInterfaceID">SECommand</span> {
+<span data-dfn-for="secommand" class="idlAttribute" id="idl-def-secommand-cla" data-idl="" data-title="cla">    attribute <span class="idlAttrType">octet</span>          <span class="idlAttrName"><a data-for="SECommand" data-link-type="dfn" class="internalDFN" href="#dom-secommand-cla" data-lt="cla"><code>cla</code></a></span>;</span>
+<span data-dfn-for="secommand" class="idlAttribute" id="idl-def-secommand-ins" data-idl="" data-title="ins">    attribute <span class="idlAttrType">octet</span>          <span class="idlAttrName"><a data-for="SECommand" data-link-type="dfn" class="internalDFN" href="#dom-secommand-ins" data-lt="ins"><code>ins</code></a></span>;</span>
+<span data-dfn-for="secommand" class="idlAttribute" id="idl-def-secommand-p1" data-idl="" data-title="p1">    attribute <span class="idlAttrType">octet</span>          <span class="idlAttrName"><a data-for="SECommand" data-link-type="dfn" class="internalDFN" href="#dom-secommand-p1" data-lt="p1"><code>p1</code></a></span>;</span>
+<span data-dfn-for="secommand" class="idlAttribute" id="idl-def-secommand-p2" data-idl="" data-title="p2">    attribute <span class="idlAttrType">octet</span>          <span class="idlAttrName"><a data-for="SECommand" data-link-type="dfn" class="internalDFN" href="#dom-secommand-p2" data-lt="p2"><code>p2</code></a></span>;</span>
+<span data-dfn-for="secommand" class="idlAttribute" id="idl-def-secommand-data" data-idl="" data-title="data">    attribute <span class="idlAttrType">Uint8Array?</span>    <span class="idlAttrName"><a data-for="SECommand" data-link-type="dfn" class="internalDFN" href="#dom-secommand-data" data-lt="data"><code>data</code></a></span>;</span>
+<span data-dfn-for="secommand" class="idlAttribute" id="idl-def-secommand-le" data-idl="" data-title="le">    attribute <span class="idlAttrType">unsigned short</span> <span class="idlAttrName"><a data-for="SECommand" data-link-type="dfn" class="internalDFN" href="#dom-secommand-le" data-lt="le"><code>le</code></a></span>;</span>
+};</span></pre>
+
+    <section property="bibo:hasPart" resource="#attributes-6" typeof="bibo:Chapter" id="attributes-6">
+      <h3 resource="#h-attributes-6" id="h-attributes-6"><span property="xhv:role" resource="xhv:heading"><span class="secno">13.1 </span>
+          Attributes
+        </span></h3>
+      <dl data-link-for="SECommand" data-dfn-for="SECommand" class="attributes">
+        <dt>
+            <dfn data-idl="" id="dom-secommand-cla" data-dfn-type="dfn" data-dfn-for="secommand"><code>cla</code></dfn> of type <span class="idlAttrType">octet</span>
+          </dt>
+        <dd>
+          <a data-link-type="dfn" class="internalDFN" href="#dfn-class-byte">Class byte</a>.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-secommand-ins" data-dfn-type="dfn" data-dfn-for="secommand"><code>ins</code></dfn> of type <span class="idlAttrType">octet</span>
+          </dt>
+        <dd>
+          <a data-link-type="dfn" class="internalDFN" href="#dfn-instruction-byte">Instruction byte</a>.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-secommand-p1" data-dfn-type="dfn" data-dfn-for="secommand"><code>p1</code></dfn> of type <span class="idlAttrType">octet</span>
+          </dt>
+        <dd>
+          First octet of the <a data-link-type="dfn" class="internalDFN" href="#dfn-parameter-bytes">parameter bytes</a>.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-secommand-p2" data-dfn-type="dfn" data-dfn-for="secommand"><code>p2</code></dfn> of type <span class="idlAttrType">octet</span>
+          </dt>
+        <dd>
+          Second octet of the <a data-link-type="dfn" class="internalDFN" href="#dfn-parameter-bytes">parameter bytes</a>.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-secommand-data" data-dfn-type="dfn" data-dfn-for="secommand"><code>data</code></dfn> of type <span class="idlAttrType">Uint8Array</span>, nullable
+          </dt>
+        <dd>
+          <a data-link-type="dfn" class="internalDFN" href="#dfn-data-field-bytes">Data field bytes</a> or <code>null</code> if command has no data.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-secommand-le" data-dfn-type="dfn" data-dfn-for="secommand"><code>le</code></dfn> of type <span class="idlAttrType">unsigned
+            short</span>
+          </dt>
+        <dd>
+          The length of the expected response data or <code>-1</code> if application does not require a specific length.
+        </dd>
+      </dl>
+    </section>
+  </section>
+  <!-- Interface SECommand -->
+  <!-- - - - - - - - - - - - Interface SEResponse - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#seresponse-interface" typeof="bibo:Chapter" id="seresponse-interface">
+    <!--OddPage-->
+    <h2 resource="#h-seresponse-interface" id="h-seresponse-interface"><span property="xhv:role" resource="xhv:heading"><span class="secno">14. </span>
+        <a data-link-type="dfn" class="internalDFN" href="#idl-def-seresponse"><code>SEResponse</code></a> Interface
+      </span></h2>
+    <p>
+      The <a data-link-type="dfn" class="internalDFN" href="#idl-def-seresponse"><code>SEResponse</code></a> interface represents an <a data-link-type="dfn" class="internalDFN" href="#dfn-apdu-response"><abbr title="Application Protocol Data Unit">APDU</abbr> response</a> received from a Secure Element.
+    </p>
+    <pre class="def idl"><span class="idlInterface" id="idl-def-seresponse" data-idl="" data-title="SEResponse">[<span class="idlCtor"><span class="extAttrName">Constructor</span>(<span class="idlParam"><span class="idlParamType">Uint8Array</span> <span class="idlParamName">raw</span></span>)</span>]
+interface <span class="idlInterfaceID">SEResponse</span> {
+<span data-dfn-for="seresponse" class="idlAttribute" id="idl-def-seresponse-channel" data-idl="" data-title="channel">    readonly attribute <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-channel"><code>Channel</code></a></span>    <span class="idlAttrName"><a data-for="SEResponse" data-link-type="dfn" class="internalDFN" href="#dom-seresponse-channel" data-lt="channel"><code>channel</code></a></span>;</span>
+<span data-dfn-for="seresponse" class="idlAttribute" id="idl-def-seresponse-sw1" data-idl="" data-title="sw1">    readonly attribute <span class="idlAttrType">octet</span>      <span class="idlAttrName"><a data-for="SEResponse" data-link-type="dfn" class="internalDFN" href="#dom-seresponse-sw1" data-lt="sw1"><code>sw1</code></a></span>;</span>
+<span data-dfn-for="seresponse" class="idlAttribute" id="idl-def-seresponse-sw2" data-idl="" data-title="sw2">    readonly attribute <span class="idlAttrType">octet</span>      <span class="idlAttrName"><a data-for="SEResponse" data-link-type="dfn" class="internalDFN" href="#dom-seresponse-sw2" data-lt="sw2"><code>sw2</code></a></span>;</span>
+<span data-dfn-for="seresponse" class="idlAttribute" id="idl-def-seresponse-data" data-idl="" data-title="data">    readonly attribute <span class="idlAttrType">Uint8Array</span> <span class="idlAttrName"><a data-for="SEResponse" data-link-type="dfn" class="internalDFN" href="#dom-seresponse-data" data-lt="data"><code>data</code></a></span>;</span>
+<span data-dfn-for="seresponse" class="idlMethod" id="idl-def-seresponse-isstatus(octet?,octet?)" data-idl="" data-title="isStatus">    <span class="idlMethType">boolean</span> <span class="idlMethName"><a data-for="SEResponse" data-link-type="dfn" class="internalDFN" href="#dom-seresponse-isstatus" data-lt="isStatus"><code>isStatus</code></a></span>(<span class="idlParam"><span class="idlParamType">octet?</span> <span class="idlParamName">sw1</span></span>, <span class="idlParam"><span class="idlParamType">octet?</span> <span class="idlParamName">sw2</span></span>);</span>
+};</span></pre>
+
+    <section property="bibo:hasPart" resource="#attributes-7" typeof="bibo:Chapter" id="attributes-7">
+      <h3 resource="#h-attributes-7" id="h-attributes-7"><span property="xhv:role" resource="xhv:heading"><span class="secno">14.1 </span>
+          Attributes
+        </span></h3>
+      <dl data-link-for="SEResponse" data-dfn-for="SEResponse" class="attributes">
+        <dt>
+            <dfn data-idl="" id="dom-seresponse-channel" data-dfn-type="dfn" data-dfn-for="seresponse"><code>channel</code></dfn> of type <span class="idlAttrType"><a data-link-type="dfn" class="internalDFN" href="#dom-seresponse-channel"><code>Channel</code></a></span>, readonly
+          </dt>
+        <dd>
+          This attribute <em title="MUST" class="rfc2119">MUST</em> return the channel object that was used to transmit the command which triggered this response object.
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-seresponse-sw1" data-dfn-type="dfn" data-dfn-for="seresponse"><code>sw1</code></dfn> of type <span class="idlAttrType">octet</span>, readonly
+          </dt>
+        <dd>
+          First octet of response's <a data-link-type="dfn" class="internalDFN" href="#dfn-status-word">status word</a>
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-seresponse-sw2" data-dfn-type="dfn" data-dfn-for="seresponse"><code>sw2</code></dfn> of type <span class="idlAttrType">octet</span>, readonly
+          </dt>
+        <dd>
+          Second octet of response's <a data-link-type="dfn" class="internalDFN" href="#dfn-status-word">status word</a>
+        </dd>
+        <dt>
+            <dfn data-idl="" id="dom-seresponse-data" data-dfn-type="dfn" data-dfn-for="seresponse"><code>data</code></dfn> of type <span class="idlAttrType">Uint8Array</span>, readonly
+          </dt>
+        <dd>
+          The response's <a data-link-type="dfn" class="internalDFN" href="#dfn-data-field-bytes">data field bytes</a>
+        </dd>
+      </dl>
+    </section>
+
+    <section property="bibo:hasPart" resource="#methods-4" typeof="bibo:Chapter" id="methods-4">
+      <h3 resource="#h-methods-4" id="h-methods-4"><span property="xhv:role" resource="xhv:heading"><span class="secno">14.2 </span>
+          Methods
+        </span></h3>
+      <dl data-link-for="SEResponse" data-dfn-for="SEResponse" class="methods">
+        <dt>
+            <dfn data-idl="" id="dom-seresponse-isstatus" data-dfn-type="dfn" data-dfn-for="seresponse"><code>isStatus</code></dfn>
+          </dt>
+        <dd>
+          Utility method to test the <a data-link-type="dfn" class="internalDFN" href="#dfn-status-word">status word</a> of an <a data-link-type="dfn" class="internalDFN" href="#dfn-apdu-response"><abbr title="Application Protocol Data Unit">APDU</abbr>
+            response</a>. This method <em title="MUST" class="rfc2119">MUST</em> return <code>true</code> if the parameters match the value of the response.
+          <table class="parameters">
+            <tbody>
+              <tr>
+                <th>
+                  Parameter
+                </th>
+                <th>
+                  Type
+                </th>
+                <th>
+                  Nullable
+                </th>
+                <th>
+                  Optional
+                </th>
+                <th>
+                  Description
+                </th>
+              </tr>
+              <tr>
+                <td class="prmName">
+                  sw1
+                </td>
+                <td class="prmType">
+                  <code>octet</code>
+                </td>
+                <td class="prmNullTrue">
+                  <span role="img" aria-label="True">✔</span>
+                </td>
+                <td class="prmOptFalse">
+                  <span role="img" aria-label="False">✘</span>
+                </td>
+                <td class="prmDesc">
+                  Value to compare to the first octet of response's <a data-link-type="dfn" class="internalDFN" href="#dfn-status-word">status
+                    word</a> or <code>null</code> if this first octet may have any value.
+                </td>
+              </tr>
+              <tr>
+                <td class="prmName">
+                  sw2
+                </td>
+                <td class="prmType">
+                  <code>octet</code>
+                </td>
+                <td class="prmNullTrue">
+                  <span role="img" aria-label="True">✔</span>
+                </td>
+                <td class="prmOptFalse">
+                  <span role="img" aria-label="False">✘</span>
+                </td>
+                <td class="prmDesc">
+                  Value to compare to the second octet of response's
+                  <a data-link-type="dfn" class="internalDFN" href="#dfn-status-word">status word</a> or <code>null</code> if this second octet may have any value.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </dd>
+      </dl>
+    </section>
+  </section>
+  <!-- Interface SEResponse -->
+  <!-- - - - - - - - - - - - - -  Errors - - - - - - - - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#error-types" typeof="bibo:Chapter" id="error-types">
+    <!--OddPage-->
+    <h2 resource="#h-error-types" id="h-error-types"><span property="xhv:role" resource="xhv:heading"><span class="secno">15. </span>
+        Error Types
+      </span></h2>
+    <p>
+      In the interfaces defined above, some method return a <a data-link-type="dfn" class="internalDFN" href="#dfn-promise">Promise</a> object. If an error occurs during the execution of any of these methods, the <code>reject()</code> method of promise's resolver will be invoked with an error value of one of the following <a data-link-type="dfn" class="internalDFN" href="#dfn-domexception">DOMException</a> subtypes:
+    </p>
+    <dl title="errors">
+      <dt>
+          SESecurityException
+        </dt>
+      <dd>
+        The requested operation does not match the Secure Element access conditions, as defined in <a href="#access-control">Access
+          Control</a> section
+      </dd>
+      <dt>
+          SEIoException
+        </dt>
+      <dd>
+        Communication error
+      </dd>
+      <dt>
+          SEInvalidStateException
+        </dt>
+      <dd>
+        The target object was not in the proper state to execute the operation
+      </dd>
+      <dt>
+          SEInvalidValueException
+        </dt>
+      <dd>
+        The method was invoked with an incorrect parameter value
+      </dd>
+      <dt>
+          SENoChannelException
+        </dt>
+      <dd>
+        Tentative to open a channel failed because no channel is available
+      </dd>
+      <dt>
+          SENoApplicationException
+        </dt>
+      <dd>
+        The requested <a data-link-type="dfn" class="internalDFN" href="#dfn-on-card">on-card</a> application was not found on the Secure Element
+      </dd>
+      <dt>
+          SEClosedException
+        </dt>
+      <dd>
+        The operation could not be fulfilled because the target object is closed
+      </dd>
+      <dt>
+          SEUnknownException
+        </dt>
+      <dd>
+        Internal error, no further details available
+      </dd>
+    </dl>
+  </section>
+  <!-- Errors -->
+  <!-- - - - - - - - - - - - - -  Examples  - - - - - - - - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#code-example" typeof="bibo:Chapter" id="code-example">
+    <!--OddPage-->
+    <h2 resource="#h-code-example" id="h-code-example"><span property="xhv:role" resource="xhv:heading"><span class="secno">16. </span>
+        Code Example
+      </span></h2>
+    <p>
+      The javascript code excerpt below shows how a web application can wait for a card to be present and send it an <abbr title="Application Protocol Data Unit">APDU</abbr> command:
+    </p>
+    <div class="example">
+      <div class="example-title marker"><span>Example 1</span></div><pre class="highlight hljs javascript"><span class="hljs-comment">// my application identifier</span>
+<span class="hljs-keyword">var</span> myAppId = ...;
+<span class="hljs-comment">// my application command</span>
+<span class="hljs-keyword">var</span> myAppCmd = <span class="hljs-keyword">new</span> SECommand(...);
+
+<span class="hljs-comment">// get Secure Element manager</span>
+<span class="hljs-keyword">var</span> seMgr = navigator.secureElementManager;
+
+<span class="hljs-comment">// register sepresent event handler</span>
+seMgr.onsepresent = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) </span>{
+
+  <span class="hljs-comment">// open session</span>
+  event.reader.openSession()
+  .then(
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">session</span>) </span>{
+      <span class="hljs-comment">// open a basic logical channel to my application</span>
+      <span class="hljs-keyword">return</span> session.openBasicChannel(myAppID);
+    }
+
+  ).then(
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">channel</span>) </span>{
+      <span class="hljs-comment">// send APDU to my application</span>
+      <span class="hljs-keyword">return</span> channel.transmit(myAppCmd);
+    }
+
+  ).then(
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">response</span>) </span>{
+      <span class="hljs-keyword">if</span> (!response.isStatus(<span class="hljs-number">0x90</span>, <span class="hljs-number">0x00</span>) {
+        <span class="hljs-comment">// this might be an error</span>
+        <span class="hljs-comment">// ...</span>
+      }
+      response.channel.session.reader.close();
+    }
+
+  );
+};</pre></div>
+    <p>
+      For simplicity and readability reasons, the code above omits the error handling that would have to be implemented in a real application.
+    </p>
+  </section>
+  <!-- Examples -->
+  <!-- - - - - - - - - - - - - -  Changes - - - - - - - - - - - - - - - - -->
+
+  <section property="bibo:hasPart" resource="#Changes" typeof="bibo:Chapter" class="appendix" id="Changes">
+    <!--OddPage-->
+    <h2 resource="#h-changes" id="h-changes"><span property="xhv:role" resource="xhv:heading"><span class="secno">A. </span>
+        Changes
+      </span></h2>
+    <p>
+      The complete list of changes can be viewed on <a href="https://github.com/GlobalPlatform/WebApis-for-SE/commits/gh-pages">Github</a>. You can also check the <a href="https://github.com/GlobalPlatform/WebApis-for-SE/issues">issues</a>.
+    </p>
+  </section>
+
+
+  <section property="bibo:hasPart" resource="#references" typeof="bibo:Chapter" id="references" class="appendix">
+    <!--OddPage-->
+    <h2 resource="#h-references" id="h-references"><span property="xhv:role" resource="xhv:heading"><span class="secno">B. </span>References</span></h2>
+
+    <section property="bibo:hasPart" resource="#normative-references" typeof="bibo:Chapter" id="normative-references">
+      <h3 resource="#h-normative-references" id="h-normative-references"><span property="xhv:role" resource="xhv:heading"><span class="secno">B.1 </span>Normative references</span></h3>
+      <dl resource="" class="bibliography"><dt id="bib-DOM4">[DOM4]</dt>
+        <dd>Anne van Kesteren; Aryeh Gregor; Ms2ger; Alex Russell; Robin Berjon. W3C. <a property="dc:requires" href="https://www.w3.org/TR/dom/"><cite>W3C DOM4</cite></a>. 19 November 2015. W3C Recommendation. URL: <a property="dc:requires" href="https://www.w3.org/TR/dom/">https://www.w3.org/TR/dom/</a>
+        </dd><dt id="bib-ES6">[ES6]</dt>
+        <dd>Ecma International. <a property="dc:requires" href="http://ecma-international.org/ecma-262/6.0/index.html"><cite>ECMA-262, 6th Edition / Draft January 20, 2014</cite></a>. Draft. URL: <a property="dc:requires" href="http://ecma-international.org/ecma-262/6.0/index.html">http://ecma-international.org/ecma-262/6.0/index.html</a>
+        </dd><dt id="bib-ETSI-102216">[ETSI-102216]</dt>
+        <dd>ETSI. ETSI. <a property="dc:requires" href="https://webapp.etsi.org/workprogram/Report_WorkItem.asp?WKI_ID=18815&amp;curItemNr=1&amp;totalNrItems=1&amp;optDisplay=10&amp;qSORT=HIGHVERSION&amp;qETSI_STANDARD_TYPE=%27TR%27&amp;qETSI_NUMBER=102+216"><cite>TR 102 216 : Smart cards; Vocabulary for Smart Card Platform specifications</cite></a>. URL: <a property="dc:requires" href="https://webapp.etsi.org/workprogram/Report_WorkItem.asp?WKI_ID=18815&amp;curItemNr=1&amp;totalNrItems=1&amp;optDisplay=10&amp;qSORT=HIGHVERSION&amp;qETSI_STANDARD_TYPE=%27TR%27&amp;qETSI_NUMBER=102+216">https://webapp.etsi.org/workprogram/Report_WorkItem.asp?WKI_ID=18815&amp;curItemNr=1&amp;totalNrItems=1&amp;optDisplay=10&amp;qSORT=HIGHVERSION&amp;qETSI_STANDARD_TYPE=%27TR%27&amp;qETSI_NUMBER=102+216</a>
+        </dd><dt id="bib-GP">[GP]</dt>
+        <dd>GlobalPlatform. GlobalPlatform. <a property="dc:requires" href="https://www.globalplatform.org/specificationscard.asp"><cite>Card specifications</cite></a>. URL: <a property="dc:requires" href="https://www.globalplatform.org/specificationscard.asp">https://www.globalplatform.org/specificationscard.asp</a>
+        </dd><dt id="bib-GP-AC">[GP-AC]</dt>
+        <dd>GlobalPlatform. GlobalPlatform. <a property="dc:requires" href="https://www.globalplatform.org/specificationsdevice.asp"><cite>Secure Element Access Control</cite></a>. URL: <a property="dc:requires" href="https://www.globalplatform.org/specificationsdevice.asp">https://www.globalplatform.org/specificationsdevice.asp</a>
+        </dd><dt id="bib-HTML">[HTML]</dt>
+        <dd>Ian Hickson. WHATWG. <a property="dc:requires" href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a property="dc:requires" href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+        </dd><dt id="bib-ISO7816-3">[ISO7816-3]</dt>
+        <dd>ISO/IEC. ISO. <a property="dc:requires" href="http://www.iso.org/iso/fr/home/store/catalogue_tc/catalogue_detail.htm?csnumber=38770"><cite>7816-3 Identification cards -- Integrated circuit cards -- Part 3: Cards with contacts -- Electrical interface and transmission protocols</cite></a>. URL: <a property="dc:requires" href="http://www.iso.org/iso/fr/home/store/catalogue_tc/catalogue_detail.htm?csnumber=38770">http://www.iso.org/iso/fr/home/store/catalogue_tc/catalogue_detail.htm?csnumber=38770</a>
+        </dd><dt id="bib-ISO7816-4">[ISO7816-4]</dt>
+        <dd>ISO/IEC. ISO. <a property="dc:requires" href="http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=54550"><cite>7816-4 Identification cards -- Integrated circuit cards -- Part 4: Organization, security and commands for interchange</cite></a>. URL: <a property="dc:requires" href="http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=54550">http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=54550</a>
+        </dd><dt id="bib-ISO7816-5">[ISO7816-5]</dt>
+        <dd>ISO/IEC. ISO. <a property="dc:requires" href="http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=34259"><cite>7816-5 Identification cards -- Integrated circuit cards -- Part 5: Registration of application providers</cite></a>. URL: <a property="dc:requires" href="http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=34259">http://www.iso.org/iso/home/store/catalogue_tc/catalogue_detail.htm?csnumber=34259</a>
+        </dd><dt id="bib-RFC2119">[RFC2119]</dt>
+        <dd>S. Bradner. IETF. <a property="dc:requires" href="https://tools.ietf.org/html/rfc2119"><cite>Key words for use in RFCs to Indicate Requirement Levels</cite></a>. March 1997. Best Current Practice. URL: <a property="dc:requires" href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
+        </dd><dt id="bib-RFC6454">[RFC6454]</dt>
+        <dd>A. Barth. IETF. <a property="dc:requires" href="https://tools.ietf.org/html/rfc6454"><cite>The Web Origin Concept</cite></a>. December 2011. Proposed Standard. URL: <a property="dc:requires" href="https://tools.ietf.org/html/rfc6454">https://tools.ietf.org/html/rfc6454</a>
+        </dd><dt id="bib-WEBIDL">[WEBIDL]</dt>
+        <dd>Cameron McCormack; Boris Zbarsky. W3C. <a property="dc:requires" href="https://www.w3.org/TR/WebIDL-1/"><cite>WebIDL Level 1</cite></a>. 8 March 2016. W3C Candidate Recommendation. URL: <a property="dc:requires" href="https://www.w3.org/TR/WebIDL-1/">https://www.w3.org/TR/WebIDL-1/</a>
+        </dd>
+      </dl>
+    </section>
+
+    <section property="bibo:hasPart" resource="#informative-references" typeof="bibo:Chapter" id="informative-references">
+      <h3 resource="#h-informative-references" id="h-informative-references"><span property="xhv:role" resource="xhv:heading"><span class="secno">B.2 </span>Informative references</span></h3>
+      <dl resource="" class="bibliography"><dt id="bib-NFC">[NFC]</dt>
+        <dd>W3C Near Field Communications (NFC) Community Group. W3C. <a property="dc:references" href="https://www.w3.org/community/web-nfc/"><cite>Web NFC</cite></a>. URL: <a property="dc:references" href="https://www.w3.org/community/web-nfc/">https://www.w3.org/community/web-nfc/</a>
+        </dd><dt id="bib-WEBCRYPTO">[WEBCRYPTO]</dt>
+        <dd>W3C Web Cryptography Working Group. W3C. <a property="dc:references" href="https://www.w3.org/TR/WebCryptoAPI/"><cite>Web Cryptography API</cite></a>. URL: <a property="dc:references" href="https://www.w3.org/TR/WebCryptoAPI/">https://www.w3.org/TR/WebCryptoAPI/</a>
+        </dd>
+      </dl>
+    </section>
+  </section>
+  <p role="navigation" id="back-to-top"><a href="#toc"><abbr title="Back to Top">↑</abbr></a></p>
+  <script src="https://www.w3.org/scripts/TR/2016/fixup.js" defer="" async=""></script>
+</body>
+</html>
