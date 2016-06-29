@@ -165,7 +165,7 @@ window.onload = function () {
           if (prev) prev.innerHTML = "Draft under GlobalPlatform Public Review";
         });
     });
-};
+    };
     </script>
     <style>
 #gp-logo > img {
@@ -425,9 +425,10 @@ window.onload = function () {
         <li>
           <dfn>APDU command</dfn>, <dfn>APDU response</dfn>, <dfn>class
           byte</dfn>, <dfn>instruction byte</dfn>, <dfn>parameter bytes</dfn>,
-          <dfn>data field bytes</dfn>, <dfn>status word</dfn>, <dfn>logical
-          channel</dfn>, <dfn>basic logical channel</dfn> and <dfn>historical
-          bytes</dfn> are defined in [[!ISO7816-4]]
+          <dfn>data field bytes</dfn>, <dfn>status word</dfn>, <dfn>extended
+          length</dfn>, <dfn>logical channel</dfn>, <dfn>basic logical
+          channel</dfn> and <dfn>historical bytes</dfn> are defined in
+          [[!ISO7816-4]]
         </li>
         <li>
           <dfn><abbr title="Application Identifier">AID</abbr></dfn>
@@ -1775,7 +1776,7 @@ enum ChannelType {
         can be sent to a Secure Element.
       </p>
       <pre class="idl">
-[Constructor(octet cla, octet ins, octet p1, octet p2, optional Uint8Array data, optional octet le, optional booolean extended)]
+[Constructor(octet cla, octet ins, octet p1, octet p2, optional Uint8Array data, optional octet le, optional boolean isExtended)]
 interface SECommand {
     attribute octet          cla;
     attribute octet          ins;
@@ -1783,7 +1784,7 @@ interface SECommand {
     attribute octet          p2;
     attribute Uint8Array?    data;
     attribute unsigned short le;
-    attribute boolean        extended;
+    attribute boolean        isExtended;
 };
 </pre>
       <section>
@@ -1835,12 +1836,12 @@ interface SECommand {
             application does not require a specific length.
           </dd>
           <dt>
-            <dfn>extended</dfn> of type <span class="idlAttrType"><a>boolean
-            </a></span>
+            <dfn>isExtended</dfn> of type <span class=
+            "idlAttrType"><a>boolean</a></span>
           </dt>
           <dd>
-            Set to <code>true</code> if the command is encoded using extended
-            length as defined in [[!ISO7816-4]].
+            If set to <code>true</code> the command will be transmitted using
+            <a>extended length</a> encoding.
           </dd>
         </dl>
       </section>
