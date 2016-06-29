@@ -420,15 +420,11 @@ window.onload = function () {
       </p>
       <ul>
         <li>
-          <dfn><abbr title="Answer to Reset">ATR</abbr></dfn> (Answer to Reset)
-          is defined in [[!ISO7816-3]]
-        </li>
-        <li>
           <dfn>APDU command</dfn>, <dfn>APDU response</dfn>, <dfn>class
           byte</dfn>, <dfn>instruction byte</dfn>, <dfn>parameter bytes</dfn>,
           <dfn>data field bytes</dfn>, <dfn>status word</dfn>, <dfn>logical
-          channel</dfn> and <dfn>basic logical channel</dfn> are defined in
-          [[!ISO7816-4]]
+          channel</dfn>, <dfn>basic logical channel</dfn> and <dfn>historical
+          bytes</dfn>are defined in [[!ISO7816-4]]
         </li>
         <li>
           <dfn><abbr title="Application Identifier">AID</abbr></dfn>
@@ -1148,7 +1144,7 @@ enum SecureElementType {
       <pre class="idl">
 interface Session {
     readonly        attribute Reader      reader;
-    readonly        attribute Uint8Array? atr;
+    readonly        attribute Uint8Array? historicalBytes;
     Promise&lt;Channel&gt; openBasicChannel (Uint8Array? aid, optional octet p2);
     Promise&lt;Channel&gt; openSupplementaryChannel (Uint8Array? aid, optional octet p2);
     Promise&lt;void&gt;    close ();
@@ -1168,13 +1164,13 @@ interface Session {
             session object was created.
           </dd>
           <dt>
-            <dfn>atr</dfn> of type <span class=
+            <dfn>historicalBytes</dfn> of type <span class=
             "idlAttrType"><a>Uint8Array</a></span>, readonly, nullable
           </dt>
           <dd>
-            This attribute MUST return the <a>Answer to Reset</a> provided by
-            the Secure Element or <code>null</code> if the Secure Element does
-            not provide one.
+            This attribute MUST return the <a>Historical Bytes</a> provided by
+            the physical interface of the Secure Element or <code>null</code>
+            if the interface does not provide it.
           </dd>
         </dl>
       </section>
