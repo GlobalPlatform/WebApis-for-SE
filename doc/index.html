@@ -1479,7 +1479,7 @@ interface Channel {
     readonly        attribute Session     session;
     readonly        attribute ChannelType channelType;
     readonly        attribute SEResponse? openResponse;
-                    attribute int         timeout;
+                    attribute int?        timeout;
     Promise&lt;SEResponse&gt; selectNext ();
     Promise&lt;SEResponse&gt; transmit (SECommand cmd);
     Promise&lt;Uint8Array&gt; transmitRaw (Uint8Array cmd);
@@ -1521,7 +1521,9 @@ interface Channel {
             </span>
           </dt>
           <dd>
-            The timeout in ms of commands sent through this channel.
+            The timeout in ms of commands sent through this channel. Any
+            command sent through this channel is guaranteed to be aborted
+            after <code>timeout</code> ms.
           </dd>
         </dl>
       </section>
