@@ -985,6 +985,7 @@ interface Reader {
     readonly        attribute boolean           isRemovable;
     Promise&lt;Session&gt; openSession ();
     Promise&lt;void&gt;    closeSessions ();
+    Promise&lt;void&gt;    reset ();
 };
 </pre>
       <section>
@@ -1050,6 +1051,16 @@ interface Reader {
           <dd>
             This method closes all sessions opened through this reader object.
             This also closes their associated channels.
+          </dd>
+          <dt>
+            <dfn>reset</dfn>
+          </dt>
+          <dd>
+            This method resets the physical interface of the Secure Element.
+            The enabling process of the physical interface MUST be replayed. If
+            the physical interface does not support or allow the operation,
+            this method MUST fail with <code>SEUnsupportedException</code>.
+            error.
           </dd>
         </dl>
       </section>
@@ -2047,6 +2058,12 @@ interface SEResponse {
         <dd>
           The operation could not be fulfilled because the target object is
           closed
+        </dd>
+        <dt>
+          SEUnsupportedException
+        </dt>
+        <dd>
+          The operation is not supported by the reader or Secure Element.
         </dd>
         <dt>
           SEUnknownException
