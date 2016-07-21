@@ -1479,6 +1479,7 @@ interface Channel {
     readonly        attribute Session     session;
     readonly        attribute ChannelType channelType;
     readonly        attribute SEResponse? openResponse;
+                    attribute int?        timeout;
     Promise&lt;SEResponse&gt; selectNext ();
     Promise&lt;SEResponse&gt; transmit (SECommand cmd);
     Promise&lt;Uint8Array&gt; transmitRaw (Uint8Array cmd);
@@ -1514,6 +1515,15 @@ interface Channel {
             channel opening operation. It MUST be <code>null</code> if the
             channel was opened on the default <a>on-card</a> application (no
             <a>AID</a> was provided in the open channel operation).
+          </dd>
+          <dt>
+            <dfn>timeout</dfn> of type <span class="idlAttrType"><a>int</a>
+            </span>
+          </dt>
+          <dd>
+            The timeout in ms of commands sent through this channel. Any
+            command sent through this channel is guaranteed to be aborted
+            after <code>timeout</code> ms.
           </dd>
         </dl>
       </section>
