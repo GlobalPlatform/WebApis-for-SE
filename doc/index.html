@@ -1318,10 +1318,9 @@ interface Session {
                   <td class="prmDesc">
                     The P2 parameter of the SELECT APDU executed for this
                     channel. Except for specific needs, it is recommended to
-                    omit this method parameter. The device should allow all
-                    values for P2, however only the following values are
-                    mandatory: ‘00’, ‘04’, ‘08’, ‘0C’ (as
-                    defined in [[!ISO7816-4]]).
+                    omit this method parameter. If provided, the following
+                    values are supported as defined in [[!ISO7816-4]]:
+                    ‘00’, ‘04’, ‘08’, ‘0C’.
                   </td>
                 </tr>
               </tbody>
@@ -1452,10 +1451,9 @@ interface Session {
                   <td class="prmDesc">
                     The P2 parameter of the SELECT APDU executed for this
                     channel. Except for specific needs, it is recommended to
-                    omit this method parameter. The device should allow all
-                    values for P2, however only the following values are
-                    mandatory: ‘00’, ‘04’, ‘08’, ‘0C’ (as
-                    defined in [[!ISO7816-4]]).
+                    omit this method parameter. If provided, the following
+                    values are supported as defined in [[!ISO7816-4]]:
+                    ‘00’, ‘04’, ‘08’, ‘0C’.
                   </td>
                 </tr>
               </tbody>
@@ -1528,13 +1526,13 @@ interface Channel {
             <a>AID</a> was provided in the open channel operation).
           </dd>
           <dt>
-            <dfn>timeout</dfn> of type <span class="idlAttrType"><a>int</a>
-            </span>
+            <dfn>timeout</dfn> of type <span class=
+            "idlAttrType"><a>int</a></span>
           </dt>
           <dd>
             The timeout in ms of commands sent through this channel. Any
-            command sent through this channel is guaranteed to be aborted
-            after <code>timeout</code> ms.
+            command sent through this channel is guaranteed to be aborted after
+            <code>timeout</code> ms.
           </dd>
         </dl>
       </section>
