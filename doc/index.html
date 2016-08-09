@@ -505,18 +505,18 @@ window.onload = function () {
       </h2>
       <p>
         Communication with a Secure Element is performed through a
-        <dfn>reader</dfn>, which unlike its name suggests it not only able to
-        read content from Secure Element, but also to write or send any
-        application specific command. Given the removal nature of many Secure
-        Elements, a reader may be empty, meaning that no Secure Element is
-        connected to this reader. For instance, a USB smart card reader may be
-        connected to a computer but no smart card is inserted or a device may
-        support NFC interactions with Secure Elements but none is in the field.
-        For this reason, the API provides a means to query the list of
-        available readers and for each of them if they are empty or if a Secure
-        Element is present. In addition, this specification defines events that
-        are triggered when a Secure Element is connected to a reader and also
-        when it is disconnected.
+        <dfn>reader</dfn>, which is not only able to read content from Secure
+        Element, but also to write or send any application specific command.
+        Given the removable nature of many Secure Elements, a reader may be
+        empty, meaning that no Secure Element is connected to this reader. For
+        instance, a USB smart card reader may be connected to a computer but no
+        smart card is inserted or a device may support NFC interactions with
+        Secure Elements but none is in the field communication range. For this
+        reason, the API provides a means to query the list of available readers
+        and for each of them if they are empty or if a Secure Element is
+        present. In addition, this specification defines events that are
+        triggered when a Secure Element is connected to a reader and also when
+        it is disconnected.
       </p>
       <p>
         Once a web application is informed that a reader has a connected Secure
