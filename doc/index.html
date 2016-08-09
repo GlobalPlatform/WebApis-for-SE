@@ -1334,8 +1334,8 @@ interface Session {
               This methods opens a <a>supplementary logical channel</a> and
               selects an <a>on-card</a> application. The Secure Element MUST
               open the next available supplementary logical channel. If no more
-              supplementary logical channels are available, this method MUST fail
-              with <code>SENoChannelException</code> error.
+              supplementary logical channels are available, this method MUST
+              fail with <code>SENoChannelException</code> error.
             </p>
             <p>
               If the <code>aid</code> parameter is not null, the underlying
@@ -1466,8 +1466,8 @@ interface Session {
             This method closes the connection session to the Secure Element.
             This will close any channels opened through this session object.
             Invoking <code>close()</code> method on an already closed session
-            has no effect. Calling any other method on this object MUST fail
-            with an <a>SEClosedException</a> error.
+            has no effect. After invoking this method, calling any other method
+            on this object MUST fail with an <a>SEClosedException</a> error.
           </dd>
         </dl>
       </section>
@@ -1703,9 +1703,8 @@ interface Channel {
           <dd>
             Closes this channel object. If the method is called when the
             channel is already closed, this method MUST be ignored. The
-            <code>close()</code> method MUST wait for completion of any
-            pending <code>transmit()</code> operation before closing the
-            channel.
+            <code>close()</code> method MUST wait for completion of any pending
+            <code>transmit()</code> operation before closing the channel.
             <p>
               If the channel is not the basic channel, then a MANAGE CHANNEL
               Close (P1=0x80) command shall be sent to the Secure Element for
@@ -1728,9 +1727,9 @@ interface Channel {
             <p>
               In all cases the last SW of the MANAGE CHANNEL Close, MANAGE
               CHANNEL Reset, or SELECT by DF Name command shall be ignored and
-              the channel object shall be closed by the API. Calling any other
-              method on this channel object MUST then fail with an
-              <a>SEClosedException</a> error.
+              the channel object shall be closed by the API. After invoking
+              this method, calling any other method on this channel object MUST
+              then fail with an <a>SEClosedException</a> error.
             </p>
           </dd>
         </dl>
@@ -1851,8 +1850,8 @@ interface SECommand {
             short</a></span>
           </dt>
           <dd>
-            The length of the expected response data or <code>undefined</code> if
-            application does not require a specific length.
+            The length of the expected response data or <code>undefined</code>
+            if application does not require a specific length.
           </dd>
           <dt>
             <dfn>isExtended</dfn> of type <span class=
