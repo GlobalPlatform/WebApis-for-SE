@@ -1203,13 +1203,13 @@ interface Session {
               an <a>on-card</a> application. Once this channel has been opened
               by an <a>off-card</a> application, it is considered to be
               "locked" to other applications: any other call to this method
-              will fail with <code>SENoChannelException</code> error until this
+              MUST fail with <code>SENoChannelException</code> error until this
               <a>basic channel</a> is closed. Some Secure Elements might always
               deny opening a basic channel.
             </p>
             <p>
               If the <code>aid</code> parameter is not null, the underlying
-              implementation of this operation shall send a SELECT command to
+              implementation of this operation MUST send a SELECT command to
               the Secure Element, as defined in [[!ISO7816-4]], with following
               header values:
             </p>
@@ -1332,9 +1332,9 @@ interface Session {
           <dd>
             <p>
               This methods opens a <a>supplementary logical channel</a> and
-              selects an <a>on-card</a> application. The Secure Element shall
+              selects an <a>on-card</a> application. The Secure Element MUST
               open the next available supplementary logical channel. If no more
-              supplementary logical channel is available, this method MUST fail
+              supplementary logical channels are available, this method MUST fail
               with <code>SENoChannelException</code> error.
             </p>
             <p>
@@ -1702,8 +1702,8 @@ interface Channel {
           </dt>
           <dd>
             Closes this channel object. If the method is called when the
-            channel is already closed, this method shall be ignored. The
-            <code>close()</code> method shall wait for completion of any
+            channel is already closed, this method MUST be ignored. The
+            <code>close()</code> method MUST wait for completion of any
             pending <code>transmit()</code> operation before closing the
             channel.
             <p>
@@ -1713,7 +1713,7 @@ interface Channel {
             </p>
             <p>
               If the channel is the basic channel, then the following procedure
-              must be followed for closing the channel:
+              MUST be followed for closing the channel:
             </p>
             <ol>
               <li>Send a MANAGE CHANNEL Reset (P1=0x40) command, as defined by
