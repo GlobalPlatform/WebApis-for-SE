@@ -493,7 +493,7 @@ window.onload = function () {
           <strong>Traceability</strong> of the user may be facilitated by the
           unique identifying information the Secure Element may contain. Here
           again, the access control defined in <a href="#access-control">Access
-          Control</a> section will ensure only authorized web applications have
+          Control</a> section ensures only authorized web applications have
           access to the Secure Element API.
         </li>
       </ul>
@@ -634,7 +634,7 @@ window.onload = function () {
           </li>
         </ul>
         <p>
-          All applications that have the same <a>origin</a> will get the same
+          All applications that have the same <a>origin</a> MUST get the same
           application identifier, hence use the same <a>Access Rules</a>.
         </p>
         <p>
@@ -695,10 +695,10 @@ window.onload = function () {
           Using Transport layer T=1
         </h3>
         <p>
-          The API or the underlying implementation shall handle the protocol
-          T=1 as specified in [[ISO7816-3]] and returns data (if available) and
+          The API or the underlying implementation MUST handle the protocol T=1
+          as specified in [[ISO7816-3]] and returns data (if available) and
           received status word to the application. The API or underlying
-          implementation shall never automatically issue GET-RESPONSE APDU on
+          implementation MUST never automatically issue GET-RESPONSE APDU on
           reception of any status word.
         </p>
       </section>
@@ -713,23 +713,23 @@ window.onload = function () {
         </p>
         <ul>
           <li>For status word ‘61 XX’ the API or underlying implementation
-          shall issue a GET RESPONSE command as specified by ISO 7816 standard
+          MUST issue a GET RESPONSE command as specified by ISO 7816 standard
           with LE=XX. The same behaviour has to be applied for the scenario
           where the SE returns overall response data of more than 256 bytes to
           the APDU. If an Error SW is received to GET RESPONSE command, all
-          data received so far shall be discarded and the Error SW shall be
+          data received so far MUST be discarded and the Error SW MUST be
           returned.
           </li>
           <li>For the status word ‘6C XX’, the API or underlying
-          implementation shall reissue the input command with LE=XX as
-          specified by ISO 7816 standard. If an Error SW is received to the
-          reissued command, all data received so far shall be discarded and the
-          Error SW shall be returned.
+          implementation MUST reissue the input command with LE=XX as specified
+          by ISO 7816 standard. If an Error SW is received to the reissued
+          command, all data received so far MUST be discarded and the Error SW
+          MUST be returned.
           </li>
           <li>For any status words different than 61xx and 6Cxx the API or
-          underlying implementation shall not handle the received status words
-          internally (e.g.: it shall not send GET RESPONSE automatically). The
-          API or underlying implementation shall provide the status word
+          underlying implementation MUST NOT handle the received status words
+          internally (e.g.: it MUST NOT send GET RESPONSE automatically). The
+          API or underlying implementation MUST provide the status word
           together with data, if data is also received with the SW to the
           calling web application.
           </li>
@@ -737,7 +737,7 @@ window.onload = function () {
       </section>
       <p>
         Note that the handling of GET RESPONSE specified above implies that the
-        API or underlying implementation shall handle response data even if it
+        API or underlying implementation MUST handle response data even if it
         is more than 256 bytes.
       </p>
     </section><!-- Handling of Status Word -->
@@ -1040,8 +1040,8 @@ interface Reader {
           </dt>
           <dd>
             This method establishes a communication link with a Secure Element.
-            There may be several sessions opened at the same time: no session
-            shall lock access to the Secure Element.
+            There may be several sessions opened at the same time: a session
+            MUST NOT lock access to the Secure Element.
           </dd>
           <dt>
             <dfn>closeSessions</dfn>
@@ -1233,22 +1233,22 @@ interface Session {
               open such channel.
             </p>
             <p>
-              For the SELECT command the API shall handle received status word
+              For the SELECT command the API MUST handle received status word
               as defined in <a href=
               "#general-rules-for-handling-of-status-word">section 7</a>,
-              except that for T=0 protocol the GET RESPONSE shall also be sent
+              except that for T=0 protocol the GET RESPONSE MUST also be sent
               in case of SW warning (‘62 XX’ or ‘63 XX’). If the status
               word for the SELECT command indicates that the SE was able to
               open a channel (status word ‘90 00’ or status words
-              referencing a warning), the API shall keep the channel open and
-              the channel's <code>openResponse</code> attribute shall return
-              the status word for the SELECT command together with data, if any
+              referencing a warning), the API MUST keep the channel open and
+              the channel's <code>openResponse</code> attribute MUST return the
+              status word for the SELECT command together with data, if any
               data is received.
             </p>
             <p>
               Other status words for the SELECT command which indicate that the
-              SE was not able to open a channel shall be considered as an error
-              and the corresponding channel shall not be opened.
+              SE was not able to open a channel MUST be considered as an error
+              and the corresponding channel MUST NOT be opened.
             </p>
             <table class="parameters">
               <tbody>
@@ -1290,12 +1290,11 @@ interface Session {
                       </li>
                       <li>A partial <a>Application Identifier</a> matching a
                       set of targeted <a>on-card</a> applications. The
-                      application with the first matching AID shall be
-                      selected;
+                      application with the first matching AID MUST be selected;
                       </li>
                       <li>
-                        <code>null</code> if the implicitly selected
-                        application on this channel shall be selected.
+                        <code>null</code>, the implicitly selected application
+                        on this channel MUST be selected.
                       </li>
                     </ul>
                   </td>
@@ -1361,27 +1360,27 @@ interface Session {
               AID.
             </p>
             <p>
-              This method will trigger the <a>Access Control Enforcer</a> to
+              This method MUST trigger the <a>Access Control Enforcer</a> to
               check the requesting <a>off-card</a> application is authorized to
               open such channel.
             </p>
             <p>
-              For the SELECT command the API shall handle received status word
+              For the SELECT command the API MUST handle received status word
               as defined in <a href=
               "#general-rules-for-handling-of-status-word">section 7</a>,
-              except that for T=0 protocol the GET RESPONSE shall also be sent
+              except that for T=0 protocol the GET RESPONSE MUST also be sent
               in case of SW warning (‘62 XX’ or ‘63 XX’). If the status
               word for the SELECT command indicates that the SE was able to
               open a channel (status word ‘90 00’ or status words
-              referencing a warning), the API shall keep the channel open and
-              the channel's <code>openResponse</code> attribute shall return
-              the status word for the SELECT command together with data, if any
+              referencing a warning), the API MUST keep the channel open and
+              the channel's <code>openResponse</code> attribute MUST return the
+              status word for the SELECT command together with data, if any
               data is received.
             </p>
             <p>
               Other status words for the SELECT command which indicate that the
-              SE was not able to open a channel shall be considered as an error
-              and the corresponding channel shall not be opened.
+              SE was not able to open a channel MUST be considered as an error
+              and the corresponding channel MUST NOT be opened.
             </p>
             <table class="parameters">
               <tbody>
@@ -1423,12 +1422,11 @@ interface Session {
                       </li>
                       <li>A partial <a>Application Identifier</a> matching a
                       set of targeted <a>on-card</a> applications. The
-                      application with the first matching AID shall be
-                      selected;
+                      application with the first matching AID MUST be selected;
                       </li>
                       <li>
-                        <code>null</code> if the implicitly selected
-                        application on this channel shall be selected.
+                        <code>null</code> the implicitly selected application
+                        on this channel MUST be selected.
                       </li>
                     </ul>
                   </td>
@@ -1462,7 +1460,7 @@ interface Session {
           </dt>
           <dd>
             This method closes the connection session to the Secure Element.
-            This will close any channels opened through this session object.
+            This MUST close any channels opened through this session object.
             Invoking <code>close()</code> method on an already closed session
             has no effect. After invoking this method, calling any other method
             on this object MUST fail with an <a>SEClosedException</a> error.
@@ -1554,16 +1552,16 @@ interface Channel {
             been found and associated to this channel, this operation succeeds
             and returns the Secure Element's response.
             <p>
-              For the SELECT command the API shall handle received status word
+              For the SELECT command the API MUST handle received status word
               as defined in <a href=
               "#general-rules-for-handling-of-status-word">section 7</a>,
-              except that for T=0 protocol the GET RESPONSE shall also be sent
+              except that for T=0 protocol the GET RESPONSE MUST also be sent
               in case of SW warning (‘62 XX’ or ‘63 XX’). If the status
               word for the SELECT command indicates that the SE was able to
               open a channel (status word ‘90 00’ or status words
-              referencing a warning), the API shall keep the channel open and
-              the channel's <code>openResponse</code> attribute shall return
-              the status word for the SELECT command together with data, if any
+              referencing a warning), the API MUST keep the channel open and
+              the channel's <code>openResponse</code> attribute MUST return the
+              status word for the SELECT command together with data, if any
               data is received.
             </p>
           </dd>
@@ -1579,13 +1577,13 @@ interface Channel {
               this same Secure Element.
             </p>
             <p>
-              This method will trigger the <a>Access Control Enforcer</a> to
+              This method MUST trigger the <a>Access Control Enforcer</a> to
               check the requesting <a>off-card</a> application is authorized to
               send such command on this channel.
             </p>
             <p>
               The channel information in the <a>class byte</a> in the <a>APDU
-              command</a> will be ignored. The system MAY modify the <a>class
+              command</a> MUST be ignored. The system MAY modify the <a>class
               byte</a> of the command to ensure the APDU is transported on this
               channel. To ensure the invoking web application does not exit
               from the scope of this channel, the user agent MUST reject the
@@ -1650,7 +1648,7 @@ interface Channel {
               the channel allocated to this <a>Channel</a> object.
             </p>
             <p>
-              This method will trigger the <a>Access Control Enforcer</a> to
+              This method MUST trigger the <a>Access Control Enforcer</a> to
               check the requesting <a>off-card</a> application is authorized to
               send such command on this channel.
             </p>
@@ -1689,7 +1687,7 @@ interface Channel {
                   <td class="prmDesc">
                     The raw command to send to the <a>on-card</a> application.
                     The channel information in the <a>class byte</a> of the
-                    command (first octet of the cmd data) will be ignored.
+                    command (first octet of the cmd data) MUST be ignored.
                   </td>
                 </tr>
               </tbody>
@@ -1705,7 +1703,7 @@ interface Channel {
             <code>transmit()</code> operation before closing the channel.
             <p>
               If the channel is not the basic channel, then a MANAGE CHANNEL
-              Close (P1=0x80) command shall be sent to the Secure Element for
+              Close (P1=0x80) command MUST be sent to the Secure Element for
               closing the channel.
             </p>
             <p>
@@ -1718,16 +1716,16 @@ interface Channel {
               </li>
               <li>If previous command is not supported by the card (i.e. card
               returns an error SW), then SELECT by DF Name (P1=0x04; P2=0x00)
-              command shall be sent with an empty AID (Lc=0x00). All data
-              returned for the SELECT by DF Name command shall be discarded.
+              command MUST be sent with an empty AID (Lc=0x00). All data
+              returned for the SELECT by DF Name command MUST be discarded.
               </li>
             </ol>
             <p>
               In all cases the last SW of the MANAGE CHANNEL Close, MANAGE
-              CHANNEL Reset, or SELECT by DF Name command shall be ignored and
-              the channel object shall be closed by the API. After invoking
-              this method, calling any other method on this channel object MUST
-              then fail with an <a>SEClosedException</a> error.
+              CHANNEL Reset, or SELECT by DF Name command MUST be ignored and
+              the channel object MUST be closed by the API. After invoking this
+              method, calling any other method on this channel object MUST then
+              fail with an <a>SEClosedException</a> error.
             </p>
           </dd>
         </dl>
@@ -1856,7 +1854,7 @@ interface SECommand {
             "idlAttrType"><a>boolean</a></span>
           </dt>
           <dd>
-            If set to <code>true</code> the command will be transmitted using
+            If set to <code>true</code> the command MUST be transmitted using
             <a>extended length</a> encoding.
           </dd>
         </dl>
@@ -2002,7 +2000,7 @@ interface SEResponse {
       <p>
         In the interfaces defined above, some methods return a <a>Promise</a>
         object. If an error occurs during the execution of any of these
-        methods, the <code>reject()</code> method of Promise's resolver will be
+        methods, the <code>reject()</code> method of Promise's resolver MUST be
         invoked with an error value of one of the following <a>DOMException</a>
         subtypes:
       </p>
