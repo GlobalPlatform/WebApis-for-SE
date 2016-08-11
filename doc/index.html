@@ -144,7 +144,7 @@
                 ,   publisher:  "GlobalPlatform"
               }
             , "GP-AC": {
-                    title:    "Secure Element Access Control"
+                    title:    "Secure Element Access Control v1.1 | GPD_SPE_013"
                 ,   authors:  [ "GlobalPlatform" ]
                 ,   href:     "https://www.globalplatform.org/specificationsdevice.asp"
                 ,   publisher:  "GlobalPlatform"
@@ -638,11 +638,9 @@ window.onload = function () {
           application identifier, hence use the same <a>Access Rules</a>.
         </p>
         <p>
-          While applying the GlobalPlatform Access Control process, if the
-          <a>Access Control Enforcer</a> detects that the Secure Element does
-          not implement the GlobalPlatform Access Control (it does not have
-          access rules), the <a>Access Control Enforcer</a> may use its own
-          policy to grant or refuse access to the Secure Element API.
+          The GlobalPlatform <a>Access Control Enforcer</a> will authorize or
+          deny access based on the conditions and algorithm defined in
+          [[!GP-AC]] section 4.
         </p>
       </section>
       <section>
