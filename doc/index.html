@@ -2077,51 +2077,55 @@ interface SEResponse {
       </p>
       <pre class="example highlight">
 
-            // my application identifier
-            var myAppId = ...;
-            // my application command
-            var myAppCmd = new SECommand(...);
+// my application identifier
+var myAppId = new Uint8Array(
+  [0xA0, 0x00, 0x00, 0x00, 0x18, 0x0C, 0x00, 0x00, 0x01, 0x63, 0x42, 0x00]
+);
+// my application command
+var myAppCmd = new SECommand(0x00, 0xCA, 0x9F, 0x7F, undefined, 0x2A);
 
-            // get Secure Element manager
-            var seMgr = navigator.secureElementManager;
+// register sepresent event handler
+navigator.secureElementManager.onsepresent = (event) =&gt; {
 
-            // register sepresent event handler
-            seMgr.onsepresent = function(event) {
+  var session;
+  
+  // open session
+  event.reader.openSession()
 
-              // open session
-              event.reader.openSession()
-              .then(
+  .then( _session =&gt; {
+    session = _session;
+    return session.openBasicChannel(myAppId);
+  })
 
-                function (session) {
-                  // open a basic logical channel to my application
-                  return session.openBasicChannel(myAppID);
-                }
+  .then( _channel =&gt; {
+    return _channel.transmit(myAppCmd);
+  })
 
-              ).then(
+  .then( _response =&gt; {
+    if (_response.isStatus(0x90, 0x00)) {
+      // process success response
+      mySuccessHandler(_response);
+    } else {
+      // process unexpected response
+      myFailureHandler(_response);
+    }
+  })
 
-                function (channel) {
-                  // send APDU to my application
-                  return channel.transmit(myAppCmd);
-                }
+  .then( _ =&gt; {
+    session.close();
+  })
 
-              ).then(
+  .catch( error =&gt; {
+    // error handler
+    myErrorHandler(error);
+    if (session) {
+      session.close();
+    }
+  })
 
-                function (response) {
-                  if (!response.isStatus(0x90, 0x00) {
-                    // this might be an error
-                    // ...
-                  }
-                  response.channel.session.reader.close();
-                }
-
-              );
-            };
+}
 
 </pre>
-      <p>
-        For simplicity and readability reasons, the code above omits the error
-        handling that would have to be implemented in a real application.
-      </p>
     </section><!-- Examples -->
     <!-- - - - - - - - - - - - - -  Changes - - - - - - - - - - - - - - - - -->
     <section class="appendix" id="Changes">
