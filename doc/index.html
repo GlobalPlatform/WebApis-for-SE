@@ -2109,13 +2109,12 @@ navigator.secureElementManager.onsepresent = (event) =&gt; {
     }
   })
 
-  .then( _ =&gt; {
-    session.close();
-  })
-
   .catch( error =&gt; {
     // error handler
     myErrorHandler(error);
+  })
+
+  .then( _ =&gt; {
     if (session) {
       session.close();
     }
