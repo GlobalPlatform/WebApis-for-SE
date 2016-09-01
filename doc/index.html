@@ -416,7 +416,8 @@ window.onload = function () {
         concepts.
       </p>
       <p>
-        [[!GP]]: The <dfn>Supplementary Logical Channel</dfn> concept.
+        [[!GP]]: The <dfn>Supplementary Logical Channel</dfn> and <dfn>Issuer
+        Security Domain</dfn> concepts.
       </p>
       <p>
         Some Secure Element concepts are defined in ISO/IEC specifications:
@@ -1226,6 +1227,11 @@ interface Session {
               application.
             </p>
             <p>
+              If <code>aid</code> is an empty array (array of size 0), the Lc
+              and data field of the SELECT command MUST be omitted, so that the
+              <a>Issuer Security Domain</a> is selected as defined in [[!GP]].
+            </p>
+            <p>
               This method MUST trigger the <a>Access Control Enforcer</a> to
               check the requesting <a>off-card</a> application is authorized to
               open such channel.
@@ -1356,6 +1362,11 @@ interface Session {
               the case of a UICC it is recommended that the API rejects the
               opening of the supplementary logical channel without a specific
               AID.
+            </p>
+            <p>
+              If <code>aid</code> is an empty array (array of size 0), the Lc
+              and data field of the SELECT command MUST be omitted, so that the
+              <a>Issuer Security Domain</a> is selected as defined in [[!GP]].
             </p>
             <p>
               This method MUST trigger the <a>Access Control Enforcer</a> to
