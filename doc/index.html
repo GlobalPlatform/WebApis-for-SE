@@ -1296,9 +1296,12 @@ interface Session {
                       set of targeted <a>on-card</a> applications. The
                       application with the first matching AID MUST be selected;
                       </li>
+                      <li>An empty <a>Application Identifier</a> (array of size
+                      0), to select the <a>Issuer Security Domain</a>;
+                      </li>
                       <li>
-                        <code>null</code>, the implicitly selected application
-                        on this channel MUST be selected.
+                        <code>null</code>, to select the implicitly selected
+                        application on this channel.
                       </li>
                     </ul>
                   </td>
@@ -1433,9 +1436,12 @@ interface Session {
                       set of targeted <a>on-card</a> applications. The
                       application with the first matching AID MUST be selected;
                       </li>
+                      <li>An empty <a>Application Identifier</a> (array of size
+                      0), to select the <a>Issuer Security Domain</a>;
+                      </li>
                       <li>
-                        <code>null</code> the implicitly selected application
-                        on this channel MUST be selected.
+                        <code>null</code>, to select the implicitly selected
+                        application on this channel.
                       </li>
                     </ul>
                   </td>
