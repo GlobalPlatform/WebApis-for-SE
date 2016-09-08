@@ -62,8 +62,8 @@
           // previousMaturity:  "WD",
 
           // if there a publicly available Editor's Draft, this is the link
-          edDraftURI:           "https://globalplatform.github.io/WebApis-for-SE/doc/",
-          prevRecURI:           "https://globalplatform.github.io/WebApis-for-SE/doc/public-review.html",
+          edDraftURI:           "https://globalplatform.github.io/WebApis-for-SE/doc/editor-draft.html",
+          prevRecURI:           "https://globalplatform.github.io/WebApis-for-SE/doc/",
 
           // if this is a LCWD, uncomment and set the end of its review period
           // lcEnd: "2009-08-05",
@@ -162,7 +162,7 @@ window.onload = function () {
           var statusIntro = document.querySelector("#sotd > p:nth-child(2)");
           if (statusIntro) statusIntro.remove();
           var prev = document.querySelector("#respecHeader > dl:nth-child(6) > dt:nth-child(3)");
-          if (prev) prev.innerHTML = "Draft under GlobalPlatform Public Review";
+          if (prev) prev.innerHTML = "Latest published version";
         });
     });
     };
