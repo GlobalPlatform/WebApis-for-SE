@@ -1,0 +1,6 @@
+pre {
+  page-break-inside: auto !important;
+}
+em.rfc2119 {
+  text-transform: capitalize !important;
+}
